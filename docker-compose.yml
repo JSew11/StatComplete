@@ -23,13 +23,3 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
-
-  frontend:
-    build: ./frontend
-    command: npm start
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      - backend
