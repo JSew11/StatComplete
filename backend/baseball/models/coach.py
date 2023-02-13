@@ -8,7 +8,7 @@ class Coach (models.Model):
     """
     PROTECTED_FIELDS = ['id', 'created_at', 'updated_at']
 
-    class meta:
+    class Meta:
         ordering = ['created_at']
         verbose_name = 'Coach'
         verbose_name_plural = 'Coaches'

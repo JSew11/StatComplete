@@ -1,1 +1,1 @@
-from coach import Coach as _Coach
+from .coach import Coach
