@@ -1,0 +1,7 @@
+Django
+psycopg2
+django-rest-framework
+django-reset-migrations
+pytest
+pathlib
+pytest-django
