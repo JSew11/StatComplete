@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,8 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#(1n%(&1pb1e72%u+0l)h1b27n3(n*yc#!avq+@g5z&2mzhf#s'
-
+SECRET_KEY = config('SECRET_KEY', default='very-bad-prod-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -77,16 +77,30 @@ WSGI_APPLICATION = 'statcomplete_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': 'db',
-        'PORT': 5432,
+DB_USERNAME=os.environ.get("DB_USERNAME")
+DB_PASSWORD=os.environ.get("DB_PASSWORD")
+DB_HOST=os.environ.get("DB_HOST")
+DB_PORT=os.environ.get("DB_PORT")
+DB_DATABASE=os.environ.get("DB_DATABASE")
+DB_IS_AVAIL = all([
+        DB_USERNAME, 
+        DB_PASSWORD, 
+        DB_HOST,
+        DB_PORT,
+        DB_DATABASE
+])
+
+if DB_IS_AVAIL:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": DB_DATABASE,
+            "USER": DB_USERNAME,
+            "PASSWORD": DB_PASSWORD,
+            "HOST": DB_HOST,
+            "PORT": DB_PORT,
+        }
     }
-}
 
 
 # Password validation

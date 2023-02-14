@@ -3,7 +3,7 @@ from django.test import TestCase
 from baseball.models.coach import Coach
 from baseball.models.coach_stats import CoachStats
 
-class CoachTestCase (TestCase):
+class TestCoachModel (TestCase):
     """Tests for the coach model.
     """
 
