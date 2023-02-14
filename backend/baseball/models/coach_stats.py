@@ -34,4 +34,4 @@ class CoachStats (models.Model):
     stats = models.JSONField(default=dict)
 
     def __str__(self) -> str:
-        return str(self.coach) + ' #' + str(self.jersey_number) if self.jersey_number else self.coach
+        return f'{self.coach} #{self.jersey_number if self.jersey_number else self.coach}'

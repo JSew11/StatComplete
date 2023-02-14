@@ -24,5 +24,5 @@ class Coach (models.Model):
     birth_date = models.DateField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return 'Coach ' + self.first_name + ' ' + self.last_name
+        return f'Coach {self.first_name} {self.last_name}'
     
