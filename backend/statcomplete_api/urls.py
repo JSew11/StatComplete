@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from baseball.views.coach_details import CoachDetails
+from baseball.views.coach_list import CoachList
+
 urlpatterns = [
+    path('coaches/', CoachList.as_view()),
+    path('coaches/<uuid:coach_id>/', CoachDetails.as_view()),
     path('admin/', admin.site.urls),
 ]
