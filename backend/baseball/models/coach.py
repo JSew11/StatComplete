@@ -6,7 +6,7 @@ class Coach (models.Model):
 
     Includes generic info and record (total and by team).
     """
-    PROTECTED_FIELDS = ['id', 'created_at', 'updated_at']
+    PROTECTED_FIELDS = ['id', 'created_at', 'updated_at', 'stats_by_team']
 
     class Meta:
         ordering = ['created_at']
@@ -22,4 +22,7 @@ class Coach (models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     birth_date = models.DateField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        return 'Coach ' + self.first_name + ' ' + self.last_name
     
