@@ -1,4 +1,10 @@
 # Custom gitignore for the StatComplete Project
 
+# pytest cache
+.pytest_cache/
+
+# vscode settings
+.vscode/
+
 # PostgreSQL as a part of the container
 data/

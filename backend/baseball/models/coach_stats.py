@@ -10,6 +10,10 @@ class CoachStats (models.Model):
     stat data.
     """
     PROTECTED_FIELDS = ['id', 'created_at', 'updated_at']
+    ROLES = dict(
+        MANAGER = 'Manager',
+        ASSISTANT = 'Assistant Coach'
+    )
 
     class Meta:
         ordering = ['created_at']
@@ -30,4 +34,4 @@ class CoachStats (models.Model):
     stats = models.JSONField(default=dict)
 
     def __str__(self) -> str:
-        return self.coach + ' #' + self.jersey_number if self.jersey_number else self.coach
+        return str(self.coach) + ' #' + str(self.jersey_number) if self.jersey_number else self.coach
