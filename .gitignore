@@ -1,5 +1,8 @@
 # Custom gitignore for the StatComplete Project
 
+# environment variables
+.env
+
 # pytest cache
 .pytest_cache/
 
