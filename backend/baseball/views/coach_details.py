@@ -34,7 +34,7 @@ class CoachDetails(APIView):
         if not request.data:
             mutable_fields = []
             for field in Coach._meta.get_fields():
-                if field.name not in Coach.UNAVAILABLE_FIELDS:
+                if field.name not in Coach.PROTECTED_FIELDS:
                     mutable_fields.append(field.name)
             return Response(
                 data={

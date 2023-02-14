@@ -1,22 +1,26 @@
 from uuid import uuid4
 from django.db import models
+from safedelete.models import SafeDeleteModel
+from safedelete import SOFT_DELETE_CASCADE
 
-class Coach (models.Model):
+class Coach (SafeDeleteModel):
     """Model for a baseball coach.
 
     Includes generic info and record (total and by team).
     """
-    PROTECTED_FIELDS = ['id', 'created_at', 'updated_at', 'stats_by_team']
+
+    _safedelete_policy = SOFT_DELETE_CASCADE
+    PROTECTED_FIELDS = ['id', 'created', 'updated', 'deleted', 'stats_by_team']
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['created']
         verbose_name = 'Coach'
         verbose_name_plural = 'Coaches'
     
     # database info
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     # coach info
     first_name = models.CharField(max_length=50)

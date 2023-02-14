@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'safedelete',
     'baseball.apps.BaseballConfig',
     'django.contrib.admin',
     'django.contrib.auth',

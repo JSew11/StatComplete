@@ -1,29 +1,34 @@
 from uuid import uuid4
 from django.db import models
+from safedelete.models import SafeDeleteModel
+from safedelete import SOFT_DELETE_CASCADE
 
 from .coach import Coach
 
-class CoachStats (models.Model): 
+class CoachStats (SafeDeleteModel): 
     """Model for a baseball coach's stats.
 
     Includes the related coach and team, as well as a json object storing 
     stat data.
     """
-    PROTECTED_FIELDS = ['id', 'created_at', 'updated_at']
+
     ROLES = dict(
         MANAGER = 'Manager',
         ASSISTANT = 'Assistant Coach'
     )
 
+    _safedelete_policy = SOFT_DELETE_CASCADE
+    PROTECTED_FIELDS = ['id', 'created', 'updated', 'deleted']
+
     class Meta:
-        ordering = ['created_at']
+        ordering = ['created']
         verbose_name = 'Coach Stats'
         verbose_name_plural = 'Coach Stats'
 
     # database info
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     # related models
     coach = models.ForeignKey(Coach, on_delete=models.CASCADE, related_name='stats_by_team')
