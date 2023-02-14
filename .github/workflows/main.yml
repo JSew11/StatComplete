@@ -6,8 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - run: cd backend
       - run: pip install flake8
-      - run: pip install -r requirements.txt # install all our dependencies for the project
+      - run: pip install -r backend/requirements.txt # install all our dependencies for the project
       - run: pytest . # run pytest test
       - run: flake8 . # run flake8 test
