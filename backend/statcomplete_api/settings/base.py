@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'statcomplete_api.wsgi.application'
 
 DB_USERNAME=os.environ.get("DB_USERNAME")
 DB_PASSWORD=os.environ.get("DB_PASSWORD")
-DB_HOST=os.environ.get("DB_HOST")
-DB_PORT=os.environ.get("DB_PORT")
+DB_HOST='db'
+DB_PORT=5432
 DB_DATABASE=os.environ.get("DB_DATABASE")
 DB_IS_AVAIL = all([
         DB_USERNAME, 
