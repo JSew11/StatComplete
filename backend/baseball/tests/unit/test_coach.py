@@ -20,7 +20,7 @@ class TestCoachModel (TestCase):
         return super().setUp()
     
     def test_coach_string(self):
-        """Test the overwritten __str__ method for the Coach model.
+        """Test the overwritten __str__ method for the coach model.
         """
         coach_string_representation = 'Coach '+self.test_coach.first_name+' '+self.test_coach.last_name
         self.assertEqual(coach_string_representation, str(self.test_coach))
