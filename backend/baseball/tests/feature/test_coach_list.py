@@ -4,7 +4,7 @@ from rest_framework import status
 from baseball.models.coach import Coach
 
 class TestCoachListApi(APITestCase):
-    """Tests for endpoints defined in CoachList class.
+    """Tests for endpoints defined in CoachList view.
     """
 
     def setUp(self):
@@ -18,9 +18,9 @@ class TestCoachListApi(APITestCase):
             first_name = 'Another',
             last_name = 'Coach',
         )
-
         self.client = APIClient()
-    
+        return super().setUp()
+
     def test_create_coach(self):
         """Test the POST endpoint for creating a coach.
         """
