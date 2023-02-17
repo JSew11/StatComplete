@@ -24,6 +24,3 @@ class TestCoachModel (TestCase):
         """
         coach_string_representation = 'Coach '+self.test_coach.first_name+' '+self.test_coach.last_name
         self.assertEqual(coach_string_representation, str(self.test_coach))
-
-        coach_stats_string_representation = coach_string_representation+' #'+str(self.test_coach_stats.jersey_number)
-        self.assertEqual(coach_stats_string_representation, str(self.test_coach_stats))

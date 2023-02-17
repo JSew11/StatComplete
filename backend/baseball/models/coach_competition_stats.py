@@ -33,6 +33,3 @@ class CoachCompetitionStats (SafeDeleteModel):
 
     # related models
     coach = models.ForeignKey(Coach, on_delete=models.CASCADE, related_name='stats_by_team')
-
-    def __str__(self) -> str:
-        return f'{self.coach} #{self.jersey_number if self.jersey_number else self.coach}'
