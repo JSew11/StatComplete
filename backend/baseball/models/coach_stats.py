@@ -6,7 +6,7 @@ from safedelete import SOFT_DELETE_CASCADE
 from .coach import Coach
 
 class CoachStats (SafeDeleteModel): 
-    """Model for a baseball coach's stats.
+    """Model for a baseball coach's stats for a specific team.
 
     Includes the related coach and team, as well as a json object storing 
     stat data.
@@ -16,7 +16,8 @@ class CoachStats (SafeDeleteModel):
         MANAGER = 'Manager',
         ASSISTANT = 'Assistant Coach'
     )
-
+    
+    deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE
     PROTECTED_FIELDS = ['id', 'created', 'updated', 'deleted']
 

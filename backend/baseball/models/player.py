@@ -9,6 +9,7 @@ class Player (SafeDeleteModel):
     Includes generic info and stats (total and by team).
     """
 
+    deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE
     PROTECTED_FIELDS = ['id', 'created', 'updated', 'deleted', 'stats_by_team']
 
