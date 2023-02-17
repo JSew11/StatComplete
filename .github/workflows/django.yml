@@ -43,7 +43,7 @@ jobs:
       - name: Run Tests
         env:
           DEBUG: "0"
-          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
+          SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
           DB_USERNAME: ${{ env.MY_POSTGRES_USER }}
           DB_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
           DB_HOST: localhost

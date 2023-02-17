@@ -6,4 +6,3 @@ pytest
 pathlib
 pytest-django
 django-safedelete
-python-decouple
