@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from baseball.models.coach import Coach
-from baseball.models.coach_stats import CoachStats
+from baseball.models.coach_competition_stats import CoachCompetitionStats
 
 class TestCoachModel (TestCase):
     """Tests for the coach model.
@@ -12,10 +12,10 @@ class TestCoachModel (TestCase):
             first_name = 'Test',
             last_name = 'Coach'
         )
-        self.test_coach_stats = CoachStats.objects.create(
+        self.test_coach_stats = CoachCompetitionStats.objects.create(
             coach = self.test_coach,
             jersey_number = 1,
-            role = CoachStats.ROLES['MANAGER']
+            role = CoachCompetitionStats.ROLES['MANAGER']
         )
         return super().setUp()
     

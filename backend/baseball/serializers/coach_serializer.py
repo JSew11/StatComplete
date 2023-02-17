@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
 from ..models.coach import Coach
-from ..models.coach_stats import CoachStats
+from ..models.coach_competition_stats import CoachCompetitionStats
 
 class StatsByTeamField(serializers.RelatedField):
     """Custom relational serializer for a Coach's stats by team.
     """
-    def to_representation(self, value: CoachStats):
+    def to_representation(self, value: CoachCompetitionStats):
         """Overwritten method that shows how each CoachStats in the stats_by_team
         will be displayed."""
         if value.role:

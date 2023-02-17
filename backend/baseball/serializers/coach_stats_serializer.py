@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from ..models.coach_stats import CoachStats
+from ..models.coach_competition_stats import CoachCompetitionStats
 
 class CoachStatsSerializer(serializers.ModelSerializer):
-    """Serializer for the CoachStats model.
+    """Serializer for the CoachCompetitionStats model.
     """
 
     class Meta:
-        model = CoachStats
+        model = CoachCompetitionStats
         fields = '__all__'

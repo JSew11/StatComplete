@@ -5,11 +5,11 @@ from safedelete import SOFT_DELETE_CASCADE
 
 from .coach import Coach
 
-class CoachStats (SafeDeleteModel): 
-    """Model for a baseball coach's stats for a specific team.
+class CoachCompetitionStats (SafeDeleteModel): 
+    """Model for a baseball coach's stats for a specific competition.
 
-    Includes the related coach and team, as well as a json object storing 
-    stat data.
+    Includes the related coach and competition, as well as their stats for each
+    team they coached as a part of that competition.
     """
 
     ROLES = dict(
@@ -33,11 +33,6 @@ class CoachStats (SafeDeleteModel):
 
     # related models
     coach = models.ForeignKey(Coach, on_delete=models.CASCADE, related_name='stats_by_team')
-
-    # stats/team-specific info
-    jersey_number = models.PositiveSmallIntegerField(blank=True, null=True)
-    role = models.CharField(max_length=100, blank=True, null=True)
-    stats = models.JSONField(default=dict)
 
     def __str__(self) -> str:
         return f'{self.coach} #{self.jersey_number if self.jersey_number else self.coach}'
