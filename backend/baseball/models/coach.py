@@ -9,8 +9,9 @@ class Coach (SafeDeleteModel):
     Includes generic info and record (total and by team).
     """
 
+    deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE
-    PROTECTED_FIELDS = ['id', 'created', 'updated', 'deleted', 'stats_by_team']
+    PROTECTED_FIELDS = ['id', 'created', 'updated', 'deleted', 'stats_by_competition']
 
     class Meta:
         ordering = ['created']
