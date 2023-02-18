@@ -4,6 +4,7 @@ from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
 from .player import Player
+from .competition import Competition
 
 class PlayerCompetitionStats (SafeDeleteModel):
     """Model for a baseball player's stats for a specific competition.
@@ -32,4 +33,5 @@ class PlayerCompetitionStats (SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # related models
-    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='stats_by_competition')
+    player = models.ForeignKey(Player, on_delete=models.PROTECT, related_name='stats_by_competition')
+    competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='player_stats', null=True)
