@@ -18,7 +18,6 @@ class TestCoachDetailsApi (APITestCase):
         self.client = APIClient()
         return super().setUp()
 
-
     def test_coach_by_id(self):
         """Test the GET endpoint for getting a coach by its associated uuid.
         """
