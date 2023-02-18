@@ -18,4 +18,4 @@ class CoachSerializer (serializers.ModelSerializer):
 
     class Meta:
         model = Coach
-        exclude = Coach.PROTECTED_FIELDS
+        fields = '__all__'

@@ -8,4 +8,4 @@ class CoachCompetitionStatsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CoachCompetitionStats
-        exclude = CoachCompetitionStats.PROTECTED_FIELDS
+        fields = '__all__'

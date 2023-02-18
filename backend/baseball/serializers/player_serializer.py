@@ -18,4 +18,4 @@ class PlayerSerializer (serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        exclude = Player.PROTECTED_FIELDS
+        fields = '__all__'
