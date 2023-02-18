@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from ..models.coach_competition_stats import CoachCompetitionStats
 
-class CoachStatsSerializer(serializers.ModelSerializer):
+class CoachCompetitionStatsSerializer(serializers.ModelSerializer):
     """Serializer for the CoachCompetitionStats model.
     """
 

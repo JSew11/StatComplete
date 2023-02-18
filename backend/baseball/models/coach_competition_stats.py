@@ -32,4 +32,4 @@ class CoachCompetitionStats (SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # related models
-    coach = models.ForeignKey(Coach, on_delete=models.CASCADE, related_name='stats_by_team')
+    coach = models.ForeignKey(Coach, on_delete=models.CASCADE, related_name='stats_by_competition')
