@@ -31,14 +31,9 @@ class CoachDetails(APIView):
         """Edit the details of a specific coach by uuid.
         """
         if not request.data:
-            mutable_fields = []
-            for field in Coach._meta.get_fields():
-                if field.name not in Coach.PROTECTED_FIELDS:
-                    mutable_fields.append(field.name)
             return Response(
                 data={
                     'status':'no fields were given to update',
-                    'available fields': mutable_fields
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )

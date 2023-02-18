@@ -18,4 +18,5 @@ class PlayerSerializer (serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = '__all__'
+        exclude = ['created', 'updated', 'deleted']
+        read_only_fields = ['id']

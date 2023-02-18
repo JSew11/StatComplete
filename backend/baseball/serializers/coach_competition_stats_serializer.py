@@ -8,4 +8,5 @@ class CoachCompetitionStatsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CoachCompetitionStats
-        fields = '__all__'
+        exclude = ['created', 'updated', 'deleted']
+        read_only_fields = ['id']

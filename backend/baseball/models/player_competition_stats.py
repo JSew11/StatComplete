@@ -20,7 +20,6 @@ class PlayerCompetitionStats (SafeDeleteModel):
 
     deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE
-    PROTECTED_FIELDS = ['id', 'created', 'updated', 'deleted']
 
     class Meta:
         ordering = ['created']
