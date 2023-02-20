@@ -33,4 +33,4 @@ class CoachCompetitionStats (SafeDeleteModel):
 
     # related models
     coach = models.ForeignKey(Coach, on_delete=models.PROTECT, related_name='stats_by_competition')
-    competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='coach_stats', null=True)
+    competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='coaches', null=True)
