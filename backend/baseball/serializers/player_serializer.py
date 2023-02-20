@@ -9,7 +9,7 @@ class StatsByCompetitionField (serializers.RelatedField):
     def to_representation(self, value: PlayerCompetitionStats):
         """Overwritten method that shows how each PlayerCompetitionStats in the stats_by_competition
         will be displayed."""
-        return f'Associated Competition Name'
+        return f'{value.competition.name}'
     
 class PlayerSerializer (serializers.ModelSerializer):
     """Serializer for the player model.

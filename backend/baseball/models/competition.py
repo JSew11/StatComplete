@@ -37,3 +37,6 @@ class Competition (SafeDeleteModel):
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.name
