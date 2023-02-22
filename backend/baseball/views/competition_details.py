@@ -42,7 +42,7 @@ class CompetitionDetails (APIView):
             competition = Competition.objects.get(id=competition_id)
             competition.updated = datetime.now()
 
-            # give the current coach's name to the serialzier if none is provided
+            # give the current competition's name and type to the serialzier if none is provided
             if not request.data.get('name', None):
                 request.data.update(name=competition.name)
             if not request.data.get('type', None):
@@ -62,10 +62,22 @@ class CompetitionDetails (APIView):
                 )
         except Competition.DoesNotExist:
             return Response(
-                data={'status': f'Coach with id \'{competition_id}\' not found'},
+                data={'status': f'Competition with id \'{competition_id}\' not found'},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
     def delete(self, request:Request, competition_id: str, format=None) -> Response:
         """Delete the competition with the given uuid.
         """
+        try:
+            competition = Competition.objects.get(id=competition_id)
+            competition.delete()
+            return Response(
+                data={'status':'Competition deleted successfully'},
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        except Competition.DoesNotExist:
+            return Response(
+                data={'status': f'Competition with id \'{competition_id}\' not found'},
+                status=status.HTTP_404_NOT_FOUND,
+            )

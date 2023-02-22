@@ -40,4 +40,8 @@ class TestCompetitionDetailsApi (APITestCase):
     def test_delete_competition(self):
         """Test the DELETE endpoint for deleting a competition by its associated uuid.
         """
-        self.assertEqual(1, 0)
+        delete_response = self.client.delete(path=f'/competitions/{self.test_competition_id}/')
+        self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
+
+        get_response = self.client.get(path=f'/competitions/{self.test_competition_id}/')
+        self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
