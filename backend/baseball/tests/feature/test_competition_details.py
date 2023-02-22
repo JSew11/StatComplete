@@ -29,7 +29,13 @@ class TestCompetitionDetailsApi (APITestCase):
     def test_edit_competition(self):
         """Test the PUT endpoint for editing a competition's info.
         """
-        self.assertEqual(1, 0)
+        updated_competition_field = {
+            'start_date':'2023-03-31',
+        }
+        response = self.client.put(path=f'/competitions/{self.test_competition_id}/', data=updated_competition_field, format='json')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(updated_competition_field.get('start_date'), response.data.get('start_date'))
+    
 
     def test_delete_competition(self):
         """Test the DELETE endpoint for deleting a competition by its associated uuid.

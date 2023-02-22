@@ -30,6 +30,41 @@ class CompetitionDetails (APIView):
     def put(self, request: Request, competition_id: str, format=None) -> Response:
         """Edit the details of a specific competition by uuid.
         """
+        if not request.data:
+            return Response(
+                data={
+                    'status':'no fields were given to update',
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            competition = Competition.objects.get(id=competition_id)
+            competition.updated = datetime.now()
+
+            # give the current coach's name to the serialzier if none is provided
+            if not request.data.get('name', None):
+                request.data.update(name=competition.name)
+            if not request.data.get('type', None):
+                request.data.update(type=competition.type)
+
+            serializer = CompetitionSerializer(competition, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    data=serializer.data,
+                    status=status.HTTP_200_OK,
+                )
+            else: 
+                return Response(
+                    data=serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        except Competition.DoesNotExist:
+            return Response(
+                data={'status': f'Coach with id \'{competition_id}\' not found'},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
     def delete(self, request:Request, competition_id: str, format=None) -> Response:
         """Delete the competition with the given uuid.
