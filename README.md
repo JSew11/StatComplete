@@ -7,7 +7,6 @@ Stat tracking and live score keeping web app for baseball games. Built using Dja
 * Docker & Docker Compose [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 * [VSCode](https://code.visualstudio.com/download)
 * [Git](https://git-scm.com/downloads)
-* [Conda]() (I use miniconda but you can use any form of conda)
 * Database Management tool (I like [DBeaver](https://dbeaver.io/))
 
 ### Project Setup
