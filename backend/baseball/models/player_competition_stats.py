@@ -33,5 +33,5 @@ class PlayerCompetitionStats (SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # related models
-    player = models.ForeignKey(Player, on_delete=models.PROTECT, related_name='stats_by_competition')
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='stats_by_competition')
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='players', null=True)
