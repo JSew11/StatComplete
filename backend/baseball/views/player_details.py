@@ -8,7 +8,7 @@ from rest_framework import status
 from ..models.player import Player
 from ..serializers.player_serializer import PlayerSerializer
 
-class PlayerDetails(APIView):
+class PlayerDetails (APIView):
     """View, edit, and delete endpoints for the Player model.
     """
 

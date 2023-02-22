@@ -15,7 +15,10 @@ class PlayerList (APIView):
         """
         players = Player.objects.all()
         serializer = PlayerSerializer(players, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            data=serializer.data, 
+            status=status.HTTP_200_OK
+        )
     
     def post(self, request: Request, format=None) -> Response:
         """Create a new player.

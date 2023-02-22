@@ -7,7 +7,7 @@ from rest_framework import status
 from ..models.coach import Coach
 from ..serializers.coach_serializer import CoachSerializer
 
-class CoachDetails(APIView):
+class CoachDetails (APIView):
     """View, edit, and delete endpoints for the Coach model.
     """
     
