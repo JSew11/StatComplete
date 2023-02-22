@@ -35,4 +35,7 @@ class TestCompetitionListApi (APITestCase):
     def test_competitions_list(self):
         """Test the GET endpoint for getting the list of competitions.
         """
-        self.assertEqual(1 == 0)
+        response = self.client.get('/competitions/')
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(2, len(response.data))
