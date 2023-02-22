@@ -12,6 +12,16 @@ Stat tracking and live score keeping web app for baseball games. Built using Dja
 ### Project Setup
 1. Clone the repo (https://github.com/JSew11/StatComplete) using the command:  
     `git clone https://github.com/JSew11/StatComplete`
+1. Make sure you have a file named `.env` in your root directory with the following structure (you will most likely have to create one):  
+```
+DB_NAME=# this can be anything you want
+DB_USERNAME=# this can be anything you want
+DB_PASSWORD=# this can be anything you want
+DB_HOST=db
+DB_PORT=5432
+
+SECRET_KEY=#this can be anything you want
+```
 
 ### Running the App
 1. Navigate to the project root
