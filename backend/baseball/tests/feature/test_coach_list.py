@@ -3,7 +3,7 @@ from rest_framework import status
 
 from baseball.models.coach import Coach
 
-class TestCoachListApi(APITestCase):
+class TestCoachListApi (APITestCase):
     """Tests for endpoints defined in CoachList view.
     """
 

@@ -4,12 +4,12 @@ from ..models.coach import Coach
 from ..models.coach_competition_stats import CoachCompetitionStats
 
 class StatsByCompetitionField (serializers.RelatedField):
-    """Custom relational serializer for a coach's stats by competition.
+    """Custom relational field for a coach's stats by competition.
     """
     def to_representation(self, value: CoachCompetitionStats):
         """Overwritten method that shows how each CoachCompetitionStats in the stats_by_competition
         will be displayed."""
-        return f'Associated Competition Name'
+        return f'{value.competition.name}'
 
 class CoachSerializer (serializers.ModelSerializer):
     """Serializer for the coach model.
@@ -18,4 +18,5 @@ class CoachSerializer (serializers.ModelSerializer):
 
     class Meta:
         model = Coach
-        fields = '__all__'
+        exclude = ['created', 'updated', 'deleted']
+        read_only_fields = ['id']

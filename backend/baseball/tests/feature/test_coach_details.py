@@ -10,7 +10,7 @@ class TestCoachDetailsApi (APITestCase):
     def setUp(self) -> None:
         """Set up necessary objects for testing.
         """
-        self.test_coach = Coach.objects.create(
+        self.test_coach: Coach = Coach.objects.create(
             first_name = 'Test',
             last_name = 'Coach',
         )

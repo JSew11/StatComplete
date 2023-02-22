@@ -8,7 +8,7 @@ from rest_framework import status
 from ..models.player import Player
 from ..serializers.player_serializer import PlayerSerializer
 
-class PlayerDetails(APIView):
+class PlayerDetails (APIView):
     """View, edit, and delete endpoints for the Player model.
     """
 
@@ -32,14 +32,9 @@ class PlayerDetails(APIView):
         """Edit the details of a specific player by uuid.
         """
         if not request.data:
-            mutable_fields = []
-            for field in Player._meta.get_fields():
-                if field.name not in Player.UNAVAILABLE_FIELDS:
-                    mutable_fields.append(field.name)
             return Response(
                 data={
                     'status':'no fields were given to update',
-                    'available fields': mutable_fields
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )

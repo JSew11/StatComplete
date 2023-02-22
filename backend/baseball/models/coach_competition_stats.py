@@ -4,6 +4,7 @@ from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
 from .coach import Coach
+from .competition import Competition
 
 class CoachCompetitionStats (SafeDeleteModel): 
     """Model for a baseball coach's stats for a specific competition.
@@ -19,7 +20,6 @@ class CoachCompetitionStats (SafeDeleteModel):
     
     deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE
-    PROTECTED_FIELDS = ['id', 'created', 'updated', 'deleted']
 
     class Meta:
         ordering = ['created']
@@ -32,4 +32,5 @@ class CoachCompetitionStats (SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # related models
-    coach = models.ForeignKey(Coach, on_delete=models.CASCADE, related_name='stats_by_competition')
+    coach = models.ForeignKey(Coach, on_delete=models.PROTECT, related_name='stats_by_competition')
+    competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='coaches', null=True)

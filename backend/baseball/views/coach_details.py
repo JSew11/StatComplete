@@ -7,8 +7,8 @@ from rest_framework import status
 from ..models.coach import Coach
 from ..serializers.coach_serializer import CoachSerializer
 
-class CoachDetails(APIView):
-    """View, edit, and delete endpoints for the Coach model.
+class CoachDetails (APIView):
+    """View, edit, and delete endpoints for the coach model.
     """
     
     def get(self, request: Request, coach_id: str, format=None) -> Response:
@@ -31,14 +31,9 @@ class CoachDetails(APIView):
         """Edit the details of a specific coach by uuid.
         """
         if not request.data:
-            mutable_fields = []
-            for field in Coach._meta.get_fields():
-                if field.name not in Coach.PROTECTED_FIELDS:
-                    mutable_fields.append(field.name)
             return Response(
                 data={
                     'status':'no fields were given to update',
-                    'available fields': mutable_fields
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
