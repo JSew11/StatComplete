@@ -8,7 +8,7 @@ from ..models.coach import Coach
 from ..serializers.coach_serializer import CoachSerializer
 
 class CoachDetails (APIView):
-    """View, edit, and delete endpoints for the Coach model.
+    """View, edit, and delete endpoints for the coach model.
     """
     
     def get(self, request: Request, coach_id: str, format=None) -> Response:

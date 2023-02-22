@@ -8,6 +8,8 @@ class TestCompetitionListApi (APITestCase):
     """
 
     def setUp(self) -> None:
+        """Set up necessary objects for testing.
+        """
         Competition.objects.create(
             name = 'Test Season',
             type = Competition.CompetitionType.SEASON
