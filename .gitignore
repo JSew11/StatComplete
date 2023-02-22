@@ -9,5 +9,5 @@
 # vscode settings
 .vscode/
 
-# PostgreSQL as a part of the container
+# PostgreSQL local Docker storage
 data/
