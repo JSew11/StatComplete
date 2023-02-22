@@ -11,12 +11,6 @@ class PlayerCompetitionStats (SafeDeleteModel):
 
     Includes the related player and competition, as well as their stats for each
     team they played on as a part of that competition.
-
-    Includes the related player and team, a json object for games played by
-    position, as well as json objects storing total stat data for fielding, 
-    batting, pitching, etc. Also includes related stats yb game and the dates
-    when the player started and finished (if applicable) with the associated
-    team.
     """
 
     deleted_by_cascade = None # removes this default field from the db table
