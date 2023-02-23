@@ -22,8 +22,10 @@ from baseball.views.coach_details import CoachDetails
 from baseball.views.coach_list import CoachList
 from baseball.views.player_details import PlayerDetails
 from baseball.views.player_list import PlayerList
+from baseball.views.organization_list import OrganizationList
 
 urlpatterns = [
+    path('organizations/', OrganizationList.as_view()),
     path('competitions/', CompetitionList.as_view()),
     path('competitions/<uuid:competition_id>/', CompetitionDetails.as_view()),
     path('coaches/', CoachList.as_view()),
