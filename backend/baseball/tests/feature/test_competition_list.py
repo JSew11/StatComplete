@@ -28,7 +28,7 @@ class TestCompetitionListApi (APITestCase):
             'name' : 'Test Season',
             'type' : Competition.CompetitionType.SEASON
         }
-        response = self.client.post('/competitions/', data=competition_data, format='json')
+        response = self.client.post('/api/baseball/competitions/', data=competition_data, format='json')
         
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(competition_data.get('name'), response.data.get('name'))
@@ -37,7 +37,7 @@ class TestCompetitionListApi (APITestCase):
     def test_competitions_list(self):
         """Test the GET endpoint for getting the list of competitions.
         """
-        response = self.client.get('/competitions/')
+        response = self.client.get('/api/baseball/competitions/')
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
