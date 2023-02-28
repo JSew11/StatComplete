@@ -25,7 +25,7 @@ class TestOrganizationListApi (APITestCase):
         organization_data = {
             'name' : 'Test Organization Create',
         }
-        response = self.client.post('/organizations/', data=organization_data, format='json')
+        response = self.client.post('/api/baseball/organizations/', data=organization_data, format='json')
         
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(organization_data.get('name'), response.data.get('name'))
@@ -34,7 +34,7 @@ class TestOrganizationListApi (APITestCase):
     def test_organizations_list(self):
         """Test the GET endpoint for getting the list of organizations.
         """
-        response = self.client.get('/organizations/')
+        response = self.client.get('/api/baseball/organizations/')
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))

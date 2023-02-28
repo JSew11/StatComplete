@@ -28,7 +28,7 @@ class TestCoachListApi (APITestCase):
             'first_name' : 'TEST',
             'last_name' : 'COACH',
         }
-        response = self.client.post(path='/coaches/', data=coach_data, format='json')
+        response = self.client.post(path='/api/baseball/coaches/', data=coach_data, format='json')
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(coach_data.get('first_name'), response.data.get('first_name'))
@@ -37,7 +37,7 @@ class TestCoachListApi (APITestCase):
     def test_coaches_list(self):
         """Test the GET endpoint for getting the list of coaches.
         """
-        response = self.client.get(path='/coaches/')
+        response = self.client.get(path='/api/baseball/coaches/')
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
