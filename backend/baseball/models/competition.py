@@ -3,6 +3,8 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
+from ..models.organization import Organization
+
 class Competition (SafeDeleteModel):
     """Model for a baseball competition.
 
@@ -37,6 +39,9 @@ class Competition (SafeDeleteModel):
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+
+    # related models
+    organizer = models.ForeignKey(Organization, on_delete=models.SET_NULL, related_name='competitions', null=True)
 
     def __str__(self) -> str:
         return self.name

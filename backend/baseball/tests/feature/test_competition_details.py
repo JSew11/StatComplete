@@ -21,7 +21,7 @@ class TestCompetitionDetailsApi (APITestCase):
     def test_competition_by_id(self):
         """Test the GET endpoint for getting a competition by its associated uuid.
         """
-        response = self.client.get(f'/competitions/{self.test_competition_id}/')
+        response = self.client.get(f'/api/baseball/competitions/{self.test_competition_id}/')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.test_competition.name, response.data.get('name'))
         self.assertEqual(self.test_competition.type, response.data.get('type'))
@@ -32,7 +32,7 @@ class TestCompetitionDetailsApi (APITestCase):
         updated_competition_field = {
             'start_date':'2023-03-31',
         }
-        response = self.client.put(path=f'/competitions/{self.test_competition_id}/', data=updated_competition_field, format='json')
+        response = self.client.put(path=f'/api/baseball/competitions/{self.test_competition_id}/', data=updated_competition_field, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_competition_field.get('start_date'), response.data.get('start_date'))
     
@@ -40,8 +40,8 @@ class TestCompetitionDetailsApi (APITestCase):
     def test_delete_competition(self):
         """Test the DELETE endpoint for deleting a competition by its associated uuid.
         """
-        delete_response = self.client.delete(path=f'/competitions/{self.test_competition_id}/')
+        delete_response = self.client.delete(path=f'/api/baseball/competitions/{self.test_competition_id}/')
         self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
 
-        get_response = self.client.get(path=f'/competitions/{self.test_competition_id}/')
+        get_response = self.client.get(path=f'/api/baseball/competitions/{self.test_competition_id}/')
         self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
