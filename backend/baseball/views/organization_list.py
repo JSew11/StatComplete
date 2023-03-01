@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from rest_framework import status
+from rest_framework import status, permissions
 
 from ..models.organization import Organization
 from ..serializers.organization_serializer import OrganizationSerializer
@@ -9,6 +9,7 @@ from ..serializers.organization_serializer import OrganizationSerializer
 class OrganizationList (APIView):
     """List and create API endpoints for the organization model.
     """
+    permission_classes = (permissions.IsAuthenticated,)
     
     def get(self, request: Request, format=None) -> Response:
         """View a list of all organizations.

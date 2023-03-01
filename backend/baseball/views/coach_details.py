@@ -2,7 +2,7 @@ from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from rest_framework import status
+from rest_framework import status, permissions
 
 from ..models.coach import Coach
 from ..serializers.coach_serializer import CoachSerializer
@@ -10,6 +10,7 @@ from ..serializers.coach_serializer import CoachSerializer
 class CoachDetails (APIView):
     """View, edit, and delete endpoints for the coach model.
     """
+    permission_classes = (permissions.IsAuthenticated,)
     
     def get(self, request: Request, coach_id: str, format=None) -> Response:
         """Get the details of a specific coach by uuid.

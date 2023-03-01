@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from rest_framework import status
+from rest_framework import status, permissions
 
 from ..models.player import Player
 from ..serializers.player_serializer import PlayerSerializer
@@ -9,6 +9,7 @@ from ..serializers.player_serializer import PlayerSerializer
 class PlayerList (APIView):
     """List and create endpoints for the player model.
     """
+    permission_classes = (permissions.IsAuthenticated,)
     
     def get(self, request: Request, format=None) -> Response:
         """View the list of all players.

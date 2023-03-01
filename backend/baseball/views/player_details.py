@@ -3,7 +3,7 @@ from copy import deepcopy
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from rest_framework import status
+from rest_framework import status, permissions
 
 from ..models.player import Player
 from ..serializers.player_serializer import PlayerSerializer
@@ -11,6 +11,7 @@ from ..serializers.player_serializer import PlayerSerializer
 class PlayerDetails (APIView):
     """View, edit, and delete endpoints for the Player model.
     """
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request: Request, player_id: str, format=None) -> Response:
         """Get the details of a specific player by uuid.
