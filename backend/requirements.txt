@@ -3,7 +3,6 @@ psycopg2
 django-rest-framework
 django-reset-migrations
 pytest
-pathlib
 pytest-django
 django-safedelete
 django-rest-knox

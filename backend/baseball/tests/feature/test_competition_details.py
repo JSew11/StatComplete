@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 
@@ -6,6 +7,7 @@ from baseball.models.competition import Competition
 class TestCompetitionDetailsApi (APITestCase):
     """Tests for endpoints defined in the CompetitionDetailsView.
     """
+    fixtures = ['user']
 
     def setUp(self) -> None:
         """ Set up necessary objects for testing.
@@ -16,6 +18,8 @@ class TestCompetitionDetailsApi (APITestCase):
         )
         self.test_competition_id = self.test_competition.id
         self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
         return super().setUp()
     
     def test_competition_by_id(self):

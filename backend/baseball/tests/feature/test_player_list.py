@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 
@@ -6,6 +7,7 @@ from baseball.models.player import Player
 class TestPlayerListApi (APITestCase):
     """Tests for endpoints defined in PlayerList view.
     """
+    fixtures = ['user']
 
     def setUp(self):
         """Set up necessary objects for testing.
@@ -19,6 +21,10 @@ class TestPlayerListApi (APITestCase):
             last_name = 'Player',
         )
         self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
         return super().setUp()
 
     def test_create_player(self):

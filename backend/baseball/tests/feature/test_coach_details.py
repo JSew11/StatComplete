@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 
@@ -6,9 +7,10 @@ from baseball.models.coach import Coach
 class TestCoachDetailsApi (APITestCase):
     """Tests for endpoints defined in CoachDetails view.
     """
+    fixtures = ['user']
 
     def setUp(self) -> None:
-        """Set up necessary objects for testing.
+        """Set up necessary objects for testing and log in the appropriate test user(s).
         """
         self.test_coach: Coach = Coach.objects.create(
             first_name = 'Test',
@@ -16,6 +18,8 @@ class TestCoachDetailsApi (APITestCase):
         )
         self.test_coach_id = self.test_coach.id
         self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
         return super().setUp()
 
     def test_coach_by_id(self):
