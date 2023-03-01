@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os, os.path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+BASE_DIR = os.path.dirname(os.path.realpath('manage.py'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -152,5 +152,5 @@ REST_FRAMEWORK = {
 
 # Test Fixtures
 FIXTURE_DIRS = [
-    'assets/fixtures/'
+    BASE_DIR + '/assets/fixtures'
 ]
