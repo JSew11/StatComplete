@@ -13,18 +13,13 @@ class CoachCompetitionStats (SafeDeleteModel):
     team they coached as a part of that competition.
     """
 
-    ROLES = dict(
-        MANAGER = 'Manager',
-        ASSISTANT = 'Assistant Coach'
-    )
-    
     deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE
 
     class Meta:
         ordering = ['created']
-        verbose_name = 'Coach Stats'
-        verbose_name_plural = 'Coach Stats'
+        verbose_name = 'Coach Stats (Competition)'
+        verbose_name_plural = 'Coach Stats (Competition)'
 
     # database info
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)

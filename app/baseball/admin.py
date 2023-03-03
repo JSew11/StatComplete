@@ -8,6 +8,7 @@ from .models.competition import Competition
 from .models.organization import Organization
 from .models.team import Team
 from .models.competition_team import CompetitionTeam
+from .models.coach_team_stats import CoachTeamStats
 
 # Register your models here.
 admin.site.register(Coach)
@@ -18,3 +19,4 @@ admin.site.register(Competition)
 admin.site.register(Organization)
 admin.site.register(Team)
 admin.site.register(CompetitionTeam)
+admin.site.register(CoachTeamStats)
