@@ -2,7 +2,7 @@
 FROM python:3
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-WORKDIR /code/backend
-COPY requirements.txt /code/backend/
+WORKDIR /code/app
+COPY requirements.txt /code/app/
 RUN pip install -r requirements.txt
-COPY . /code/backend/
+COPY . /code/app/
