@@ -1,13 +1,14 @@
 from django.urls import path
 
-from baseball.views.competition_details import CompetitionDetails
-from baseball.views.competition_list import CompetitionList
-from baseball.views.coach_details import CoachDetails
-from baseball.views.coach_list import CoachList
-from baseball.views.player_details import PlayerDetails
-from baseball.views.player_list import PlayerList
-from baseball.views.organization_list import OrganizationList
-from baseball.views.organization_details import OrganizationDetails
+from .views.competition_details import CompetitionDetails
+from .views.competition_list import CompetitionList
+from .views.coach_details import CoachDetails
+from .views.coach_list import CoachList
+from .views.player_details import PlayerDetails
+from .views.player_list import PlayerList
+from .views.organization_list import OrganizationList
+from .views.organization_details import OrganizationDetails
+from .views.team_list import TeamList
 
 urlpatterns = [
     path('organizations/', OrganizationList.as_view()),
@@ -18,4 +19,5 @@ urlpatterns = [
     path('coaches/<uuid:coach_id>/', CoachDetails.as_view()),
     path('players/', PlayerList.as_view()),
     path('players/<uuid:player_id>/', PlayerDetails.as_view()),
+    path('teams/', TeamList.as_view()),
 ]
