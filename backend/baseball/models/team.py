@@ -31,3 +31,6 @@ class Team (SafeDeleteModel):
 
     # related models
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, related_name='teams', null=True)
+
+    def __str__(self) -> str:
+        return f'{self.location} {self.name}'
