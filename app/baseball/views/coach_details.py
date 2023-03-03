@@ -42,6 +42,7 @@ class CoachDetails (APIView):
         try:
             coach = Coach.objects.get(id=coach_id)
             coach.updated = datetime.now()
+            coach.save()
 
             # give the current coach's name to the serialzier if none is provided
             if not request.data.get('first_name', None):
