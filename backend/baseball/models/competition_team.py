@@ -25,6 +25,7 @@ class CompetitionTeam (SafeDeleteModel):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    record = models.JSONField(default=dict)
 
     # related models
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, related_name='competition_teams', null=True)

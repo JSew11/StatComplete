@@ -27,7 +27,6 @@ class Team (SafeDeleteModel):
     # team info
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    record = models.JSONField(default=dict)
 
     # related models
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, related_name='teams', null=True)
