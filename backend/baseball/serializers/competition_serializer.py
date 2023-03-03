@@ -3,6 +3,7 @@ from rest_framework import serializers
 from ..models.competition import Competition
 from ..models.coach_competition_stats import CoachCompetitionStats
 from ..models.player_competition_stats import PlayerCompetitionStats
+from ..models.competition_team import CompetitionTeam
     
 class CompetitionCoachField (serializers.RelatedField):
     """Custom relational field for a competition's coaches.
@@ -15,6 +16,12 @@ class CompetitionPlayerField (serializers.RelatedField):
     """
     def to_representation(self, value: PlayerCompetitionStats):
         return f'{value.player.first_name} {value.player.last_name}'
+
+class CompetitionTeamsField (serializers.RelatedField):
+    """Custom relational field for a competition's teams.
+    """
+    def to_representation(self, value: CompetitionTeam):
+        return f'{value.team.location} {value.team.name}'
 
 class CompetitionSerializer (serializers.ModelSerializer):
     """Serializer for the competition model.
