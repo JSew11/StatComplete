@@ -9,6 +9,7 @@ from .views.player_list import PlayerList
 from .views.organization_list import OrganizationList
 from .views.organization_details import OrganizationDetails
 from .views.team_list import TeamList
+from .views.team_details import TeamDetails
 
 urlpatterns = [
     path('organizations/', OrganizationList.as_view()),
@@ -20,4 +21,5 @@ urlpatterns = [
     path('players/', PlayerList.as_view()),
     path('players/<uuid:player_id>/', PlayerDetails.as_view()),
     path('teams/', TeamList.as_view()),
+    path('teams/<uuid:team_id>/', TeamDetails.as_view()),
 ]
