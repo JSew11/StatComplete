@@ -3,10 +3,10 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
-from .coach_competition_stats import CoachCompetitionStats
+from .competition_coach import CompetitionCoach
 from .competition_team import CompetitionTeam
 
-class CoachTeamStats (SafeDeleteModel):
+class TeamCoach (SafeDeleteModel):
     """Model for a baseball coach's stats as a part of a specific team.
 
     Tracks the coach's record and time as a part of the associated team. 
@@ -43,5 +43,5 @@ class CoachTeamStats (SafeDeleteModel):
     left_team = models.DateField(blank=True, null=True)
 
     # related models
-    competition_coach = models.ForeignKey(CoachCompetitionStats, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
+    competition_coach = models.ForeignKey(CompetitionCoach, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
     competition_team = models.ForeignKey(CompetitionTeam, on_delete=models.SET_NULL, null=True, related_name='coach_stats')

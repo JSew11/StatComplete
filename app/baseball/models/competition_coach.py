@@ -6,7 +6,7 @@ from safedelete import SOFT_DELETE_CASCADE
 from .coach import Coach
 from .competition import Competition
 
-class CoachCompetitionStats (SafeDeleteModel): 
+class CompetitionCoach (SafeDeleteModel): 
     """Model for a baseball coach's stats for a specific competition.
 
     Includes the related coach and competition, as well as their stats for each

@@ -1,22 +1,22 @@
 from django.contrib import admin
 
 from .models.coach import Coach
-from .models.coach_competition_stats import CoachCompetitionStats
+from .models.competition_coach import CompetitionCoach
 from .models.player import Player
-from .models.player_competition_stats import PlayerCompetitionStats
+from .models.competition_player import CompetitionPlayer
 from .models.competition import Competition
 from .models.organization import Organization
 from .models.team import Team
 from .models.competition_team import CompetitionTeam
-from .models.coach_team_stats import CoachTeamStats
+from .models.team_coach import TeamCoach
 
 # Register your models here.
 admin.site.register(Coach)
-admin.site.register(CoachCompetitionStats)
+admin.site.register(CompetitionCoach)
 admin.site.register(Player)
-admin.site.register(PlayerCompetitionStats)
+admin.site.register(CompetitionPlayer)
 admin.site.register(Competition)
 admin.site.register(Organization)
 admin.site.register(Team)
 admin.site.register(CompetitionTeam)
-admin.site.register(CoachTeamStats)
+admin.site.register(TeamCoach)

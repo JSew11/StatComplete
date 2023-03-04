@@ -80,8 +80,3 @@ class TestCompetitionListApi (APITestCase):
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
-
-class TestCoachCompetitionApi (APITestCase):
-    """Tests for endpoints defined in the CoachCompetitionStatsList view.
-    """
-    fixtures = ['user', 'competition']
