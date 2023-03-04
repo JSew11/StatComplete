@@ -2,17 +2,19 @@ from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 
+from baseball.models.organization import Organization
 from baseball.models.competition import Competition
 from baseball.models.coach import Coach
 
 class TestCompetitionDetailsApi (APITestCase):
     """Tests for endpoints defined in the CompetitionDetails view.
     """
-    fixtures = ['user', 'competition']
+    fixtures = ['user', 'organization', 'competition']
 
     def setUp(self) -> None:
         """ Set up necessary objects for testing.
         """
+        self.test_organization: Organization = Organization.objects.get(name='Test Organization')
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
         self.client = APIClient()
         user = User.objects.get(username='DeveloperAdmin')
@@ -30,12 +32,12 @@ class TestCompetitionDetailsApi (APITestCase):
     def test_edit_competition(self):
         """Test the PUT endpoint for editing a competition's info.
         """
-        updated_competition_field = {
+        updated_competition_data = {
             'start_date':'2023-03-31',
         }
-        response = self.client.put(path=f'/api/baseball/competitions/{self.test_competition.id}/', data=updated_competition_field, format='json')
+        response = self.client.put(path=f'/api/baseball/competitions/{self.test_competition.id}/', data=updated_competition_data, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertEqual(updated_competition_field.get('start_date'), response.data.get('start_date'))
+        self.assertEqual(updated_competition_data.get('start_date'), response.data.get('start_date'))
     
 
     def test_delete_competition(self):
@@ -50,7 +52,7 @@ class TestCompetitionDetailsApi (APITestCase):
 class TestCompetitionListApi (APITestCase):
     """Tests for endpoints defined in the CompetitionList view.
     """
-    fixtures = ['user', 'competition']
+    fixtures = ['user', 'organization', 'competition']
 
     def setUp(self) -> None:
         """Set up necessary objects for testing.
@@ -84,7 +86,7 @@ class TestCompetitionListApi (APITestCase):
 class TestCompetitionCoachDetailsApi (APITestCase):
     """Tests for endpoints defined in the CompetitionCoachDetails view.
     """
-    fixtures = ['user', 'competition', 'coach', 'competition_coach']
+    fixtures = ['user', 'organization', 'competition', 'coach', 'competition_coach']
 
     def setUp(self) -> None:
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
@@ -121,7 +123,7 @@ class TestCompetitionCoachDetailsApi (APITestCase):
 class TestCompetitionCoachListApi (APITestCase):
     """Tests for the endpoints defined in the CompetitionCoachList view.
     """
-    fixtures = ['user', 'competition', 'coach', 'competition_coach']
+    fixtures = ['user', 'organization', 'competition', 'coach', 'competition_coach']
 
     def setUp(self) -> None:
         self.test_competition: Competition = Competition.objects.get(name='Test Season')

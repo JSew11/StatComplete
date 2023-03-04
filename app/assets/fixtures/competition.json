@@ -5,12 +5,12 @@
     "fields": {
         "deleted": null,
         "created": "2023-03-04T19:47:26.824Z",
-        "updated": "2023-03-04T19:47:26.824Z",
+        "updated": "2023-03-04T22:39:52.485Z",
         "name": "Test Season",
         "type": 1,
         "start_date": null,
         "end_date": null,
-        "organizer": null
+        "organizer": "6188c414-d2ed-4e8f-8521-70135f7b9503"
     }
 },
 {
@@ -19,12 +19,12 @@
     "fields": {
         "deleted": null,
         "created": "2023-03-04T19:49:17.315Z",
-        "updated": "2023-03-04T19:49:17.315Z",
+        "updated": "2023-03-04T22:40:52.179Z",
         "name": "Test Tournament",
         "type": 2,
         "start_date": null,
         "end_date": null,
-        "organizer": null
+        "organizer": "6188c414-d2ed-4e8f-8521-70135f7b9503"
     }
 }
 ]

@@ -5,7 +5,7 @@ from baseball.models.competition import Competition
 class TestCompetitionModel (TestCase):
     """Tests for the competition model.
     """
-    fixtures = ['competition']
+    fixtures = ['organization', 'competition']
 
     def setUp(self) -> None:
         self.test_competition = Competition.objects.get(name='Test Season')
