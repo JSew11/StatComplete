@@ -1,4 +1,4 @@
-from uuid import uuid4
+from uuid import uuid4, UUID
 from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
@@ -30,3 +30,8 @@ class Coach (SafeDeleteModel):
     def __str__(self) -> str:
         return f'Coach {self.first_name} {self.last_name}'
     
+    def get_competition_stats(self, competition_id):
+        """Get the CoachCompetitionStats object for a specific competition
+        """
+        competition_stats = self.stats_by_competition.filter(competition__id=competition_id)
+        return competition_stats[0]
