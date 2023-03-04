@@ -94,11 +94,29 @@ class TestCompetitionCoachDetailsApi (APITestCase):
         self.client.force_authenticate(user)
         return super().setUp()
     
+    def test_get_competition_coach(self):
+        """Test the GET endpoint for getting a competition coach by its associated
+        competition and coach.
+        """
+        response = self.client.get(f'/api/baseball/competitions/{self.test_competition.id}/coaches/{self.test_coach.id}/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+ 
     def test_create_competition_coach(self):
         """Test the POST endpoint for creating a new competition coach.
         """
         response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/coaches/{self.test_coach.id}/')
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+    def test_delete_competition_coach(self):
+        """Test the DELETE endpoint for deleting a competition coach by it associated competition
+        and coach.
+        """
+        delete_response = self.client.delete(path=f'/api/baseball/competitions/{self.test_competition.id}/coaches/{self.test_coach.id}/')
+        self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
+
+        get_response = self.client.get(path=f'/api/baseball/competitions/{self.test_competition.id}//coaches/{self.test_coach.id}/')
+        self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
+
 
 class TestCompetitionCoachListApi (APITestCase):
     """Tests for the endpoints defined in the CompetitionCoachList view.

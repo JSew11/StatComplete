@@ -40,9 +40,8 @@ class OrganizationDetails (APIView):
             )
 
         try:
-            organization = Organization.objects.get(id=organization_id)
+            organization: Organization = Organization.objects.get(id=organization_id)
             organization.updated = datetime.now()
-            organization.save()
 
             # give the current organization's name and type to the serialzier if none is provided
             if not request.data.get('name', None):

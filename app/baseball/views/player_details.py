@@ -41,9 +41,8 @@ class PlayerDetails (APIView):
             )
 
         try:
-            player = Player.objects.get(id=player_id)
+            player: Player = Player.objects.get(id=player_id)
             player.updated = datetime.now()
-            player.save()
 
             # give the current player's name to the serialzier if none is provided
             data = deepcopy(request.data)

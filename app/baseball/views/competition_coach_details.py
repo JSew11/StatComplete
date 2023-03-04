@@ -4,8 +4,6 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status, permissions
 
-from ..models.competition import Competition
-from ..models.coach import Coach
 from ..models.competition_coach import CompetitionCoach
 from ..serializers.competition_coach_serializer import CompetitionCoachSerializer
 
@@ -29,7 +27,7 @@ class CompetitionCoachDetails (APIView):
             )
         except CompetitionCoach.DoesNotExist:
             return Response(
-                data={'status': f'Coach with competition id \'{competition_id}\' and coach id \'{coach_id}\' not found'},
+                data={'status': f'Coach with id \'{coach_id}\' not found in the competition \'{competition_id}\''},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -50,11 +48,20 @@ class CompetitionCoachDetails (APIView):
                 data=serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        
-    def put(self, request: Request, competition_id: str, coach_id: str, format=None) -> Response:
-        """Edit the details of a specific competition coach by uuid.
-        """
 
     def delete(self, request: Request, competition_id: str, coach_id: str, format=None) -> Response:
         """Delete the competition coach with the given uuid.
         """
+        try:
+            competition_coach: CompetitionCoach = CompetitionCoach.objects.get(competition__id=competition_id, coach__id=coach_id)
+            # TODO: check if the competition coach has any team data before deleting
+            competition_coach.delete()
+            return Response(
+                data={'status':'Competition coach deleted successfully'},
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        except CompetitionCoach.DoesNotExist:
+            return Response(
+                data={'status': f'Competition with id \'{competition_id}\' not found'},
+                status=status.HTTP_404_NOT_FOUND,
+            )

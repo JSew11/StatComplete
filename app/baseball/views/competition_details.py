@@ -40,9 +40,8 @@ class CompetitionDetails (APIView):
             )
 
         try:
-            competition = Competition.objects.get(id=competition_id)
+            competition: Competition = Competition.objects.get(id=competition_id)
             competition.updated = datetime.now()
-            competition.save()
 
             # give the current competition's name and type to the serialzier if none is provided
             if not request.data.get('name', None):

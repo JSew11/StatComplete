@@ -41,9 +41,8 @@ class TeamDetails (APIView):
             )
 
         try:
-            team = Team.objects.get(id=team_id)
+            team: Team = Team.objects.get(id=team_id)
             team.updated = datetime.now()
-            team.save()
 
             # give the current team's name/location to the serialzier if none is provided
             data = deepcopy(request.data)

@@ -2,8 +2,6 @@ from rest_framework import serializers
 
 from ..models.competition_coach import CompetitionCoach
 from ..models.team_coach import TeamCoach
-from .competition_serializer import CompetitionSerializer
-from .coach_serializer import CoachSerializer
 
 class StatsByTeamField (serializers.RelatedField):
     """Custom relational field for a CompetitionCoach's stats_by_team field.
