@@ -5,12 +5,10 @@ from baseball.models.team import Team
 class TestTeamModel (TestCase):
     """Tests for the team model.
     """
+    fixtures = ['team']
 
     def setUp(self) -> None:
-        self.test_team = Team.objects.create(
-            name = 'Team',
-            location = 'Test'
-        )
+        self.test_team = Team.objects.get(name='Team', location='Test')
         return super().setUp()
     
     def test_team_string(self):

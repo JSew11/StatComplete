@@ -5,12 +5,10 @@ from baseball.models.competition import Competition
 class TestCompetitionModel (TestCase):
     """Tests for the competition model.
     """
+    fixtures = ['competition']
 
     def setUp(self) -> None:
-        self.test_competition = Competition.objects.create(
-            name = 'Test Competition',
-            type = Competition.CompetitionType.SEASON
-        )
+        self.test_competition = Competition.objects.get(name='Test Season')
         return super().setUp()
     
     def test_competition_string(self):

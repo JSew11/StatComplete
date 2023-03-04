@@ -16,8 +16,3 @@ class TestCoachModel (TestCase):
         """
         coach_string_representation = 'Coach '+self.test_coach.first_name+' '+self.test_coach.last_name
         self.assertEqual(coach_string_representation, str(self.test_coach))
-
-    # def test_stats_by_competition(self):
-    #     """Test getting competition stats by a competition id for a coach.
-    #     """
-    #     self.assertEqual(True, False)

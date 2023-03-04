@@ -1,0 +1,26 @@
+[
+{
+    "model": "baseball.team",
+    "pk": "0d058880-f2fc-4733-8965-02ee6caea5f7",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-04T20:23:53.683Z",
+        "updated": "2023-03-04T20:23:53.683Z",
+        "name": "Team",
+        "location": "Test",
+        "organization": null
+    }
+},
+{
+    "model": "baseball.team",
+    "pk": "c69ba7cf-cf87-4532-a3dc-87631aa733f9",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-04T20:24:12.963Z",
+        "updated": "2023-03-04T20:24:12.963Z",
+        "name": "Team",
+        "location": "Another",
+        "organization": null
+    }
+}
+]

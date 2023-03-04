@@ -7,16 +7,12 @@ from baseball.models.player import Player
 class TestPlayerDetailsApi (APITestCase):
     """Tests for endpoints defined in PlayerDetails view.
     """
-    fixtures = ['user']
+    fixtures = ['user', 'player']
 
     def setUp(self) -> None:
         """Set up necessary objects for testing.
         """
-        self.test_player = Player.objects.create(
-            first_name = 'Test',
-            last_name = 'Player',
-        )
-        self.test_player_id = self.test_player.id
+        self.test_player = Player.objects.get(first_name='Test', last_name='Player')
         self.client = APIClient()
         user = User.objects.get(username='DeveloperAdmin')
         self.client.force_authenticate(user)
@@ -25,7 +21,7 @@ class TestPlayerDetailsApi (APITestCase):
     def test_player_by_id(self):
         """Test the GET endpoint for getting a player by its associated uuid.
         """
-        response = self.client.get(path=f'/api/baseball/players/{self.test_player_id}/')
+        response = self.client.get(path=f'/api/baseball/players/{self.test_player.id}/')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.test_player.first_name, response.data.get('first_name'))
         self.assertEqual(self.test_player.last_name, response.data.get('last_name'))
@@ -36,38 +32,30 @@ class TestPlayerDetailsApi (APITestCase):
         updated_player_field = {
             'birth_date':'2000-01-01',
         }
-        response = self.client.put(path=f'/api/baseball/players/{self.test_player_id}/', data=updated_player_field, format='json')
+        response = self.client.put(path=f'/api/baseball/players/{self.test_player.id}/', data=updated_player_field, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_player_field.get('birth_date'), response.data.get('birth_date'))
     
     def test_delete_player(self):
         """Test the DELETE endpoint for deleting a player using its associated uuid.
         """
-        delete_response = self.client.delete(path=f'/api/baseball/players/{self.test_player_id}/')
+        delete_response = self.client.delete(path=f'/api/baseball/players/{self.test_player.id}/')
         self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
 
-        get_response = self.client.get(path=f'/api/baseball/playeres/{self.test_player_id}/')
+        get_response = self.client.get(path=f'/api/baseball/playeres/{self.test_player.id}/')
         self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
 
 class TestPlayerListApi (APITestCase):
     """Tests for endpoints defined in PlayerList view.
     """
-    fixtures = ['user']
+    fixtures = ['user', 'player']
 
     def setUp(self):
         """Set up necessary objects for testing.
         """
-        Player.objects.create(
-            first_name = 'Test',
-            last_name = 'Player',
-        )
-        Player.objects.create(
-            first_name = 'Another',
-            last_name = 'Player',
-        )
+        Player.objects.get(first_name = 'Test', last_name = 'Player')
+        Player.objects.get(first_name='Another', last_name='Player')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
-        self.client.force_authenticate(user)
         user = User.objects.get(username='DeveloperAdmin')
         self.client.force_authenticate(user)
         return super().setUp()

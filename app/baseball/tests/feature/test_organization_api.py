@@ -7,15 +7,12 @@ from baseball.models.organization import Organization
 class TestOrganizationDetailsApi (APITestCase):
     """Tests for endpoints defined in the OrganizationDetailsView.
     """
-    fixtures = ['user']
+    fixtures = ['user', 'organization']
 
     def setUp(self) -> None:
         """ Set up necessary objects for testing.
         """
-        self.test_organization: Organization = Organization.objects.create(
-            name = 'Test Organization',
-        )
-        self.test_organization_id = self.test_organization.id
+        self.test_organization: Organization = Organization.objects.get(name='Test Organization')
         self.client = APIClient()
         user = User.objects.get(username='DeveloperAdmin')
         self.client.force_authenticate(user)
@@ -24,7 +21,7 @@ class TestOrganizationDetailsApi (APITestCase):
     def test_organization_by_id(self):
         """Test the GET endpoint for getting a organization by its associated uuid.
         """
-        response = self.client.get(f'/api/baseball/organizations/{self.test_organization_id}/')
+        response = self.client.get(f'/api/baseball/organizations/{self.test_organization.id}/')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.test_organization.name, response.data.get('name'))
 
@@ -34,7 +31,7 @@ class TestOrganizationDetailsApi (APITestCase):
         updated_organization_field = {
             'location':'Anywhere, USA',
         }
-        response = self.client.put(path=f'/api/baseball/organizations/{self.test_organization_id}/', data=updated_organization_field, format='json')
+        response = self.client.put(path=f'/api/baseball/organizations/{self.test_organization.id}/', data=updated_organization_field, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_organization_field.get('location'), response.data.get('location'))
     
@@ -42,26 +39,22 @@ class TestOrganizationDetailsApi (APITestCase):
     def test_delete_organization(self):
         """Test the DELETE endpoint for deleting a organization by its associated uuid.
         """
-        delete_response = self.client.delete(path=f'/api/baseball/organizations/{self.test_organization_id}/')
+        delete_response = self.client.delete(path=f'/api/baseball/organizations/{self.test_organization.id}/')
         self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
 
-        get_response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization_id}/')
+        get_response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/')
         self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
 
 class TestOrganizationListApi (APITestCase):
     """Tests for endpoints defined in the OrganizationList view.
     """
-    fixtures = ['user']
+    fixtures = ['user', 'organization']
 
     def setUp(self) -> None:
         """Set up necessary objects for testing.
         """
-        Organization.objects.create(
-            name = 'Test ORganization',
-        )
-        Organization.objects.create(
-            name = 'Test Organization 2',
-        )
+        Organization.objects.get(name='Test Organization')
+        Organization.objects.get(name = 'Test Organization 2')
         self.client = APIClient()
         user = User.objects.get(username='DeveloperAdmin')
         self.client.force_authenticate(user)
