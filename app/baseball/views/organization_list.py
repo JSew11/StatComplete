@@ -26,6 +26,7 @@ class OrganizationList (APIView):
         """
         serializer = OrganizationSerializer(data=request.data)
         if serializer.is_valid():
+            serializer.save()
             return Response(
                 data=serializer.data,
                 status=status.HTTP_201_CREATED

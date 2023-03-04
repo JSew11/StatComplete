@@ -7,15 +7,12 @@ from baseball.models.competition import Competition
 class TestCompetitionDetailsApi (APITestCase):
     """Tests for endpoints defined in the CompetitionDetailsView.
     """
-    fixtures = ['user']
+    fixtures = ['user', 'competition']
 
     def setUp(self) -> None:
         """ Set up necessary objects for testing.
         """
-        self.test_competition: Competition = Competition.objects.create(
-            name = 'Test Season',
-            type = Competition.CompetitionType.SEASON
-        )
+        self.test_competition: Competition = Competition.objects.get(name='Test Season')
         self.test_competition_id = self.test_competition.id
         self.client = APIClient()
         user = User.objects.get(username='DeveloperAdmin')
@@ -53,19 +50,11 @@ class TestCompetitionDetailsApi (APITestCase):
 class TestCompetitionListApi (APITestCase):
     """Tests for endpoints defined in the CompetitionList view.
     """
-    fixtures = ['user']
+    fixtures = ['user', 'competition']
 
     def setUp(self) -> None:
         """Set up necessary objects for testing.
         """
-        Competition.objects.create(
-            name = 'Test Season',
-            type = Competition.CompetitionType.SEASON
-        )
-        Competition.objects.create(
-            name = 'Test Tournament',
-            type = Competition.CompetitionType.TOURNAMENT
-        )
         self.client = APIClient()
         user = User.objects.get(username='DeveloperAdmin')
         self.client.force_authenticate(user)
@@ -91,3 +80,8 @@ class TestCompetitionListApi (APITestCase):
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
+
+class TestCoachCompetitionApi (APITestCase):
+    """Tests for endpoints defined in the CoachCompetitionStatsList view.
+    """
+    fixtures = ['user', 'competition']
