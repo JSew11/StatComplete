@@ -4,7 +4,7 @@ from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
 from .competition_player import CompetitionPlayer
-from .competition_team import CompetitionTeam
+from .competition_team import CompetitionTeam, validate_team_jersey_number
 
 class TeamPlayer (SafeDeleteModel):
     """Mode for a baseball player's stats as a part of a specific team.
@@ -27,6 +27,12 @@ class TeamPlayer (SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # team-specific info
+    jersey_number = models.PositiveSmallIntegerField(default=99 ,validators=[validate_team_jersey_number])
+    batting_totals = models.JSONField(default=dict)
+    fielding_totals = models.JSONField(default=dict)
+    pitching_totals = models.JSONField(default=dict)
+    joined_team = models.DateField(blank=True, null=True)
+    left_team = models.DateField(blank=True, null=True)
 
     # related models
     competition_player = models.ForeignKey(CompetitionPlayer, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')

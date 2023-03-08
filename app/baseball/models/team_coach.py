@@ -4,7 +4,7 @@ from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
 from .competition_coach import CompetitionCoach
-from .competition_team import CompetitionTeam
+from .competition_team import CompetitionTeam, validate_team_jersey_number
 
 class TeamCoach (SafeDeleteModel):
     """Model for a baseball coach's stats as a part of a specific team.
@@ -34,6 +34,7 @@ class TeamCoach (SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # team-specific info
+    jersey_number = models.PositiveSmallIntegerField(default=99, validators=[validate_team_jersey_number])
     record = models.JSONField(default=dict, blank=True, null=True)
     role = models.PositiveSmallIntegerField(
         choices=CoachRole.choices,
