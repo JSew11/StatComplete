@@ -34,7 +34,7 @@ class TeamCoach (SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # team-specific info
-    jersey_number = models.PositiveSmallIntegerField(default=99, validators=[validate_team_jersey_number])
+    jersey_number = models.PositiveSmallIntegerField(null=True, validators=[validate_team_jersey_number])
     record = models.JSONField(default=dict, blank=True, null=True)
     role = models.PositiveSmallIntegerField(
         choices=CoachRole.choices,

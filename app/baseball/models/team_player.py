@@ -27,7 +27,7 @@ class TeamPlayer (SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # team-specific info
-    jersey_number = models.PositiveSmallIntegerField(default=99 ,validators=[validate_team_jersey_number])
+    jersey_number = models.PositiveSmallIntegerField(null=True, validators=[validate_team_jersey_number])
     batting_totals = models.JSONField(default=dict)
     fielding_totals = models.JSONField(default=dict)
     pitching_totals = models.JSONField(default=dict)
