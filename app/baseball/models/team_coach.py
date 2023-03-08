@@ -10,7 +10,7 @@ class TeamCoach (SafeDeleteModel):
     """Model for a baseball coach's stats as a part of a specific team.
 
     Tracks the coach's record and time as a part of the associated team. 
-    Includes the related coach competition stats, and competition team.
+    Includes the related competition coach, and competition team.
     """
 
     class CoachRole (models.IntegerChoices):
@@ -19,7 +19,7 @@ class TeamCoach (SafeDeleteModel):
         COACH = 0, 'Coach'
         MANAGER = 1, 'Manager'
         ASSISTANT = 2, 'Assistant Coach'
-    
+
     deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE
 
