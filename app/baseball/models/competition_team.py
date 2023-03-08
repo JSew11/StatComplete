@@ -34,4 +34,6 @@ class CompetitionTeam (SafeDeleteModel):
 def validate_team_jersey_number(jersey_number: int):
     """Validator function for a team's jersey numbers as a part of a competition.
     """
+    # TODO: write this to check if a team/competition requires unique jersey numbers and
+    #   validate if so
     return True
