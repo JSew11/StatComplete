@@ -1,9 +1,19 @@
 from django.urls import path
 
-from ..views.player_details import PlayerDetails
-from ..views.player_list import PlayerList
+from ..views.player_viewset import PlayerViewSet
+
+player_list = PlayerViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
+player_details = PlayerViewSet.as_view({
+    'get': 'retrieve',
+    'patch': 'partial_update',
+    'delete': 'destroy'
+})
 
 urlpatterns = [
-    path('', PlayerList.as_view()),
-    path('<uuid:player_id>/', PlayerDetails.as_view()),
+    path('', player_list),
+    path('<uuid:player_id>/', player_details),
 ]

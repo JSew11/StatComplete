@@ -27,7 +27,7 @@ class TestCoachDetailsApi (APITestCase):
         self.assertEqual(self.test_coach.last_name, response.data.get('last_name'))
     
     def test_edit_coach(self):
-        """Test the PUT endpoint for editing a coach's info.
+        """Test the PATCH endpoint for editing a coach's info.
         """
         updated_coach_field = {
             'birth_date':'2000-01-01',

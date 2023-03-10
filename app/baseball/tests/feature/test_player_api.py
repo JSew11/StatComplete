@@ -27,12 +27,12 @@ class TestPlayerDetailsApi (APITestCase):
         self.assertEqual(self.test_player.last_name, response.data.get('last_name'))
     
     def test_edit_player(self):
-        """Test the PUT endpoint for editing a player's info.
+        """Test the PATCH endpoint for editing a player's info.
         """
         updated_player_field = {
             'birth_date':'2000-01-01',
         }
-        response = self.client.put(path=f'/api/baseball/players/{self.test_player.id}/', data=updated_player_field, format='json')
+        response = self.client.patch(path=f'/api/baseball/players/{self.test_player.id}/', data=updated_player_field, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_player_field.get('birth_date'), response.data.get('birth_date'))
     
