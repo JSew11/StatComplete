@@ -1,4 +1,4 @@
-from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status, permissions
@@ -6,12 +6,23 @@ from rest_framework import status, permissions
 from ..models.competition import Competition
 from ..serializers.competition_serializer import CompetitionSerializer
 
-class CompetitionDetails (APIView):
-    """View, edit, and delete endpoints for the competition model.
+class CompetitionViewSet (ModelViewSet):
+    """Views for the competition model.
     """
-    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = CompetitionSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request: Request, competition_id: str, format=None) -> Response:
+    def list(self, request: Request, *args, **kwargs) -> Response:
+        """View a list of all competitions.
+        """
+        competitions = Competition.objects.all()
+        serializer = CompetitionSerializer(competitions, many=True)
+        return Response(
+            data=serializer.data, 
+            status=status.HTTP_200_OK
+        )
+
+    def retrieve(self, request: Request, competition_id: str, *args, **kwargs) -> Response:
         """Get the details of a specific competition by uuid.
         """
         try:

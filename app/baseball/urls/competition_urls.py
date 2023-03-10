@@ -1,9 +1,16 @@
 from django.urls import path
 
-from ..views.competition_details import CompetitionDetails
-from ..views.competition_list import CompetitionList
+from ..views.competition_viewset import CompetitionViewSet
+
+competition_list = CompetitionViewSet.as_view({
+    'get': 'list'
+})
+
+competition_details = CompetitionViewSet.as_view({
+    'get': 'retrieve'
+})
 
 urlpatterns = [
-    path('', CompetitionList.as_view()),
-    path('<uuid:competition_id>/', CompetitionDetails.as_view()),
+    path('', competition_list),
+    path('<uuid:competition_id>/', competition_details),
 ]
