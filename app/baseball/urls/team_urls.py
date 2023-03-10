@@ -1,9 +1,16 @@
 from django.urls import path
 
-from ..views.team_list import TeamList
-from ..views.team_details import TeamDetails
+from ..views.team_viewset import TeamViewSet
+
+team_list = TeamViewSet.as_view({
+    'get': 'list'
+})
+
+team_details = TeamViewSet.as_view({
+    'get': 'retrieve'
+})
 
 urlpatterns = [
-    path('', TeamList.as_view()),
-    path('<uuid:team_id>/', TeamDetails.as_view()),
+    path('', team_list),
+    path('<uuid:team_id>/', team_details),
 ]
