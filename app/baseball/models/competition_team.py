@@ -34,8 +34,8 @@ class CompetitionTeam (SafeDeleteModel):
     def __str__(self) -> str:
         return f'{self.competition} - {self.team}'
 
-def validate_team_jersey_number(jersey_number: int):
-    """Validator function for a team's jersey numbers as a part of a competition.
+def validate_team_jersey_number (jersey_number: int) -> bool:
+    """Validator function for a team's jersey numbers as a part of a competition team.
     """
     # TODO: write this to check if a team/competition requires unique jersey numbers and
     #   validate if so
