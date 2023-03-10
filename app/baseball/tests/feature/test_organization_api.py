@@ -28,12 +28,12 @@ class TestOrganizationDetailsApi (APITestCase):
         self.assertEqual(self.test_organization.name, response.data.get('name'))
 
     def test_edit_organization(self):
-        """Test the PUT endpoint for editing a organization's info.
+        """Test the PATCH endpoint for editing a organization's info.
         """
         updated_organization_field = {
             'location':'Anywhere, USA',
         }
-        response = self.client.put(path=f'/api/baseball/organizations/{self.test_organization.id}/', data=updated_organization_field, format='json')
+        response = self.client.patch(path=f'/api/baseball/organizations/{self.test_organization.id}/', data=updated_organization_field, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_organization_field.get('location'), response.data.get('location'))
     
