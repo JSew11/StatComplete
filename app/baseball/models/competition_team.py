@@ -31,9 +31,22 @@ class CompetitionTeam (SafeDeleteModel):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, related_name='competition_teams', null=True)
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='teams', null=True)
 
+    # properties
+    @property
+    def active_roster(self):
+        """Method to get the active roster for a competition team.
+        """
+        return self.roster.filter(active=True)
+    
+    @property
+    def active_coaching_staff(self):
+        """Method to get the active coaching staff for a competition team.
+        """
+        return self.coaching_staff.filter(active=True)
+
     def __str__(self) -> str:
         return f'{self.competition} - {self.team}'
-
+    
 def validate_team_jersey_number (jersey_number: int) -> bool:
     """Validator function for a team's jersey numbers as a part of a competition team.
     """
