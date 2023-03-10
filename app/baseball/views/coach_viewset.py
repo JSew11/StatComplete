@@ -1,5 +1,5 @@
 from datetime import datetime
-from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status, permissions
@@ -7,12 +7,39 @@ from rest_framework import status, permissions
 from ..models.coach import Coach
 from ..serializers.coach_serializer import CoachSerializer
 
-class CoachDetails (APIView):
-    """View, edit, and delete endpoints for the coach model.
+class CoachViewSet (ModelViewSet):
+    """Views for the coach model.
     """
-    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = CoachSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request: Request, *args, **kwargs) -> Response:
+        """View the list of all coaches.
+        """
+        coaches = Coach.objects.all()
+        serializer = CoachSerializer(coaches, many=True)
+        return Response(
+            data=serializer.data, 
+            status=status.HTTP_200_OK
+        )
     
-    def get(self, request: Request, coach_id: str, format=None) -> Response:
+    def create(self, request: Request, *args, **kwargs) -> Response:
+        """Create a new coach.
+        """
+        serializer = CoachSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                data=serializer.data,
+                status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(
+                data=serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+    def retrieve(self, request: Request, coach_id: str, *args, **kwargs) -> Response:
         """Get the details of a specific coach by uuid.
         """
         try:
@@ -27,8 +54,8 @@ class CoachDetails (APIView):
                 data={'status': f'Coach with id \'{coach_id}\' not found'},
                 status=status.HTTP_404_NOT_FOUND,
             )
-
-    def put(self, request: Request, coach_id: str, format=None) -> Response:
+    
+    def partial_update(self, request: Request, coach_id: str, *args, **kwargs) -> Response:
         """Edit the details of a specific coach by uuid.
         """
         if not request.data:
@@ -43,13 +70,7 @@ class CoachDetails (APIView):
             coach: Coach = Coach.objects.get(id=coach_id)
             coach.updated = datetime.now()
 
-            # give the current coach's name to the serialzier if none is provided
-            if not request.data.get('first_name', None):
-                request.data.update(first_name=coach.first_name)
-            if not request.data.get('last_name', None):
-                request.data.update(last_name=coach.last_name)
-
-            serializer = CoachSerializer(coach, data=request.data)
+            serializer = CoachSerializer(coach, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 return Response(
@@ -66,8 +87,8 @@ class CoachDetails (APIView):
                 data={'status': f'Coach with id \'{coach_id}\' not found'},
                 status=status.HTTP_404_NOT_FOUND,
             )
-
-    def delete(self, request: Request, coach_id: str, format=None) -> Response:
+        
+    def destroy(self, request: Request, coach_id: str, *args, **kwargs) -> Response:
         """Delete the coach with the given id.
         """
         try:

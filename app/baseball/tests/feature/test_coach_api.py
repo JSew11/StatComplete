@@ -5,7 +5,7 @@ from rest_framework import status
 from baseball.models.coach import Coach
 
 class TestCoachDetailsApi (APITestCase):
-    """Tests for endpoints defined in CoachDetails view.
+    """Tests for detail endpoints defined in coach viewset.
     """
     fixtures = ['user', 'coach']
 
@@ -32,7 +32,7 @@ class TestCoachDetailsApi (APITestCase):
         updated_coach_field = {
             'birth_date':'2000-01-01',
         }
-        response = self.client.put(path=f'/api/baseball/coaches/{self.test_coach.id}/', data=updated_coach_field, format='json')
+        response = self.client.patch(path=f'/api/baseball/coaches/{self.test_coach.id}/', data=updated_coach_field, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_coach_field.get('birth_date'), response.data.get('birth_date'))
     
@@ -46,7 +46,7 @@ class TestCoachDetailsApi (APITestCase):
         self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
 
 class TestCoachListApi (APITestCase):
-    """Tests for endpoints defined in CoachList view.
+    """Tests for list endpoints defined in coach viewset.
     """
     fixtures = ['user', 'coach']
 
