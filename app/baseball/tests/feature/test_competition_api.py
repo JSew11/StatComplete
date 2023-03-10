@@ -4,10 +4,10 @@ from rest_framework import status
 
 from baseball.models.organization import Organization
 from baseball.models.competition import Competition
-from baseball.models.coach import Coach
+from baseball.models.team import Team
 
 class TestCompetitionDetailsApi (APITestCase):
-    """Tests for endpoints defined in the CompetitionDetails view.
+    """Tests for details endpoints defined in the CompetitionViewSet.
     """
     fixtures = ['user', 'organization', 'competition']
 
@@ -30,7 +30,7 @@ class TestCompetitionDetailsApi (APITestCase):
         self.assertEqual(self.test_competition.type, response.data.get('type'))
 
 class TestCompetitionListApi (APITestCase):
-    """Tests for endpoints defined in the CompetitionList view.
+    """Tests for list endpoints defined in the CompetitionViewSet.
     """
     fixtures = ['user', 'organization', 'competition']
 
@@ -49,3 +49,32 @@ class TestCompetitionListApi (APITestCase):
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
+
+class TestCompetitionTeamApi (APITestCase):
+    """Tests for competition team endpoints defined in the CompetitionViewset.
+    """
+    fixtures = ['user', 'organization', 'competition', 'team', 'competition_team']
+
+    def setUp(self) -> None:
+        """Set up necessary objects for testing.
+        """
+        self.test_competition: Competition = Competition.objects.get(name='Test Season')
+        self.test_team: Team = Team.objects.get(location='Test', name='Team')
+        self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
+        return super().setUp()
+    
+    def test_register_team(self):
+        """Test the POST endpoint for registering a team for a competition.
+        """
+        response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/')
+
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+    def test_unregister_team(self):
+        """Test the DELETE endpoint for unregistering a team from a competition.
+        """
+        response = self.client.delete(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/')
+
+        self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
