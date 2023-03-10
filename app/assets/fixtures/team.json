@@ -8,7 +8,7 @@
         "updated": "2023-03-04T20:23:53.683Z",
         "name": "Team",
         "location": "Test",
-        "organization": null
+        "organization": "6188c414-d2ed-4e8f-8521-70135f7b9503"
     }
 },
 {
@@ -20,7 +20,7 @@
         "updated": "2023-03-04T20:24:12.963Z",
         "name": "Team",
         "location": "Another",
-        "organization": null
+        "organization": "6188c414-d2ed-4e8f-8521-70135f7b9503"
     }
 }
 ]

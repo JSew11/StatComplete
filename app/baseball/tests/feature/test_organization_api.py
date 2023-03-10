@@ -4,6 +4,7 @@ from rest_framework import status
 
 from baseball.models.organization import Organization
 from baseball.models.competition import Competition
+from baseball.models.team import Team
 
 class TestOrganizationDetailsApi (APITestCase):
     """Tests for endpoints defined in the OrganizationDetailsView.
@@ -155,6 +156,85 @@ class TestOrganizationCompetitionListApi (APITestCase):
         """Test the GET endpoint for getting the list of competitions.
         """
         response = self.client.get(f'/api/baseball/organizations/{self.test_organization.id}/competitions/')
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(2, len(response.data))
+
+class TestOrganizationTeamDetailsApi (APITestCase):
+    """Tests for endpoints defined in TeamDetails view.
+    """
+    fixtures = ['user', 'organization', 'team']
+
+    def setUp(self) -> None:
+        """Set up necessary objects for testing.
+        """
+        self.test_organization = Organization.objects.get(name='Test Organization')
+        self.test_team = Team.objects.get(location = 'Test', name = 'Team')
+        self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
+        return super().setUp()
+    
+    def test_team_by_id(self):
+        """Test the GET endpoint for getting a team by its associated uuid.
+        """
+        response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(self.test_team.location, response.data.get('location'))
+        self.assertEqual(self.test_team.name, response.data.get('name'))
+    
+    def test_edit_team(self):
+        """Test the PUT endpoint for editing a team's info.
+        """
+        updated_team_field = {
+            'location':'Updated',
+        }
+        response = self.client.put(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/{self.test_team.id}/', data=updated_team_field, format='json')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(updated_team_field.get('location'), response.data.get('location'))
+    
+    def test_delete_team(self):
+        """Test the DELETE endpoint for deleting a team using its associated uuid.
+        """
+        delete_response = self.client.delete(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
+        self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
+
+        get_response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
+        self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
+
+class TestOrganizationTeamListApi (APITestCase):
+    """Tests for endpoints defined in TeamList view.
+    """
+    fixtures = ['user', 'organization', 'team']
+
+    def setUp(self):
+        """Set up necessary objects for testing.
+        """
+        self.test_organization = Organization.objects.get(name='Test Organization')
+        Team.objects.get(location='Test', name='Team')
+        Team.objects.get(location='Another', name='Team')
+        self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
+        return super().setUp()
+
+    def test_create_team(self):
+        """Test the POST endpoint for creating a team.
+        """
+        team_data = {
+            'location' : 'TEST',
+            'name' : 'TEAM',
+        }
+        response = self.client.post(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/', data=team_data, format='json')
+
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+        self.assertEqual(team_data.get('location'), response.data.get('location'))
+        self.assertEqual(team_data.get('name'), response.data.get('name'))
+
+    def test_teams_list(self):
+        """Test the GET endpoint for getting the list of teams.
+        """
+        response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/')
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))

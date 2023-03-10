@@ -22,7 +22,6 @@ class CompetitionsField (serializers.RelatedField):
             else:
                 competition_string += ')'
 
-
 class OrganizationSerializer (serializers.ModelSerializer):
     """Serializer for the organization model.
     """

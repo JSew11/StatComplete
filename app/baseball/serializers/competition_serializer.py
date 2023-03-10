@@ -3,7 +3,7 @@ from rest_framework import serializers
 from ..models.competition import Competition
 from ..models.competition_team import CompetitionTeam
     
-class CompetitionTeamsField (serializers.RelatedField):
+class TeamsField (serializers.RelatedField):
     """Custom relational field for a competition's teams.
     """
     def to_representation(self, value: CompetitionTeam):
@@ -12,7 +12,7 @@ class CompetitionTeamsField (serializers.RelatedField):
 class CompetitionSerializer (serializers.ModelSerializer):
     """Serializer for the competition model.
     """
-    teams = CompetitionTeamsField(many=True, read_only=True)
+    teams = TeamsField(many=True, read_only=True)
 
     class Meta:
         model = Competition
