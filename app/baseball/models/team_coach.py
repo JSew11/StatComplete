@@ -47,3 +47,9 @@ class TeamCoach (SafeDeleteModel):
     # related models
     coach = models.ForeignKey(Coach, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
     competition_team = models.ForeignKey(CompetitionTeam, on_delete=models.SET_NULL, null=True, related_name='coaching_staff')
+
+    def __str__(self) -> str:
+        string = str(self.coach)
+        if self.jersey_number:
+            string += f' #{self.jersey_number}'
+        return string
