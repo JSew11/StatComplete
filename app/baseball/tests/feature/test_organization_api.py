@@ -106,12 +106,12 @@ class TestOrganizationCompetitionDetailsApi (APITestCase):
         self.assertEqual(self.test_competition.type, response.data.get('type'))
 
     def test_edit_competition(self):
-        """Test the PUT endpoint for editing a competition's info.
+        """Test the PATCH endpoint for editing a competition's info.
         """
         updated_competition_data = {
             'start_date':'2023-03-31',
         }
-        response = self.client.put(path=f'/api/baseball/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/', data=updated_competition_data, format='json')
+        response = self.client.patch(path=f'/api/baseball/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/', data=updated_competition_data, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_competition_data.get('start_date'), response.data.get('start_date'))
     
