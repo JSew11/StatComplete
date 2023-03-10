@@ -1,9 +1,7 @@
 from django.contrib import admin
 
 from .models.coach import Coach
-from .models.competition_coach import CompetitionCoach
 from .models.player import Player
-from .models.competition_player import CompetitionPlayer
 from .models.competition import Competition
 from .models.organization import Organization
 from .models.team import Team

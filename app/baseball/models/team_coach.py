@@ -3,7 +3,7 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
-from .competition_coach import CompetitionCoach
+from .coach import Coach
 from .competition_team import CompetitionTeam, validate_team_jersey_number
 
 class TeamCoach (SafeDeleteModel):
@@ -44,5 +44,5 @@ class TeamCoach (SafeDeleteModel):
     left_team = models.DateField(blank=True, null=True)
 
     # related models
-    competition_coach = models.ForeignKey(CompetitionCoach, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
+    coach = models.ForeignKey(Coach, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
     competition_team = models.ForeignKey(CompetitionTeam, on_delete=models.SET_NULL, null=True, related_name='coach_stats')

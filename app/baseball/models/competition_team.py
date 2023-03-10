@@ -29,7 +29,7 @@ class CompetitionTeam (SafeDeleteModel):
 
     # related models
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, related_name='competition_teams', null=True)
-    competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='competition_teams', null=True)
+    competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='teams', null=True)
 
 def validate_team_jersey_number(jersey_number: int):
     """Validator function for a team's jersey numbers as a part of a competition.
