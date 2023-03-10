@@ -2,6 +2,13 @@ from rest_framework import serializers
 
 from ..models.organization import Organization
 from ..models.competition import Competition
+from ..models.team import Team
+
+class TeamsField (serializers.RelatedField):
+    """Custom relational field for an organization's teams.
+    """
+    def to_representation(self, value: Team):
+        return str(value)
 
 class CompetitionsField (serializers.RelatedField):
     """Custom relational field for an organization's competitions.
@@ -20,6 +27,7 @@ class OrganizationSerializer (serializers.ModelSerializer):
     """Serializer for the organization model.
     """
     competitions = CompetitionsField(many=True, read_only=True)
+    teams = TeamsField(many=True, read_only=True)
 
     class Meta:
         model = Organization
