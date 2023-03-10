@@ -45,4 +45,4 @@ class TeamCoach (SafeDeleteModel):
 
     # related models
     coach = models.ForeignKey(Coach, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
-    competition_team = models.ForeignKey(CompetitionTeam, on_delete=models.SET_NULL, null=True, related_name='coach_stats')
+    competition_team = models.ForeignKey(CompetitionTeam, on_delete=models.SET_NULL, null=True, related_name='coaches')
