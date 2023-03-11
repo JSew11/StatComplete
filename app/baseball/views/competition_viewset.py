@@ -121,7 +121,7 @@ class CompetitionViewSet (ModelViewSet):
             )
         
     # team coach endpoints
-    def add_team_coach(self, request: Request, competition_id: str, team_id: str, coach_id: str, *args, **kwargs) -> Response:
+    def create_team_coach(self, request: Request, competition_id: str, team_id: str, coach_id: str, *args, **kwargs) -> Response:
         """Add the give coach to the given competition team's coaching staff.
         """
         try:
