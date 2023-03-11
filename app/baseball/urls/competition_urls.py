@@ -10,13 +10,14 @@ competition_details = CompetitionViewSet.as_view({
     'get': 'retrieve'
 })
 
-competition_team_registration = CompetitionViewSet.as_view({
+manage_competition_teams = CompetitionViewSet.as_view({
     'post': 'register_team',
+    'patch': 'update_team_record',
     'delete': 'unregister_team'
 })
 
 urlpatterns = [
     path('', competition_list),
     path('<uuid:competition_id>/', competition_details),
-    path('<uuid:competition_id>/teams/<uuid:team_id>/', competition_team_registration),
+    path('<uuid:competition_id>/teams/<uuid:team_id>/', manage_competition_teams),
 ]

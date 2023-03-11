@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
+from rest_framework.response import Response
 from rest_framework import status
 
 from baseball.models.organization import Organization
@@ -71,6 +72,16 @@ class TestCompetitionTeamApi (APITestCase):
         response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/')
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+    
+    def test_update_competition_team_record(self):
+        """Test the PATCH endpoint for updating a competition team's record.
+        """
+        response: Response = self.client.patch(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/', data={'wins': 1, 'losses': 2})
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(1, response.data['record']['wins'])
+        self.assertEqual(2, response.data['record']['losses'])
+        self.assertEqual(0, response.data['record']['ties'])
 
     def test_unregister_team(self):
         """Test the DELETE endpoint for unregistering a team from a competition.
