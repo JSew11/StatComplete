@@ -5,7 +5,7 @@ from baseball.models.team import Team
 class TestTeamModel (TestCase):
     """Tests for the team model.
     """
-    fixtures = ['team']
+    fixtures = ['organization', 'team']
 
     def setUp(self) -> None:
         self.test_team = Team.objects.get(name='Team', location='Test')
