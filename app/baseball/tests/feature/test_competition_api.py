@@ -6,6 +6,7 @@ from rest_framework import status
 from baseball.models.organization import Organization
 from baseball.models.competition import Competition
 from baseball.models.team import Team
+from baseball.models.coach import Coach
 
 class TestCompetitionDetailsApi (APITestCase):
     """Tests for details endpoints defined in the CompetitionViewSet.
@@ -89,3 +90,29 @@ class TestCompetitionTeamApi (APITestCase):
         response = self.client.delete(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/')
 
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+
+class TestTeamCoachApi (APITestCase):
+    """Tests for team coach endpoints defined in the CompetitionViewSet.
+    """
+    fixtures = ['user', 'organization', 'competition', 'team', 'competition_team', 'coach'] # TODO: create team_coach fixture
+
+    def setUp(self) -> None:
+        """Set up necessary objects for testing.
+        """
+        self.test_competition: Competition = Competition.objects.get(name='Test Season')
+        self.test_team: Team = Team.objects.get(location='Test', name='Team')
+        self.test_coach: Coach = Coach.objects.get(first_name='Test', last_name='Coach')
+        self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
+        return super().setUp()
+    
+    def test_add_team_coach(self):
+        """Test the POST endpoint for adding a coach to a team's competition coaching staff.
+        """
+        test_coach_data = {
+            'jersey_number': 1
+        }
+        response: Response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/coaches/{self.test_coach.id}/', data=test_coach_data, format='json')
+
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)

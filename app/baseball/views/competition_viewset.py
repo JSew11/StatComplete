@@ -6,8 +6,10 @@ from rest_framework import status, permissions
 
 from ..models.competition import Competition
 from ..models.competition_team import CompetitionTeam
+from ..models.team_coach import TeamCoach
 from ..serializers.competition_serializer import CompetitionSerializer
 from ..serializers.competition_team_serializer import CompetitionTeamSerializer
+from ..serializers.team_coach_serializer import TeamCoachSerializer
 
 class CompetitionViewSet (ModelViewSet):
     """Views for the competition model.
@@ -71,9 +73,9 @@ class CompetitionViewSet (ModelViewSet):
 
             # TODO: dispatch a job to update the competition team record, team total record, and head coach record (team coach and coach models - possibly another job?)
             # for now just update the current competition team's record
-            wins = int(request.data.get('wins', default=0))
-            losses = int(request.data.get('losses', default=0))
-            ties = int(request.data.get('ties', default=0))
+            wins = int(request.data.get('wins', 0))
+            losses = int(request.data.get('losses', 0))
+            ties = int(request.data.get('ties', 0))
             record = competition_team.record
             if len(record) == 0:
                 record['wins'] = wins
@@ -98,7 +100,7 @@ class CompetitionViewSet (ModelViewSet):
                 )
         except CompetitionTeam.DoesNotExist:
             return Response(
-                data={'status': f'No competition team associated with the competition \'{competition_id}\' and team \'{team_id}\''},
+                data={'status': f'No team with the id \'{team_id}\' is registered for the competition with the id \'{competition_id}\''},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -114,6 +116,36 @@ class CompetitionViewSet (ModelViewSet):
             )
         except CompetitionTeam.DoesNotExist:
             return Response(
-                data={'status': f'No competition team associated with the competition \'{competition_id}\' and team \'{team_id}\''},
+                data={'status': f'No team with the id \'{team_id}\' is registered for the competition with the id \'{competition_id}\''},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        
+    # team coach endpoints
+    def add_team_coach(self, request: Request, competition_id: str, team_id: str, coach_id: str, *args, **kwargs) -> Response:
+        """Add the give coach to the given competition team's coaching staff.
+        """
+        try:
+            competition_team: CompetitionTeam = CompetitionTeam.objects.get(competition=competition_id, team=team_id)
+            team_coach_data = {
+                'competition_team': competition_team.id,
+                'coach': coach_id,
+                'jersey_number': int(request.data.get('jersey_number', None)),
+                'role': int(request.data.get('role', TeamCoach.CoachRole.COACH)), # TODO: validate this to make sure it is a valid role
+                'active': True
+            }
+            serializer = TeamCoachSerializer(data=team_coach_data)
+            if serializer.is_valid():
+                return Response(
+                    data=serializer.data,
+                    status=status.HTTP_201_CREATED
+                )
+            else:
+                return Response(
+                    data=serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        except CompetitionTeam.DoesNotExist:
+            return Response(
+                data={'status': f'No team with the id \'{team_id}\' is registered for the competition with the id \'{competition_id}\''},
                 status=status.HTTP_404_NOT_FOUND,
             )
