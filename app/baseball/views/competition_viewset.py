@@ -151,6 +151,33 @@ class CompetitionViewSet (ModelViewSet):
                 status=status.HTTP_404_NOT_FOUND,
             )
     
+    def partial_update_team_coach(self, request: Request, competition_id: str, team_id: str, coach_id: str, *args, **kwargs) -> Response:
+        """Update the given team coach using the request data.
+        """
+        try:
+            team_coach: TeamCoach = TeamCoach.objects.get(
+                competition_team__competition=competition_id,
+                competition_team__team=team_id,
+                coach=coach_id
+            )
+            serializer: TeamCoachSerializer = TeamCoachSerializer(team_coach, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    data=serializer.data,
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    data=serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        except TeamCoach.DoesNotExist:
+            return Response(
+                data={'status': f'No coach with the id \'{coach_id}\' is on the team \'{team_id}\' registered for the competition \'{competition_id}\''},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+    
     def delete_team_coach(self, request: Request, competition_id: str, team_id: str, coach_id: str, *args, **kwargs) -> Response:
         """Remove the given coach from the competition team's coaching staff.
         """

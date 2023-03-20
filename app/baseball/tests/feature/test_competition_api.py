@@ -117,6 +117,16 @@ class TestTeamCoachApi (APITestCase):
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
     
+    def test_partial_update_team_coach(self):
+        """Test the PATCH update for updating a team coach on a competition team's coaching staff.
+        """
+        test_coach_data = {
+            'jersey_number': '2'
+        }
+        response: Response = self.client.patch(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/coaches/{self.test_coach.id}/', data=test_coach_data, format='json')
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+    
     def test_delete_team_coach(self):
         """Test the DELETE endpoint for deleting a coach from a competition team's coaching staff.
         """
