@@ -94,7 +94,7 @@ class TestCompetitionTeamApi (APITestCase):
 class TestTeamCoachApi (APITestCase):
     """Tests for team coach endpoints defined in the CompetitionViewSet.
     """
-    fixtures = ['user', 'organization', 'competition', 'team', 'competition_team', 'coach'] # TODO: create team_coach fixture
+    fixtures = ['user', 'organization', 'competition', 'team', 'competition_team', 'coach', 'team_coach']
 
     def setUp(self) -> None:
         """Set up necessary objects for testing.
@@ -116,3 +116,10 @@ class TestTeamCoachApi (APITestCase):
         response: Response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/coaches/{self.test_coach.id}/', data=test_coach_data, format='json')
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+    
+    def test_delete_team_coach(self):
+        """Test the DELETE endpoint for deleting a coach from a competition team's coaching staff.
+        """
+        response: Response = self.client.delete(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/coaches/{self.test_coach.id}/')
+
+        self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)

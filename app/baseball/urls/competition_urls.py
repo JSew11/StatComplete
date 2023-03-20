@@ -17,7 +17,8 @@ manage_competition_teams = CompetitionViewSet.as_view({
 })
 
 manage_competition_team_coaches = CompetitionViewSet.as_view({
-    'post': 'create_team_coach'
+    'post': 'create_team_coach',
+    'delete': 'delete_team_coach'
 })
 
 urlpatterns = [

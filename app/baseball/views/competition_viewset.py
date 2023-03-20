@@ -122,19 +122,20 @@ class CompetitionViewSet (ModelViewSet):
         
     # team coach endpoints
     def create_team_coach(self, request: Request, competition_id: str, team_id: str, coach_id: str, *args, **kwargs) -> Response:
-        """Add the give coach to the given competition team's coaching staff.
+        """Add the given coach to the given competition team's coaching staff.
         """
         try:
             competition_team: CompetitionTeam = CompetitionTeam.objects.get(competition=competition_id, team=team_id)
             team_coach_data = {
                 'competition_team': competition_team.id,
                 'coach': coach_id,
-                'jersey_number': int(request.data.get('jersey_number', None)),
+                'jersey_number': int(request.data.get('jersey_number', )),
                 'role': int(request.data.get('role', TeamCoach.CoachRole.COACH)), # TODO: validate this to make sure it is a valid role
                 'active': True
             }
             serializer = TeamCoachSerializer(data=team_coach_data)
             if serializer.is_valid():
+                serializer.save()
                 return Response(
                     data=serializer.data,
                     status=status.HTTP_201_CREATED
@@ -147,5 +148,25 @@ class CompetitionViewSet (ModelViewSet):
         except CompetitionTeam.DoesNotExist:
             return Response(
                 data={'status': f'No team with the id \'{team_id}\' is registered for the competition with the id \'{competition_id}\''},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+    
+    def delete_team_coach(self, request: Request, competition_id: str, team_id: str, coach_id: str, *args, **kwargs) -> Response:
+        """Remove the given coach from the competition team's coaching staff.
+        """
+        try:
+            team_coach: TeamCoach = TeamCoach.objects.get(
+                competition_team__competition=competition_id,
+                competition_team__team=team_id,
+                coach=coach_id
+            )
+            team_coach.delete()
+            return Response(
+                data={'status':'Team Coach deleted successfully'},
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        except TeamCoach.DoesNotExist:
+            return Response(
+                data={'status': f'No coach with the id \'{coach_id}\' is on the team \'{team_id}\' registered for the competition \'{competition_id}\''},
                 status=status.HTTP_404_NOT_FOUND,
             )
