@@ -1,0 +1,16 @@
+[
+{
+    "model": "baseball.game",
+    "pk": "301f4c55-beaf-4435-ade3-5c83833888c1",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-22T07:00:00Z",
+        "updated": "2023-03-22T07:00:00Z",
+        "date": "2023-04-11T07:00:00Z",
+        "venue": [],
+        "status": 0,
+        "rules": [],
+        "competition": null
+    }
+}
+]

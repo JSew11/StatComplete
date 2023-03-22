@@ -45,6 +45,13 @@ class Game (SafeDeleteModel):
     # related models
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='schedule', null=True)
 
+    def __str__(self) -> str:
+        if self.teams.count() > 0:
+            home_team = self.teams.filter(is_home_team=True).first()
+            away_team = self.teams.filter(is_home_team=False).first()
+            return f'{away_team.competition_team.team} at {home_team.competition_team.team} : {self.date}'
+        return f'Game at {self.date}'
+
 def limit_teams(game_id: str):
     if Game.objects.filter(id=game_id).count() >= 2:
         raise ValidationError('No more than 2 teams can play in a game')
