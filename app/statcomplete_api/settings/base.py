@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'safedelete',
     'rest_framework',
     'knox',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
