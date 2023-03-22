@@ -1,0 +1,36 @@
+[
+{
+    "model": "baseball.teamboxscore",
+    "pk": "86d02e26-24de-437a-a7d6-7319c5f41eb5",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-22T07:00:00Z",
+        "updated": "2023-03-22T07:00:00Z",
+        "score_by_inning": [],
+        "batting_stats": [],
+        "fielding_stats": [],
+        "pitching_stats": [],
+        "baserunning_stats": [],
+        "is_home_team": true,
+        "competition_team": "ff829ff9-e0c4-4ba3-8ee2-5a391fd257bc",
+        "game": "301f4c55-beaf-4435-ade3-5c83833888c1"
+    }
+},
+{
+    "model": "baseball.teamboxscore",
+    "pk": "ab915c4f-98b5-47b6-ac77-2db621a8b331",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-22T07:00:00Z",
+        "updated": "2023-03-22T07:00:00Z",
+        "score_by_inning": [],
+        "batting_stats": [],
+        "fielding_stats": [],
+        "pitching_stats": [],
+        "baserunning_stats": [],
+        "is_home_team": false,
+        "competition_team": "b59e9d57-0e60-4da8-a023-32b37c2a1333",
+        "game": "301f4c55-beaf-4435-ade3-5c83833888c1"
+    }
+}
+]

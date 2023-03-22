@@ -31,6 +31,7 @@ class TeamPlayer (SafeDeleteModel):
     batting_totals = models.JSONField(default=dict)
     fielding_totals = models.JSONField(default=dict)
     pitching_totals = models.JSONField(default=dict)
+    baserunning_totals = models.JSONField(default=dict)
     joined_team = models.DateField(blank=True, null=True)
     left_team = models.DateField(blank=True, null=True)
     active = models.BooleanField(default=False)

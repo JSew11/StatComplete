@@ -3,6 +3,7 @@ from rest_framework import serializers
 from ..models.competition_team import CompetitionTeam
 from ..models.team_coach import TeamCoach
 from ..models.team_player import TeamPlayer
+from ..models.team_box_score import TeamBoxScore
 
 class CoachingStaffField (serializers.RelatedField):
     """Custom relational field for the competition team's coaching staff.
@@ -15,6 +16,12 @@ class RosterField (serializers.RelatedField):
     """
     def to_representation(self, value: TeamPlayer):
         return str(value)
+
+class GamesField (serializers.RelatedField):
+    """Custom relational field for the competition team's games.
+    """
+    def to_representation(self, value: TeamBoxScore):
+        return f'' # TODO: edit this based on the game status and opposing team
 
 class CompetitionTeamSerializer (serializers.ModelSerializer):
     """Serializer for the competition team model.
