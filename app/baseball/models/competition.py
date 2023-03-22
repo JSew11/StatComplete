@@ -39,6 +39,7 @@ class Competition (SafeDeleteModel):
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    game_rules = models.JSONField(default=dict)
 
     # related models
     organizer = models.ForeignKey(Organization, on_delete=models.SET_NULL, related_name='competitions', null=True)

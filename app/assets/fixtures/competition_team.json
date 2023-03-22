@@ -1,0 +1,26 @@
+[
+{
+    "model": "baseball.competitionteam",
+    "pk": "ff829ff9-e0c4-4ba3-8ee2-5a391fd257bc",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-10T20:12:09.880Z",
+        "updated": "2023-03-10T20:12:09.880Z",
+        "record": {},
+        "team": "0d058880-f2fc-4733-8965-02ee6caea5f7",
+        "competition": "3ef131ec-47e2-46e8-8be2-21c33d57e9aa"
+    }
+},
+{
+    "model": "baseball.competitionteam",
+    "pk": "b59e9d57-0e60-4da8-a023-32b37c2a1333",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-22T09:34:00.000Z",
+        "updated": "2023-03-22T09:34:00.000Z",
+        "record": {},
+        "team": "c69ba7cf-cf87-4532-a3dc-87631aa733f9",
+        "competition": "3ef131ec-47e2-46e8-8be2-21c33d57e9aa"
+    }
+}
+]

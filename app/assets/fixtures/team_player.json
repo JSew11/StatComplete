@@ -1,0 +1,20 @@
+[
+{
+    "model": "baseball.teamplayer",
+    "pk": "5dec0a09-51b6-4824-81a3-254f92fbadd9",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-21T07:00:00Z",
+        "updated": "2023-03-21T07:00:00Z",
+        "jersey_number": 1,
+        "batting_totals": [],
+        "fielding_totals": [],
+        "pitching_totals": [],
+        "joined_team": null,
+        "left_team": null,
+        "active": false,
+        "player": "03c4f19c-0cf1-45e1-8115-a5ef8b5ebed6",
+        "competition_team": "ff829ff9-e0c4-4ba3-8ee2-5a391fd257bc"
+    }
+}
+]
