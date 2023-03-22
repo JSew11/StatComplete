@@ -20,7 +20,9 @@ DB_PASSWORD=# this can be anything you want
 DB_HOST=db
 DB_PORT=5432
 
-SECRET_KEY=#this can be anything you want
+SECRET_KEY=# this can be anything you want
+
+API_BASE_URL="http://localhost:8000/api" # development api url
 ```
 
 ### Running the App
