@@ -1,5 +1,6 @@
 from uuid import uuid4
 from django.db import models
+from django.core.exceptions import ValidationError
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
@@ -43,3 +44,7 @@ class Game (SafeDeleteModel):
 
     # related models
     competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='schedule', null=True)
+
+def limit_teams(game_id: str):
+    if Game.objects.filter(id=game_id).count() >= 2:
+        raise ValidationError('No more than 2 teams can play in a game')
