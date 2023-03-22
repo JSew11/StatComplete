@@ -5,12 +5,10 @@ from baseball.models.player import Player
 class TestPlayerModel (TestCase):
     """Tests for the player model.
     """
+    fixtures = ['player']
 
     def setUp(self) -> None:
-        self.test_player = Player.objects.create(
-            first_name = 'Test',
-            last_name = 'Player'
-        )
+        self.test_player = Player.objects.get(first_name='Test', last_name='Player')
         return super().setUp()
     
     def test_player_string(self):

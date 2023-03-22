@@ -1,0 +1,26 @@
+[
+{
+    "model": "baseball.coach",
+    "pk": "36111864-1a48-4110-9781-8d239e1187b8",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-04T20:10:04.138Z",
+        "updated": "2023-03-04T20:10:04.138Z",
+        "first_name": "Another",
+        "last_name": "Coach",
+        "birth_date": null
+    }
+},
+{
+    "model": "baseball.coach",
+    "pk": "9a1122ae-8291-484d-ae26-36cc71290e7c",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-04T00:17:47.517Z",
+        "updated": "2023-03-04T00:17:47.517Z",
+        "first_name": "Test",
+        "last_name": "Coach",
+        "birth_date": null
+    }
+}
+]

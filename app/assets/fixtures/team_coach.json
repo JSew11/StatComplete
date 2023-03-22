@@ -1,0 +1,19 @@
+[
+{
+    "model": "baseball.teamcoach",
+    "pk": "05f0e01f-bfd9-4946-ac82-34004ed49943",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-20T22:46:22.977Z",
+        "updated": "2023-03-20T22:46:22.977Z",
+        "jersey_number": 1,
+        "record": {},
+        "role": 0,
+        "joined_team": null,
+        "left_team": null,
+        "active": true,
+        "coach": "9a1122ae-8291-484d-ae26-36cc71290e7c",
+        "competition_team": "ff829ff9-e0c4-4ba3-8ee2-5a391fd257bc"
+    }
+}
+]

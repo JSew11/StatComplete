@@ -1,21 +1,18 @@
 from rest_framework import serializers
 
 from ..models.coach import Coach
-from ..models.coach_competition_stats import CoachCompetitionStats
+from ..models.team_coach import TeamCoach
 
-class StatsByCompetitionField (serializers.RelatedField):
-    """Custom relational field for a coach's stats by competition.
+class StatsByTeamField (serializers.RelatedField):
+    """Custom relational field for a coach's stats by team.
     """
-    def to_representation(self, value: CoachCompetitionStats):
-        """Overwritten method that shows how each CoachCompetitionStats in the stats_by_competition
-        will be displayed."""
-        return f'{value.competition.name}'
+    def to_representation(self, value: TeamCoach):
+        return str(value.competition_team)
 
 class CoachSerializer (serializers.ModelSerializer):
     """Serializer for the coach model.
     """
-    stats_by_competition = StatsByCompetitionField(many=True, read_only=True)
-
+    
     class Meta:
         model = Coach
         exclude = ['created', 'updated', 'deleted']

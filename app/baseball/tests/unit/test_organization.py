@@ -5,11 +5,10 @@ from baseball.models.organization import Organization
 class TestOrganizationModel (TestCase):
     """Tests for the organization model.
     """
+    fixtures = ['organization']
 
     def setUp(self) -> None:
-        self.test_organization = Organization.objects.create(
-            name = 'Test Organization'
-        )
+        self.test_organization = Organization.objects.get(name='Test Organization')
         return super().setUp()
     
     def test_organization_string(self):

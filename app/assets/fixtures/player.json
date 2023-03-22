@@ -1,0 +1,30 @@
+[
+{
+    "model": "baseball.player",
+    "pk": "03c4f19c-0cf1-45e1-8115-a5ef8b5ebed6",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-04T20:14:59.049Z",
+        "updated": "2023-03-04T20:14:59.049Z",
+        "first_name": "Test",
+        "last_name": "Player",
+        "birth_date": null,
+        "draft_class": null,
+        "physicals": {}
+    }
+},
+{
+    "model": "baseball.player",
+    "pk": "446f9d3c-6f1e-4019-a7f6-acf5754e2044",
+    "fields": {
+        "deleted": null,
+        "created": "2023-03-04T20:16:10.447Z",
+        "updated": "2023-03-04T20:16:10.447Z",
+        "first_name": "Another",
+        "last_name": "Player",
+        "birth_date": null,
+        "draft_class": null,
+        "physicals": {}
+    }
+}
+]
