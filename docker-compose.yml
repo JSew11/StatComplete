@@ -32,6 +32,8 @@ services:
   client:
     build: ./client
     command: npm start
+    volumes:
+      - .:/code
     ports:
       - "3000:3000"
     environment:
