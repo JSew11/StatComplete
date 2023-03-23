@@ -28,3 +28,13 @@ services:
       - SECRET_KEY=${SECRET_KEY}
     depends_on:
       - db
+  
+  client:
+    build: ./client
+    command: npm start
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - app
