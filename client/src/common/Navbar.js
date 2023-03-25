@@ -37,7 +37,7 @@ export default class Navbar extends Component {
               Sports
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem>
+              <DropdownItem className='dropdown-link p-0'>
                 <NavLink href='#' className='dropdown-link'>Baseball</NavLink>
               </DropdownItem>
             </DropdownMenu>
