@@ -28,7 +28,7 @@ export default class Navbar extends Component {
   render() {
     return (
       <Container fluid className='navbar p-0'>
-        <Nav>
+        <Nav className='px-2'>
           <Dropdown nav 
             isOpen={this.state.dropdownOpen} 
             toggle={this.toggleDropdown}

@@ -19,7 +19,9 @@ export default class Header extends Component {
             <LoginUser />
           </Col>
         </Row>
-        <Navbar/>
+        <Row>
+          <Navbar/>
+        </Row>
       </Container>
     );
   }
