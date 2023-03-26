@@ -4,7 +4,7 @@ import {
   Container, 
   Row
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import LoginUser from '../auth/LoginUser';
 import Navbar from './Navbar';
 
 export default class Header extends Component {
@@ -16,7 +16,7 @@ export default class Header extends Component {
             <h1>StatComplete</h1>
           </Col>
           <Col className='m-2 text-end'>
-            <Link to='/' className='btn btn-secondary'>Sign In</Link>
+            <LoginUser />
           </Col>
         </Row>
         <Navbar/>
