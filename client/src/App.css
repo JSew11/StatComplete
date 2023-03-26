@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.footer {
+  color: white;
+  background-color: #192841;
+  position: fixed;
+  bottom: 0;
+}
