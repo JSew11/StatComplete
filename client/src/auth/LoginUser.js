@@ -45,6 +45,12 @@ export default class LoginUser extends Component {
         >
           <Box sx={style}>
             <h2 id='login-modal-title'>Sign In to StatComplete</h2>
+            <Button 
+              className='btn-danger'
+              onClick={this.hideModal}
+            >
+              Close
+            </Button>
           </Box>
         </Modal>
       </Fragment>
