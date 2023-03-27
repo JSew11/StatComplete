@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'safedelete',
     'rest_framework',
-    'knox',
     'corsheaders',
 ]
 
