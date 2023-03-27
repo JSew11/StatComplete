@@ -1,6 +1,7 @@
 import { Modal, Box } from '@mui/material';
 import React, { Component, Fragment } from 'react';
-import { Button } from 'reactstrap';
+import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 const style = {
   position: 'absolute',
@@ -45,12 +46,30 @@ export default class LoginUser extends Component {
         >
           <Box sx={style}>
             <h2 id='login-modal-title'>Sign In to StatComplete</h2>
-            <Button 
-              className='btn-danger'
-              onClick={this.hideModal}
-            >
-              Close
-            </Button>
+            <Form onSubmit={this.getToken}>
+              <FormGroup floating>
+                <Input id='usernameInput' type='text'
+                  placeholder='Username'/>
+                <Label for='usernameInput'>Username</Label>
+              </FormGroup>
+              <FormGroup floating>
+                <Input id='passwordInput' type='password'
+                  placeholder='Password'/>
+                <Label for='passwordInput'>Password</Label>
+              </FormGroup>
+              <FormGroup row>
+                <Col>
+                  <Button className='btn-danger' onClick={this.hideModal}>
+                    Close
+                  </Button>
+                </Col>
+                <Col className='text-end'>
+                  <Button className='sign-in-btn' >
+                    Sign In
+                  </Button>
+                </Col>
+              </FormGroup>
+            </Form>
           </Box>
         </Modal>
       </Fragment>

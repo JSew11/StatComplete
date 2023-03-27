@@ -8,6 +8,10 @@ import LoginUser from '../auth/LoginUser';
 import Navbar from './Navbar';
 
 export default class Header extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <Container fluid className='p-0'>
