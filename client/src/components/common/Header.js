@@ -4,7 +4,7 @@ import {
   Container, 
   Row
 } from 'reactstrap';
-import LoginUser from '../auth/LoginUser';
+import LoginForm from '../auth/LoginForm';
 import Navbar from './Navbar';
 
 export default class Header extends Component {
@@ -20,7 +20,7 @@ export default class Header extends Component {
             <h1>StatComplete</h1>
           </Col>
           <Col className='text-end'>
-            <LoginUser />
+            <LoginForm />
           </Col>
         </Row>
         <Row>

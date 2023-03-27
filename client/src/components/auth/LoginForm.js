@@ -15,7 +15,7 @@ const style = {
   p: 4,
 };
 
-export default class LoginUser extends Component {
+export default class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
