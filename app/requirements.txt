@@ -5,5 +5,5 @@ django-reset-migrations
 pytest
 pytest-django
 django-safedelete
-django-rest-knox
 django-cors-headers
+djangorestframework-simplejwt
