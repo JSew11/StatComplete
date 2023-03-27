@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
 import Header from './components/common/Header';
-import Footer from './components/common/Footer';
+import Navbar from './components/common/Navbar';
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <Fragment>
         <Header />
-        <Footer />
+        <Navbar />
       </Fragment>
     );
   }

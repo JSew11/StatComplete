@@ -5,7 +5,6 @@ import {
   Row
 } from 'reactstrap';
 import LoginUser from '../auth/LoginUser';
-import Navbar from './Navbar';
 
 export default class Header extends Component {
   constructor(props) {
@@ -16,15 +15,12 @@ export default class Header extends Component {
     return (
       <Container fluid className='p-0'>
         <Row className='p-2 align-items-center'>
-          <Col className='m-2 text-left'>
+          <Col className='text-left'>
             <h1>StatComplete</h1>
           </Col>
-          <Col className='m-2 text-end'>
+          <Col className='text-end'>
             <LoginUser />
           </Col>
-        </Row>
-        <Row>
-          <Navbar/>
         </Row>
       </Container>
     );
