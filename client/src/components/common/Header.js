@@ -4,14 +4,10 @@ import {
   Container, 
   Row
 } from 'reactstrap';
-import LoginForm from '../auth/LoginForm';
+import LoginModal from '../auth/LoginModal';
 import Navbar from './Navbar';
 
 export default class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Container fluid>
@@ -20,7 +16,7 @@ export default class Header extends Component {
             <h1>StatComplete</h1>
           </Col>
           <Col className='text-end'>
-            <LoginForm />
+            <LoginModal />
           </Col>
         </Row>
         <Row>

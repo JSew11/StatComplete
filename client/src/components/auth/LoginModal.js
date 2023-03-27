@@ -1,7 +1,6 @@
 import { Modal, Box } from '@mui/material';
 import React, { Component, Fragment } from 'react';
-import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
-import PropTypes from 'prop-types';
+import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
 const style = {
   position: 'absolute',
@@ -15,24 +14,28 @@ const style = {
   p: 4,
 };
 
-export default class LoginForm extends Component {
+export default class LoginModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      'showModal': false,
+      'modalShowing': false,
     };
   }
 
   showModal = () => {
     this.setState({
-      'showModal': true
+      'modalShowing': true
     });
   }
 
   hideModal = () => {
     this.setState({
-      'showModal': false
+      'modalShowing': false
     });
+  }
+
+  handleSubmit = () => {
+    console.log('Login User')
   }
 
   render() {
@@ -40,13 +43,13 @@ export default class LoginForm extends Component {
       <Fragment>
         <Button onClick={this.showModal} className='btn btn-secondary'>Sign In</Button>
         <Modal
-          open={this.state.showModal}
+          open={this.state.modalShowing}
           onClose={this.hideModal}
           aria-labelledby='login-modal-title'
         >
           <Box sx={style}>
             <h2 id='login-modal-title'>Sign In to StatComplete</h2>
-            <Form onSubmit={this.getToken}>
+            <Form onSubmit={this.handleSubmit}>
               <FormGroup floating>
                 <Input id='usernameInput' type='text'
                   placeholder='Username'/>
@@ -70,6 +73,12 @@ export default class LoginForm extends Component {
                 </Col>
               </FormGroup>
             </Form>
+            <Row>
+              <Col className='text-center'>
+                <p>Don't have an Account?</p>
+                <Button onClick={this.hideModal}>Sign Up</Button>
+              </Col>
+            </Row>
           </Box>
         </Modal>
       </Fragment>
