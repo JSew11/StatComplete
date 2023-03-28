@@ -1,6 +1,8 @@
 import { Modal, Box } from '@mui/material';
+import { CgProfile } from 'react-icons/cg'
 import React, { Component, Fragment } from 'react';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
+import './LoginModal.css'
 
 const style = {
   position: 'absolute',
@@ -41,7 +43,9 @@ export default class LoginModal extends Component {
   render() {
     return (
       <Fragment>
-        <Button onClick={this.showModal} className='btn btn-secondary'>Sign In</Button>
+        <Button onClick={this.showModal} className='sign-in-button p-0 m-0'>
+          <CgProfile className='profile-icon' />
+        </Button>
         <Modal
           open={this.state.modalShowing}
           onClose={this.hideModal}
@@ -67,7 +71,7 @@ export default class LoginModal extends Component {
                   </Button>
                 </Col>
                 <Col className='text-end'>
-                  <Button className='sign-in-btn' >
+                  <Button color='primary'>
                     Sign In
                   </Button>
                 </Col>
@@ -76,7 +80,7 @@ export default class LoginModal extends Component {
             <Row>
               <Col className='text-center'>
                 <p>Don't have an Account?</p>
-                <Button onClick={this.hideModal}>Sign Up</Button>
+                <Button color='primary' onClick={this.hideModal}>Sign Up</Button>
               </Col>
             </Row>
           </Box>
