@@ -59,9 +59,9 @@ const LoginModal = () => {
     } catch (err) {
       if (!err?.response) {
         setErrorMsg('No server response');
-      } else if (err.response?.status == 400) {
+      } else if (err.response?.status === 400) {
         setErrorMsg('Missing Username or Password');
-      } else if (err.response?.status == 401) {
+      } else if (err.response?.status === 401) {
         setErrorMsg('Unauthorized');
       } else {
         setErrorMsg('Login Failed');
