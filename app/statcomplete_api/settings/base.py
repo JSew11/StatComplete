@@ -164,3 +164,5 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(minutes=45),
     'ROTATE_REFRESH_TOKENS': True,
 }
+
+CORS_ALLOW_CREDENTIALS = True

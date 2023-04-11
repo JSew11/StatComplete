@@ -1,11 +1,12 @@
 import { Modal, Box } from '@mui/material';
 import { CgProfile } from 'react-icons/cg'
-import React, { Fragment, useState, useContext } from 'react';
+import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import axios from 'axios';
 
-import AuthContext from '../../context/AuthProvider';
 import './LoginModal.css'
+
+const LOGIN_URL = 'login/';
 
 const style = {
   position: 'absolute',
@@ -19,28 +20,53 @@ const style = {
   p: 4,
 };
 
-export default function LoginModal() {
+const LoginModal = () => {
+  const usernameRef = useRef();
+  const errorRef = useRef();
+
   const [ modalActive, setModalActive ] = useState(false);
-  const { setAuth } = useContext(AuthContext);
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
+  const [ errorMsg, setErrorMsg ] = useState('');
 
+  useEffect(() => {
+    if (modalActive) {
+      usernameRef.current.focus();
+    }
+  }, [])
+  
+  useEffect(() => {
+    setErrorMsg('');
+  }, [username, password])
+  
   const handleSubmit = async (e) => {
      e.preventDefault();
     
     try {
       const response = await axios.post(
-        'login/',
-        JSON.stringify({ username, password }),
+        LOGIN_URL,
+        JSON.stringify({ username: username, password: password }),
         {
-          headers: {'Content-Type': 'application/json'},
-          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true
         }
       );
       const accessToken = response?.data?.access;
-      setAuth({ username, password, accessToken });
+      // TODO: store the access token received here
+      setModalActive(false);
     } catch (err) {
-      console.log(err);
+      if (!err?.response) {
+        setErrorMsg('No server response');
+      } else if (err.response?.status == 400) {
+        setErrorMsg('Missing Username or Password');
+      } else if (err.response?.status == 401) {
+        setErrorMsg('Unauthorized');
+      } else {
+        setErrorMsg('Login Failed');
+      }
+      errorRef.current.focus();
     }
   }
 
@@ -58,12 +84,17 @@ export default function LoginModal() {
         aria-labelledby='login-modal-title'
       >
         <Box sx={style}>
+          <div ref={errorRef} className={errorMsg ? 'errorMsg' : 'offscreen'}
+            aria-live='assertive'>
+              {errorMsg}
+          </div>
           <h2 id='login-modal-title'>Sign In to StatComplete</h2>
           <Form onSubmit={() => handleSubmit()}>
             <FormGroup floating>
               <Input 
                 id='usernameInput' 
                 type='text'
+                ref={usernameRef}
                 placeholder='Username'
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
@@ -89,7 +120,7 @@ export default function LoginModal() {
                 </Button>
               </Col>
               <Col className='text-end'>
-                <Button color='primary'>
+                <Button type='submit' color='primary'>
                   Sign In
                 </Button>
               </Col>
@@ -98,7 +129,9 @@ export default function LoginModal() {
           <Row>
             <Col className='text-center'>
               <p>Don't have an Account?</p>
-              <Button color='primary' onClick={() => setModalActive(false)}>Sign Up</Button>
+              <Button color='primary' onClick={() => setModalActive(false)}>
+                Sign Up
+              </Button>
             </Col>
           </Row>
         </Box>
@@ -106,3 +139,5 @@ export default function LoginModal() {
     </Fragment>
   );
 }
+
+export default LoginModal;
