@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Col, 
   Container, 
-  Row
+  Row,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
@@ -14,12 +18,17 @@ import './Header.css';
 export default function Header() {
   const token = localStorage.getItem('token');
 
+  const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
+
   const isTokenExpired = (token) => {
     if (!token) return true;
     const decodedToken = jwtDecode(token);
     const currentDate = new Date();
-  
     return (decodedToken.exp * 1000) < currentDate.getTime();
+  }
+
+  const toggleProfileDropdown = () => {
+    setIsProfileDropdownOpen(!isProfileDropdownOpen);
   }
 
   return (
@@ -31,9 +40,15 @@ export default function Header() {
         <Col className='text-end'>
           { isTokenExpired(token) ? 
               <Link className='btn btn-secondary' to='/login'>Sign In</Link> : 
-              <Link className='p-0 m-0' to='/'>
-                <CgProfile className='profile-icon' />
-              </Link>
+              <Dropdown isOpen={isProfileDropdownOpen} toggle={toggleProfileDropdown}>
+                <DropdownToggle className='p-0 m-0 profile-button'>
+                  <CgProfile className='profile-icon' />
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem><Link to='/'>Profile</Link></DropdownItem>
+                  <DropdownItem><Link to='/'>Logout</Link></DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
           }
         </Col>
       </Row>

@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Layout from './components/layout';
+import Layout from './pages/layout';
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 
