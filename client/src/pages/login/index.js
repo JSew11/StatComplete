@@ -53,7 +53,7 @@ export default function Login() {
       navigate(-1);
     } catch (err) {
       if (!err?.response) {
-        setErrorMsg('No server response');
+        setErrorMsg('No Server Response');
       } else if (err.response?.status === 400) {
         setErrorMsg('Missing Username or Password');
       } else if (err.response?.status === 401) {
@@ -103,7 +103,7 @@ export default function Login() {
       <Row>
         <Col className='text-center'>
           <p>Don't have an Account?</p>
-          SIGN UP LINK HERE
+          <Link to='/register'>Register Here</Link>
         </Col>
       </Row>
     </Container>
