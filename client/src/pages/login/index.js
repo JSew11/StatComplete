@@ -68,7 +68,7 @@ export default function Login() {
   return (
     <Container className='p-2'>
       <div>
-        <h2 className='p-1 m-1'>Sign In to StatComplete</h2>
+        <h2 className='p-1 m-1 text-center'>Sign In to StatComplete</h2>
       </div>
       <div ref={errorRef} className={errorMsg ? 'errorMsg' : 'offscreen'}
         aria-live='assertive'>
@@ -95,13 +95,13 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             required
-            />
+          />
           <Label for='passwordInput'>Password</Label>
         </FormGroup>
         <Button type='submit' color='primary'>
           Sign In
         </Button>
-        <div className='btn btn-danger float-end' onClick={() => {navigate(-1)}}>
+        <div className='btn btn-danger float-end' onClick={() => {navigate('/')}}>
           Cancel
         </div>
       </Form>
