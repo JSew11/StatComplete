@@ -56,7 +56,8 @@ export default function Register() {
         }
       );
       // TODO: get the accessToken and store it in localStorage
-      navigate('/login'); // TODO
+      console.log(response?.data);
+      navigate('/');
     } catch (err) {
       if (!err?.response) {
         setErrorMsg('No Server Response');
