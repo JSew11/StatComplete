@@ -63,8 +63,10 @@ export default function Register() {
   }
 
   return (
-    <Container>
-      <h1>Register</h1>
+    <Container className='p-2'>
+      <div>
+        <h2 className='p-1 m-1'>Register</h2>
+      </div>
     </Container>
   );
 }

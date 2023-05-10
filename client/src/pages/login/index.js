@@ -68,7 +68,7 @@ export default function Login() {
   return (
     <Container className='p-2'>
       <div>
-        <h2 className='p-1 m-1' id='login-modal-title'>Sign In to StatComplete</h2>
+        <h2 className='p-1 m-1'>Sign In to StatComplete</h2>
       </div>
       <div ref={errorRef} className={errorMsg ? 'errorMsg' : 'offscreen'}
         aria-live='assertive'>
