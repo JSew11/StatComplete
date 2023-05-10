@@ -29,7 +29,7 @@ export default function Register() {
   const [ errorMsg, setErrorMsg ] = useState('');
 
   useEffect(() => {
-    // firstNameRef.current.focus();
+    firstNameRef.current.focus();
   }, []);
 
   useEffect(() => {
