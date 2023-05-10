@@ -7,7 +7,7 @@ import {
   FormGroup,
   Label,
   Input,
-  Button
+  Button,
 } from 'reactstrap';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -67,7 +67,9 @@ export default function Login() {
 
   return (
     <Container className='p-2'>
-      <h2 id='login-modal-title'>Sign In to StatComplete</h2>
+      <div>
+        <h2 className='p-1 m-1' id='login-modal-title'>Sign In to StatComplete</h2>
+      </div>
       <div ref={errorRef} className={errorMsg ? 'errorMsg' : 'offscreen'}
         aria-live='assertive'>
           {errorMsg}
@@ -99,11 +101,17 @@ export default function Login() {
         <Button type='submit' color='primary'>
           Sign In
         </Button>
+        <div className='btn btn-danger float-end' onClick={() => {navigate(-1)}}>
+          Cancel
+        </div>
       </Form>
       <Row>
         <Col className='text-center'>
-          <p>Don't have an Account?</p>
-          <Link to='/register'>Register Here</Link>
+          <p>
+            Don't have an Account?
+            <br/>
+            <Link className='btn btn-secondary register-link' to='/register'>Register Here</Link>
+          </p>
         </Col>
       </Row>
     </Container>
