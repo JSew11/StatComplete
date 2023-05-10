@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  NavLink,
   Col, 
   Container, 
   Row,
@@ -45,8 +46,8 @@ export default function Header() {
                   <CgProfile className='profile-icon' />
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem><Link to='/'>Profile</Link></DropdownItem>
-                  <DropdownItem><Link to='/'>Logout</Link></DropdownItem>
+                  <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/'>Profile</NavLink></DropdownItem>
+                  <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/'>Logout</NavLink></DropdownItem>
                 </DropdownMenu>
               </Dropdown>
           }

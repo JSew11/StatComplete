@@ -19,3 +19,18 @@
     background-color: transparent;
     font-weight: lighter;
 }
+
+.user-dropdown-link:link,
+.user-dropdown-link:visited {
+    text-align: end;
+    margin-right: 10%;
+    color: black;
+}
+
+.user-dropdown-link:link:focus, 
+.user-dropdown-link:link:active {
+    text-align: end;
+    margin-right: 10%;
+    color: #013349;
+    background-color: #dadada;
+}
