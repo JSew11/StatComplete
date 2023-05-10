@@ -161,6 +161,7 @@ FIXTURE_DIRS = [
 ]
 
 SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=45),
     'REFRESH_TOKEN_LIFETIME': timedelta(hours=24),
     'ROTATE_REFRESH_TOKENS': True,
 }
