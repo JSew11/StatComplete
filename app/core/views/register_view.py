@@ -1,5 +1,7 @@
+from django.contrib.auth import authenticate
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 from ..serializers.register_serializer import RegisterSerializer
 from ..serializers.user_serializer import UserSerializer
 
@@ -14,10 +16,12 @@ class RegisterView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        fullUser = UserSerializer(user, context=self.get_serializer_context()).save()
+        refresh = RefreshToken.for_user(fullUser)
         return Response(
             data = {
-                "user": UserSerializer(user, context=self.get_serializer_context()).data,
-                "message": "User created successfully",
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
             },
             status = status.HTTP_201_CREATED
         )
