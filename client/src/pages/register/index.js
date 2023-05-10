@@ -55,8 +55,10 @@ export default function Register() {
           withCredentials: true
         }
       );
-      // TODO: get the accessToken and store it in localStorage
-      console.log(response?.data);
+      const accessToken = response?.data?.access;
+      // store token in localstorage
+      localStorage.setItem('token', accessToken);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       navigate('/');
     } catch (err) {
       if (!err?.response) {
