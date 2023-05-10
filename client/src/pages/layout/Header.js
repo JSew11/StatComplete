@@ -22,7 +22,7 @@ export default function Header() {
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
 
   const isTokenExpired = (token) => {
-    if (!token) return true;
+    if (token === null || !token) return true;
     const decodedToken = jwtDecode(token);
     const currentDate = new Date();
     return (decodedToken.exp * 1000) < currentDate.getTime();
@@ -30,6 +30,11 @@ export default function Header() {
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  }
+
+  const logoutUser = () => {
+    // TODO: call the api logout endpoint
+    localStorage.clear();
   }
 
   return (
@@ -47,7 +52,7 @@ export default function Header() {
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/'>Profile</NavLink></DropdownItem>
-                  <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/'>Logout</NavLink></DropdownItem>
+                  <DropdownItem className='p-0'><NavLink className='user-dropdown-link' onClick={logoutUser} href='/'>Logout</NavLink></DropdownItem>
                 </DropdownMenu>
               </Dropdown>
           }
