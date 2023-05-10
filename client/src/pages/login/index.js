@@ -14,7 +14,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const LOGIN_URL = 'login/';
 
-const Login = () => {
+export default function Login() {
   const navigate = useNavigate();
 
   const usernameRef = useRef();
@@ -48,7 +48,6 @@ const Login = () => {
       );
       const accessToken = response?.data?.access;
       // store token in localstorage
-      localStorage.clear();
       localStorage.setItem('token', accessToken);
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       navigate(-1);
@@ -110,5 +109,3 @@ const Login = () => {
     </Container>
   );
 }
-
-export default Login;
