@@ -3,9 +3,9 @@ name: Django Tests CI
 on:
   workflow_dispatch:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
 
 jobs:
   simple_build:
