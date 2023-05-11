@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os, os.path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.realpath('manage.py'))
@@ -40,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'safedelete',
     'rest_framework',
-    'knox',
     'corsheaders',
 ]
 
@@ -148,7 +148,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
@@ -157,3 +159,11 @@ REST_FRAMEWORK = {
 FIXTURE_DIRS = [
     BASE_DIR + '/assets/fixtures'
 ]
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=45),
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=24),
+    'ROTATE_REFRESH_TOKENS': True,
+}
+
+CORS_ALLOW_CREDENTIALS = True

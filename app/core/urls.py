@@ -1,16 +1,11 @@
 from django.urls import path
-from knox import views as knox_views
-
-from core.views.register_user_view import RegisterUserView
-from core.views.login_view import LoginView
-from core.views.manage_user_view import ManageUserView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from .views.user_viewset import UserViewSet
 
 app_name = 'core'
 
 urlpatterns = [
-    path('register/', RegisterUserView.as_view(), name='create'),
-    path('profile/', ManageUserView.as_view(), name='profile'),
-    path('login/', LoginView.as_view(), name='knox_login'),
-    path('logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
-    path('logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
+    path('login/', TokenObtainPairView.as_view(), name='login'),
+    path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', UserViewSet.as_view(), name='register')
 ]
