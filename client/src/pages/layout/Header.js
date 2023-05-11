@@ -45,16 +45,17 @@ export default function Header() {
         </Col>
         <Col className='text-end'>
           { isTokenExpired(token) ? 
-              <Link className='btn btn-secondary' to='/login'>Sign In</Link> : 
-              <Dropdown isOpen={isProfileDropdownOpen} toggle={toggleProfileDropdown}>
-                <DropdownToggle className='p-0 m-0 profile-button'>
-                  <CgProfile className='profile-icon' />
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/'>Profile</NavLink></DropdownItem>
-                  <DropdownItem className='p-0'><NavLink className='user-dropdown-link' onClick={logoutUser} href='/'>Logout</NavLink></DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
+            <Link className='btn btn-secondary' to='/login'>Sign In</Link> 
+            : 
+            <Dropdown isOpen={isProfileDropdownOpen} toggle={toggleProfileDropdown}>
+              <DropdownToggle className='p-0 m-0 profile-button'>
+                <CgProfile className='profile-icon' />
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/'>Profile</NavLink></DropdownItem>
+                <DropdownItem className='p-0'><NavLink className='user-dropdown-link' onClick={logoutUser} href='/'>Logout</NavLink></DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           }
         </Col>
       </Row>
