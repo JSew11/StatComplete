@@ -16,6 +16,7 @@ import axios from 'axios';
 import './index.css';
 
 const REGISTER_URL = 'register/';
+const MINIMUM_PASSWORD_LENGTH = 7;
 
 export default function Register() {
   const navigate = useNavigate();
@@ -41,6 +42,9 @@ export default function Register() {
 
   const validatePassword = (formErrors) => {
     if (password !== '' && confirmPassword !== '') {
+      if (password.length < MINIMUM_PASSWORD_LENGTH) {
+        formErrors.push(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
+      }
       if (password !== confirmPassword) {
         formErrors.push('Passwords must match.')
       }
@@ -103,13 +107,19 @@ export default function Register() {
 
   return (
     <Container className='p-2'>
-      <div>
-        <h2 className='p-1 m-1 text-center'>New StatComplete Account</h2>
-      </div>
-      <div ref={errorRef} className={errorMsg ? 'error-msg' : 'offscreen'}
-        aria-live='assertive'>
-          {errorMsg}
-      </div>
+      <Row>
+        <Col>
+          <h2 className='p-1 m-1 text-center'>New StatComplete Account</h2>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div ref={errorRef} className={errorMsg ? 'error-msg' : 'offscreen'}
+            aria-live='assertive'>
+              {errorMsg}
+          </div>
+        </Col>
+      </Row>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label for='usernameInput'>Username</Label>
@@ -173,9 +183,6 @@ export default function Register() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
           />
-          <FormFeedback>
-            These passwords must match.
-          </FormFeedback>
         </FormGroup>
         <Button type='submit' color='primary'>
           Register
