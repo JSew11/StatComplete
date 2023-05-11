@@ -8,9 +8,12 @@ import {
   Input,
   Label,
   Row,
-  Col
+  Col,
+  FormFeedback
 } from 'reactstrap';
 import axios from 'axios';
+
+import './index.css';
 
 const REGISTER_URL = 'register/';
 
@@ -36,8 +39,32 @@ export default function Register() {
     setErrorMsg('');
   }, [firstName, lastName, username, email, password, confirmPassword])
 
+  const validatePassword = (formErrors) => {
+    if (password !== '' && confirmPassword !== '') {
+      if (password !== confirmPassword) {
+        formErrors.push('Passwords must match.')
+      }
+    } else {
+      formErrors.push('Passwords cannot be empty.')
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let formErrors = [];
+    validatePassword(formErrors);
+
+    if (formErrors.length > 0) {
+      let errorStr = '';
+      formErrors.forEach((error) => {
+        errorStr += error + '\n';
+      })
+      setErrorMsg(errorStr);
+      errorRef.current.focus();
+      return;
+    }
+
     try {
       const response = await axios.post(
         REGISTER_URL,
@@ -79,7 +106,7 @@ export default function Register() {
       <div>
         <h2 className='p-1 m-1 text-center'>New StatComplete Account</h2>
       </div>
-      <div ref={errorRef} className={errorMsg ? 'errorMsg' : 'offscreen'}
+      <div ref={errorRef} className={errorMsg ? 'error-msg' : 'offscreen'}
         aria-live='assertive'>
           {errorMsg}
       </div>
@@ -136,7 +163,6 @@ export default function Register() {
             type='password'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            required
           />
         </FormGroup>
         <FormGroup>
@@ -146,8 +172,10 @@ export default function Register() {
             type='password'
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
-            required
           />
+          <FormFeedback>
+            These passwords must match.
+          </FormFeedback>
         </FormGroup>
         <Button type='submit' color='primary'>
           Register
