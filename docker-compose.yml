@@ -28,3 +28,16 @@ services:
       - SECRET_KEY=${SECRET_KEY}
     depends_on:
       - db
+  
+  client:
+    build: ./client
+    command: npm start
+    volumes:
+      - .:/code
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=${API_BASE_URL}
+    depends_on:
+      - app

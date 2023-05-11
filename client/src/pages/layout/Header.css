@@ -1,0 +1,36 @@
+.profile-button {
+    border-radius: 50%;
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.profile-button:hover,
+.profile-button:focus,
+.profile-button:active {
+    border-color: transparent;
+    background-color: #b1f2ff;
+}
+
+.profile-icon,
+.profile-icon:focus {
+    height: 40px;
+    width: 40px;
+    color: #192841;
+    background-color: transparent;
+    font-weight: lighter;
+}
+
+.user-dropdown-link:link,
+.user-dropdown-link:visited {
+    text-align: end;
+    margin-right: 10%;
+    color: black;
+}
+
+.user-dropdown-link:link:focus, 
+.user-dropdown-link:link:active {
+    text-align: end;
+    margin-right: 10%;
+    color: #013349;
+    background-color: #dadada;
+}
