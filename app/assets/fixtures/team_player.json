@@ -1,15 +1,17 @@
 [
 {
     "model": "baseball.teamplayer",
-    "pk": "5dec0a09-51b6-4824-81a3-254f92fbadd9",
+    "pk": "13fc42a3-c8b9-4d4e-afaf-dcf3f44712d9",
     "fields": {
         "deleted": null,
-        "created": "2023-03-21T07:00:00Z",
-        "updated": "2023-03-21T07:00:00Z",
+        "created": "2023-05-12T17:31:06.796Z",
+        "updated": "2023-05-12T17:31:06.796Z",
         "jersey_number": 1,
-        "joined_team": null,
+        "joined_team": "2023-05-12T17:31:06.774Z",
         "left_team": null,
-        "active": false,
+        "active": true,
+        "baserunning_stats": "7c307541-bb2c-4118-8e51-f0dbc4a1317e",
+        "pitching_stats": "9824b1b9-1a1d-4ad7-902b-377776a4fcdd",
         "player": "03c4f19c-0cf1-45e1-8115-a5ef8b5ebed6",
         "competition_team": "ff829ff9-e0c4-4ba3-8ee2-5a391fd257bc"
     }

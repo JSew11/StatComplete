@@ -1,3 +1,5 @@
+from datetime import datetime
+from typing import Any
 from uuid import uuid4
 from django.db import models
 from safedelete.models import SafeDeleteModel
@@ -8,12 +10,27 @@ from .player_baserunning_stats import PlayerBaserunningStats
 from .player_pitching_stats import PlayerPitchingStats
 from .competition_team import CompetitionTeam, validate_team_jersey_number
 
+class TeamPlayerManager (models.Manager):
+    """Manager for team player models.
+    """
+    def create(self, **kwargs: Any) -> Any:
+        """Overridden create method to create associated models.
+        """
+        team_player: TeamPlayer = super().create(**kwargs)
+        team_player.joined_team = datetime.now()
+        team_player.active = True
+        team_player.baserunning_stats = PlayerBaserunningStats.objects.create()
+        team_player.pitching_stats = PlayerPitchingStats.objects.create()
+        team_player.save()
+        return team_player
+
 class TeamPlayer (SafeDeleteModel):
-    """Mode for a baseball player's stats as a part of a specific team.
+    """Model for a baseball player's stats as a part of a specific team.
     
     Tracks the player's stats and time as a part of the associated team.
     Includes the related competition player and competition team.
     """
+    objects = TeamPlayerManager()
 
     deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE

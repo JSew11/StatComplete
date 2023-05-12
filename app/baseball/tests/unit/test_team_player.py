@@ -5,7 +5,9 @@ from baseball.models.team_player import TeamPlayer
 class TestTeamPlayerModel (TestCase):
     """Tests for the team player model.
     """
-    fixtures = ['organization', 'competition', 'team', 'competition_team', 'player', 'team_player']
+    fixtures = ['organization', 'competition', 'team', 'competition_team', 
+                'player', 'team_player', 'player_baserunning_stats',
+                'player_pitching_stats', 'player_pitching_stats_by_role']
 
     def setUp(self) -> None:
         self.test_team_player: TeamPlayer = TeamPlayer.objects.get(
@@ -23,7 +25,9 @@ class TestTeamPlayerModel (TestCase):
 class TestPlayerPitchingStatsModel (TestCase):
     """Tests for the player pitching stats model.
     """
-    fixtures = ['organization', 'competition', 'team', 'competition_team', 'player', 'team_player']
+    fixtures = ['organization', 'competition', 'team', 'competition_team', 
+                'player', 'team_player', 'player_baserunning_stats',
+                'player_pitching_stats', 'player_pitching_stats_by_role']
 
     def setUp(self) -> None:
         self.test_team_player: TeamPlayer = TeamPlayer.objects.get(
@@ -35,5 +39,4 @@ class TestPlayerPitchingStatsModel (TestCase):
     def test_games_started(self):
         """Test the games_started property of the player pitching stats model.
         """
-        # TODO: write this test
-        self.assertFalse(True)
+        self.assertEquals(7, self.test_team_player.pitching_stats.games_started)

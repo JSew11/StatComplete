@@ -164,7 +164,6 @@ class CompetitionViewSet (ModelViewSet):
                 'coach': coach_id,
                 'jersey_number': int(request.data.get('jersey_number')),
                 'role': int(request.data.get('role', TeamCoach.CoachRole.COACH)), # TODO: validate this to make sure it is a valid role
-                'active': True
             }
             serializer = TeamCoachSerializer(data=team_coach_data)
             if serializer.is_valid():
@@ -241,7 +240,6 @@ class CompetitionViewSet (ModelViewSet):
                 'competition_team': competition_team.id,
                 'player': player_id,
                 'jersey_number': int(request.data.get('jersey_number')),
-                'active': True
             }
             serializer = TeamPlayerSerializer(data=team_player_data)
             if serializer.is_valid():

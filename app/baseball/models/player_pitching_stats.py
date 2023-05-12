@@ -1,13 +1,27 @@
+from typing import Any
 from uuid import uuid4
 from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
+
+class PlayerPitchingStatsManager (models.Manager):
+    """Manager for player pitching stats models.
+    """
+    def create(self, **kwargs: Any) -> Any:
+        """Overridden create method to create associated models.
+        """
+        player_pitchinig_stats: PlayerPitchingStats = super().create(**kwargs)
+        player_pitchinig_stats.stats_by_role.create(role=0)
+        player_pitchinig_stats.stats_by_role.create(role=1)
+        player_pitchinig_stats.save()
+        return player_pitchinig_stats
 
 class PlayerPitchingStats(SafeDeleteModel):
     """Model for an individual player's pitching stats.
     
     Tracks standard counted pitching stats for a player, separated by role.
     """
+    objects = PlayerPitchingStatsManager()
 
     class Meta:
         ordering = ['created']
@@ -31,4 +45,4 @@ class PlayerPitchingStats(SafeDeleteModel):
 
     @property
     def games_started(self):
-        return self.stats_by_role.filter(role=0).aggregate(models.Sum('games_pitched'))
+        return self.stats_by_role.filter(role=0).aggregate(models.Sum('games_pitched'))['games_pitched__sum']

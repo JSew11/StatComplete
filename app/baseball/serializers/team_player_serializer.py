@@ -22,12 +22,3 @@ class TeamPlayerSerializer (serializers.ModelSerializer):
         exclude = ['created', 'updated', 'deleted']
         read_only = ['id']
     
-    def create(self, validated_data):
-        """Overwritten create method to instantiate stats models when creating
-        a new team player model.
-        """
-        validated_data['joined_team'] = datetime.now()
-        validated_data['baserunning_stats'] = PlayerBaserunningStats().save()
-        validated_data['pitching_stats'] = PlayerPitchingStats().save()
-        # TODO: make new stats models here
-        return super().create(validated_data)
