@@ -1,27 +1,15 @@
 from typing import Any
 from uuid import uuid4
 from django.db import models
+from django.core.exceptions import ValidationError
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
-
-class PlayerPitchingStatsManager (models.Manager):
-    """Manager for player pitching stats models.
-    """
-    def create(self, **kwargs: Any) -> Any:
-        """Overridden create method to create associated models.
-        """
-        player_pitching_stats: PlayerPitchingStats = super().create(**kwargs)
-        player_pitching_stats.stats_by_role.create(role=0)
-        player_pitching_stats.stats_by_role.create(role=1)
-        player_pitching_stats.save()
-        return player_pitching_stats
 
 class PlayerPitchingStats(SafeDeleteModel):
     """Model for an individual player's pitching stats.
     
     Tracks standard counted pitching stats for a player, separated by role.
     """
-    objects = PlayerPitchingStatsManager()
 
     class Meta:
         ordering = ['created']
@@ -46,3 +34,23 @@ class PlayerPitchingStats(SafeDeleteModel):
     @property
     def games_started(self):
         return self.stats_by_role.filter(role=0).first().games_pitched
+    
+    def update_stats_by_role(self, role: int, stats: dict, **kwargs: Any) -> Any:
+        """Update the player's pitching stats for a specific role by adding the
+        given value to the current stat value.
+        """
+        try:
+            pitching_stats_by_role, _ = self.stats_by_role.get_or_create(role=role)
+            for name, stat in stats.items():
+                try :
+                    prev_val = getattr(pitching_stats_by_role, name)
+                    setattr(pitching_stats_by_role, name, (prev_val+stat))
+                except Exception:
+                    continue
+            pitching_stats_by_role.save()
+        except ValidationError:
+            raise ValidationError('Invalid Role')
+
+    def save(self, keep_deleted=False, **kwargs):
+        self.full_clean()
+        return super().save(keep_deleted, **kwargs)

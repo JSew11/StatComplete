@@ -39,4 +39,16 @@ class TestPlayerPitchingStatsModel (TestCase):
     def test_games_started(self):
         """Test the games_started property of the player pitching stats model.
         """
-        self.assertEquals(7, self.test_team_player.pitching_stats.games_started)
+        self.assertEqual(7, self.test_team_player.pitching_stats.games_started)
+    
+    def test_update_stats_by_role(self):
+        """Test the 'update_stats_by_role' method of the player pitching stats manager.
+        """
+        stat_updates = {
+            'games_played': 9,
+            'games_pitched': 2,
+            'losses': 1,
+            'no-decisions': 3
+        }
+        self.test_team_player.pitching_stats.update_stats_by_role(0, stat_updates)
+        self.assertEqual(9, self.test_team_player.pitching_stats.games_started)
