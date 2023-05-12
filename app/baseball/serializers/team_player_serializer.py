@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework import serializers
 
 from ..models.team_player import TeamPlayer
@@ -18,3 +19,4 @@ class TeamPlayerSerializer (serializers.ModelSerializer):
         model = TeamPlayer
         exclude = ['created', 'updated', 'deleted']
         read_only = ['id']
+    

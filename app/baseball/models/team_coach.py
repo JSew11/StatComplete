@@ -1,3 +1,5 @@
+from datetime import datetime
+from typing import Any
 from uuid import uuid4
 from django.db import models
 from safedelete.models import SafeDeleteModel
@@ -5,6 +7,16 @@ from safedelete import SOFT_DELETE_CASCADE
 
 from .coach import Coach
 from .competition_team import CompetitionTeam, validate_team_jersey_number
+
+class TeamCoachManager (models.Manager):
+    """Manager for team coach models.
+    """
+    def create(self, **kwargs: Any) -> Any:
+        """Overridden create method"""
+        team_coach: TeamCoach = super().create(**kwargs)
+        team_coach.joined_team = datetime.now()
+        team_coach.active = True
+        return team_coach
 
 class TeamCoach (SafeDeleteModel):
     """Model for a baseball coach's stats as a part of a specific team.
@@ -40,8 +52,8 @@ class TeamCoach (SafeDeleteModel):
         choices=CoachRole.choices,
         default=CoachRole.COACH
     )
-    joined_team = models.DateField(blank=True, null=True)
-    left_team = models.DateField(blank=True, null=True)
+    joined_team = models.DateTimeField(blank=True, null=True)
+    left_team = models.DateTimeField(blank=True, null=True)
     active = models.BooleanField(default=False)
 
     # related models

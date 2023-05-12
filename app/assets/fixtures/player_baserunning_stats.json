@@ -1,0 +1,30 @@
+[
+{
+    "model": "baseball.playerbaserunningstats",
+    "pk": "7c307541-bb2c-4118-8e51-f0dbc4a1317e",
+    "fields": {
+        "deleted": null,
+        "created": "2023-05-12T17:31:06.774Z",
+        "updated": "2023-05-12T17:31:06.774Z",
+        "games_pinch_run": 0,
+        "picked_off_first": 0,
+        "pickoff_attempts_first": 0,
+        "picked_off_second": 0,
+        "pickoff_attempts_second": 0,
+        "steals_second": 0,
+        "caught_stealing_second": 0,
+        "advanced_to_second": 0,
+        "thrown_out_at_second": 0,
+        "picked_off_third": 0,
+        "pickoff_attempts_third": 0,
+        "advanced_to_third": 0,
+        "thrown_out_at_third": 0,
+        "steals_third": 0,
+        "caught_stealing_third": 0,
+        "runs_scored": 0,
+        "thrown_out_at_home": 0,
+        "steals_home": 0,
+        "caught_stealing_home": 0
+    }
+}
+]
