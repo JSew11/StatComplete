@@ -167,3 +167,7 @@ class PlayerPitchingStatsByRole(SafeDeleteModel):
     @property
     def strikeouts(self):
         return self.strikeouts_looking + self.strikeouts_swinging
+    
+    def save(self, keep_deleted=False, **kwargs):
+        self.full_clean()
+        return super().save(keep_deleted, **kwargs)

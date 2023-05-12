@@ -35,7 +35,7 @@ class PlayerPitchingStats(SafeDeleteModel):
     def games_started(self):
         return self.stats_by_role.filter(role=0).first().games_pitched
     
-    def update_stats_by_role(self, role: int, stats: dict, **kwargs: Any) -> Any:
+    def update_stats_by_role(self, role: int, stats: dict, **kwargs: Any) -> bool:
         """Update the player's pitching stats for a specific role by adding the
         given value to the current stat value.
         """
@@ -48,9 +48,6 @@ class PlayerPitchingStats(SafeDeleteModel):
                 except Exception:
                     continue
             pitching_stats_by_role.save()
+            return True
         except ValidationError:
-            raise ValidationError('Invalid Role')
-
-    def save(self, keep_deleted=False, **kwargs):
-        self.full_clean()
-        return super().save(keep_deleted, **kwargs)
+            return False

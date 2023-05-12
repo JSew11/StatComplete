@@ -50,5 +50,11 @@ class TestPlayerPitchingStatsModel (TestCase):
             'losses': 1,
             'no-decisions': 3
         }
-        self.test_team_player.pitching_stats.update_stats_by_role(0, stat_updates)
+        # invlid role
+        updated = self.test_team_player.pitching_stats.update_stats_by_role(-1, stat_updates)
+        self.assertFalse(updated)
+
+        # valid role
+        updated = self.test_team_player.pitching_stats.update_stats_by_role(0, stat_updates)
+        self.assertTrue(updated)
         self.assertEqual(9, self.test_team_player.pitching_stats.games_started)
