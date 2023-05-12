@@ -40,8 +40,8 @@ class TeamCoach (SafeDeleteModel):
         choices=CoachRole.choices,
         default=CoachRole.COACH
     )
-    joined_team = models.DateField(blank=True, null=True)
-    left_team = models.DateField(blank=True, null=True)
+    joined_team = models.DateTimeField(blank=True, null=True)
+    left_team = models.DateTimeField(blank=True, null=True)
     active = models.BooleanField(default=False)
 
     # related models

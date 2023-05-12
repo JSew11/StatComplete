@@ -27,7 +27,7 @@ class TeamPlayerSerializer (serializers.ModelSerializer):
         a new team player model.
         """
         validated_data['joined_team'] = datetime.now()
-        validated_data['baserunning_stats'] = PlayerBaserunningStats()
-        validated_data['pitching_stats'] = PlayerPitchingStats()
+        validated_data['baserunning_stats'] = PlayerBaserunningStats().save()
+        validated_data['pitching_stats'] = PlayerPitchingStats().save()
         # TODO: make new stats models here
         return super().create(validated_data)

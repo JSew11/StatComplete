@@ -30,8 +30,8 @@ class TeamPlayer (SafeDeleteModel):
 
     # team-specific info
     jersey_number = models.PositiveSmallIntegerField(null=True, validators=[validate_team_jersey_number])
-    joined_team = models.DateField(blank=True, null=True)
-    left_team = models.DateField(blank=True, null=True)
+    joined_team = models.DateTimeField(blank=True, null=True)
+    left_team = models.DateTimeField(blank=True, null=True)
     active = models.BooleanField(default=False)
 
     # stats
