@@ -6,6 +6,7 @@ from rest_framework import status
 from baseball.models.organization import Organization
 from baseball.models.competition import Competition
 from baseball.models.team import Team
+from baseball.models.competition_team import CompetitionTeam
 from baseball.models.coach import Coach
 
 class TestCompetitionDetailsApi (APITestCase):
@@ -52,6 +53,28 @@ class TestCompetitionListApi (APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
 
+class TestCompetitionTeamListApi (APITestCase):
+    """Tests for competition team endpoints defined in the CompetitionViewset.
+    """
+    fixtures = ['user', 'organization', 'competition', 'team', 'competition_team']
+
+    def setUp(self) -> None:
+        """Set up necessary objects for testing.
+        """
+        self.test_competition: Competition = Competition.objects.get(name='Test Season')
+        self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
+        return super().setUp()
+    
+    def test_list_teams(self):
+        """Test the GET endpoint for viewing the competition's list of registered teams.
+        """
+        response = self.client.get(f'/api/baseball/competitions/{self.test_competition.id}/teams/')
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(2, len(response.data))
+
 class TestCompetitionTeamApi (APITestCase):
     """Tests for competition team endpoints defined in the CompetitionViewset.
     """
@@ -62,17 +85,26 @@ class TestCompetitionTeamApi (APITestCase):
         """
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
         self.test_team: Team = Team.objects.get(location='Test', name='Team')
+        self.test_competition_team: CompetitionTeam = CompetitionTeam.objects.get(competition=self.test_competition, team=self.test_team)
         self.client = APIClient()
         user = User.objects.get(username='DeveloperAdmin')
         self.client.force_authenticate(user)
         return super().setUp()
-    
+
     def test_register_team(self):
         """Test the POST endpoint for registering a team for a competition.
         """
         response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/')
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+    def test_retrieve_team(self):
+        """Test the GET endpoint for getting the details of a specific competition team.
+        """
+        response = self.client.get(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/')
+
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(str(self.test_competition_team.id), response.data.get('id'))
     
     def test_update_competition_team_record(self):
         """Test the PATCH endpoint for updating a competition team's record.

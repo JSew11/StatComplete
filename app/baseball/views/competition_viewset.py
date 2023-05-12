@@ -44,6 +44,22 @@ class CompetitionViewSet (ModelViewSet):
             )
     
     # competition team endpoints
+    def list_teams(self, request: Request, competition_id: str, *args, **kwargs) -> Response:
+        """View all the teams participating in the given competition.
+        """
+        try:
+            competition: Competition = Competition.objects.get(id=competition_id)
+            serializer = CompetitionTeamSerializer(competition.teams, many=True)
+            return Response(
+                data=serializer.data,
+                status=status.HTTP_200_OK
+            )
+        except Competition.DoesNotExist:
+            return Response(
+                data={'status':f'Competition with id \'{competition_id}\' not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
     def register_team(self, request: Request, competition_id: str, team_id: str, *args, **kwargs) -> Response:
         """Create a competition team for the given competition and team.
         """
@@ -62,6 +78,22 @@ class CompetitionViewSet (ModelViewSet):
             return Response(
                 data=serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
+            )
+        
+    def retrieve_team(self, request: Request, competition_id: str, team_id: str, *args, **kwargs) -> Response:
+        """Get the details of a specific competition team.
+        """
+        try:
+            competition_team: CompetitionTeam = CompetitionTeam.objects.get(competition=competition_id, team=team_id)
+            serializer : CompetitionTeamSerializer = CompetitionTeamSerializer(competition_team)
+            return Response(
+                data=serializer.data,
+                status=status.HTTP_200_OK
+            )
+        except CompetitionTeam.DoesNotExist:
+            return Response(
+                data={'status': f'No team with the id \'{team_id}\' is registered for the competition with the id \'{competition_id}\''},
+                status=status.HTTP_404_NOT_FOUND,
             )
     
     def update_team_record(self, request: Request, competition_id: str, team_id: str, *args, **kwargs) -> Response:
