@@ -11,6 +11,8 @@ from .models.team_player import TeamPlayer
 from .models.player_baserunning_stats import PlayerBaserunningStats
 from .models.player_pitching_stats import PlayerPitchingStats
 from .models.player_pitching_stats_by_role import PlayerPitchingStatsByRole
+from .models.player_fielding_stats import PlayerFieldingStats
+from .models.player_fielding_stats_by_position import PlayerFieldingStatsByPosition
 from .models.game import Game
 from .models.team_box_score import TeamBoxScore
 

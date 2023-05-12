@@ -8,6 +8,7 @@ from safedelete import SOFT_DELETE_CASCADE
 from .player import Player
 from .player_baserunning_stats import PlayerBaserunningStats
 from .player_pitching_stats import PlayerPitchingStats
+from .player_fielding_stats import PlayerFieldingStats
 from .competition_team import CompetitionTeam, validate_team_jersey_number
 
 class TeamPlayerManager (models.Manager):
@@ -53,9 +54,9 @@ class TeamPlayer (SafeDeleteModel):
 
     # stats
     batting_stats = None
-    baserunning_stats = models.OneToOneField(PlayerBaserunningStats, on_delete=models.CASCADE, null=True, related_name='team_player')
-    pitching_stats = models.OneToOneField(PlayerPitchingStats, on_delete=models.CASCADE, null=True, related_name='team_player')
-    fielding_stats = None
+    baserunning_stats = models.OneToOneField(PlayerBaserunningStats, on_delete=models.SET_NULL, null=True, related_name='team_player')
+    pitching_stats = models.OneToOneField(PlayerPitchingStats, on_delete=models.SET_NULL, null=True, related_name='team_player')
+    fielding_stats = models.OneToOneField(PlayerFieldingStats, on_delete=models.SET_NULL, null=True, related_name='team_player')
 
     # related models
     player = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
