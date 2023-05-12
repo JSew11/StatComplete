@@ -45,4 +45,4 @@ class PlayerPitchingStats(SafeDeleteModel):
 
     @property
     def games_started(self):
-        return self.stats_by_role.filter(role=0).aggregate(models.Sum('games_pitched'))['games_pitched__sum']
+        return self.stats_by_role.filter(role=0).first().games_pitched
