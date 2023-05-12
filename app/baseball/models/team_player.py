@@ -22,6 +22,7 @@ class TeamPlayerManager (models.Manager):
         team_player.active = True
         team_player.baserunning_stats = PlayerBaserunningStats.objects.create()
         team_player.pitching_stats = PlayerPitchingStats.objects.create()
+        team_player.fielding_stats = PlayerFieldingStats.objects.create()
         team_player.save()
         return team_player
 

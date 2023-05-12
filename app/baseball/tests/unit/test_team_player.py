@@ -58,3 +58,10 @@ class TestPlayerPitchingStatsModel (TestCase):
         updated = self.test_team_player.pitching_stats.update_stats_by_role(0, stat_updates)
         self.assertTrue(updated)
         self.assertEqual(9, self.test_team_player.pitching_stats.games_started)
+
+class TestPlayerFieldingStatsModel (TestCase):
+    """Tests for the player fielding stats model.
+    """
+    fixtures = ['organization', 'competition', 'team', 'competition_team', 
+                'player', 'team_player', 'player_baserunning_stats',
+                'player_pitching_stats', 'player_pitching_stats_by_role']

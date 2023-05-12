@@ -1,23 +1,15 @@
 from typing import Any
 from uuid import uuid4
 from django.db import models
+from django.core.exceptions import ValidationError
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
-
-class PlayerFieldingStatsManager (models.Manager):
-    """Manager for player fielding stats models.
-    """
-    def create(self, **kwargs: Any) -> Any:
-        """Overridden create method to create associated models.
-        """
-        return super().create(**kwargs)
 
 class PlayerFieldingStats (SafeDeleteModel):
     """Model for an individual player's fielding stats.
     
     Tracks standard counted fielding stats, separated by position.
     """
-    objects = PlayerFieldingStatsManager()
 
     class Meta:
         ordering = ['created']
@@ -31,3 +23,20 @@ class PlayerFieldingStats (SafeDeleteModel):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+        
+    def update_stats_by_position(self, position: int, stats: dict, **kwargs: Any) -> bool:
+        """Update the player's fielding stats for a specific position by adding the
+        given value to the current stat value.
+        """
+        try:
+            fielding_stats_by_position, _ = self.stats_by_position.get_or_create(position=position)
+            for name, stat in stats.items():
+                try :
+                    prev_val = getattr(fielding_stats_by_position, name)
+                    setattr(fielding_stats_by_position, name, (prev_val+stat))
+                except Exception:
+                    continue
+            fielding_stats_by_position.save()
+            return True
+        except ValidationError:
+            return False

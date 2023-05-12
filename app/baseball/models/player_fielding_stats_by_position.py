@@ -63,3 +63,7 @@ class PlayerFieldingStatsByPosition (SafeDeleteModel):
     pickoffs = models.PositiveIntegerField(default=0)
     pickoff_attempts = models.PositiveIntegerField(default=0)
     passed_balls = models.PositiveIntegerField(default=0)
+
+    def save(self, keep_deleted=False, **kwargs):
+        self.full_clean()
+        return super().save(keep_deleted, **kwargs)

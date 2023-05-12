@@ -3,8 +3,6 @@ from rest_framework import serializers
 
 from ..models.team_player import TeamPlayer
 from ..models.player_game_stats import PlayerGameStats
-from ..models.player_baserunning_stats import PlayerBaserunningStats
-from ..models.player_pitching_stats import PlayerPitchingStats
 
 class StatsByGameField (serializers.RelatedField):
     """Custom relational field for a team player's stats by game.
