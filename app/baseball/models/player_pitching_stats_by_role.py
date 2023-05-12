@@ -8,7 +8,7 @@ from .player_pitching_stats import PlayerPitchingStats
 class PlayerPitchingStatsByRole(SafeDeleteModel):
     """Model for an individual player's pitching stats for an individual role.
     
-    Tracks pitching stats for a player pitching in a certain role.
+    Tracks counted pitching stats for a player pitching in a certain role.
     """
 
     class PitcherRole(models.IntegerChoices):
@@ -153,6 +153,7 @@ class PlayerPitchingStatsByRole(SafeDeleteModel):
     earned_runs = models.PositiveIntegerField(default=0)
     balks = models.PositiveIntegerField(default=0)
     wild_pitches = models.PositiveIntegerField(default=0)
+    outs_pitched = models.PositiveIntegerField(default=0) # pickoffs/caught stealings count here too (these are tracked in fielding)
 
     # cumulative stats
     @property
@@ -166,7 +167,3 @@ class PlayerPitchingStatsByRole(SafeDeleteModel):
     @property
     def strikeouts(self):
         return self.strikeouts_looking + self.strikeouts_swinging
-
-    @property
-    def outs_pitched(self):
-        return self.strikeouts + self.ground_outs_forced + self.line_outs_forced + self.fly_outs_forced + self.pop_outs_forced

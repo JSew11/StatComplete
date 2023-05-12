@@ -10,11 +10,11 @@ class PlayerPitchingStatsManager (models.Manager):
     def create(self, **kwargs: Any) -> Any:
         """Overridden create method to create associated models.
         """
-        player_pitchinig_stats: PlayerPitchingStats = super().create(**kwargs)
-        player_pitchinig_stats.stats_by_role.create(role=0)
-        player_pitchinig_stats.stats_by_role.create(role=1)
-        player_pitchinig_stats.save()
-        return player_pitchinig_stats
+        player_pitching_stats: PlayerPitchingStats = super().create(**kwargs)
+        player_pitching_stats.stats_by_role.create(role=0)
+        player_pitching_stats.stats_by_role.create(role=1)
+        player_pitching_stats.save()
+        return player_pitching_stats
 
 class PlayerPitchingStats(SafeDeleteModel):
     """Model for an individual player's pitching stats.
