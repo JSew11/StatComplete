@@ -6,7 +6,7 @@ from safedelete import SOFT_DELETE_CASCADE
 from .player_fielding_stats import PlayerFieldingStats
 
 class PlayerFieldingStatsByPosition (SafeDeleteModel):
-    """Model for an individual player's fielding stats for an individual position.
+    """Model for an individual player's fielding stats for a single position.
     
     Tracks counted fielding stats for a player playing a certain fielding position.
     """

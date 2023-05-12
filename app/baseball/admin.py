@@ -8,6 +8,8 @@ from .models.coach import Coach
 from .models.team_coach import TeamCoach
 from .models.player import Player
 from .models.team_player import TeamPlayer
+from .models.player_batting_stats import PlayerBattingStats
+from .models.player_batting_stats_by_lineup_spot import PlayerBattingStatsByLineupSpot
 from .models.player_baserunning_stats import PlayerBaserunningStats
 from .models.player_pitching_stats import PlayerPitchingStats
 from .models.player_pitching_stats_by_role import PlayerPitchingStatsByRole

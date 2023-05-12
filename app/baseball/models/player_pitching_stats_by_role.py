@@ -6,7 +6,7 @@ from safedelete import SOFT_DELETE_CASCADE
 from .player_pitching_stats import PlayerPitchingStats
 
 class PlayerPitchingStatsByRole(SafeDeleteModel):
-    """Model for an individual player's pitching stats for an individual role.
+    """Model for an individual player's pitching stats for a single role.
     
     Tracks counted pitching stats for a player pitching in a certain role.
     """

@@ -6,6 +6,7 @@ from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
 from .player import Player
+from .player_batting_stats import PlayerBattingStats
 from .player_baserunning_stats import PlayerBaserunningStats
 from .player_pitching_stats import PlayerPitchingStats
 from .player_fielding_stats import PlayerFieldingStats
@@ -20,6 +21,7 @@ class TeamPlayerManager (models.Manager):
         team_player: TeamPlayer = super().create(**kwargs)
         team_player.joined_team = datetime.now()
         team_player.active = True
+        team_player.batting_stats = PlayerBattingStats.objects.create()
         team_player.baserunning_stats = PlayerBaserunningStats.objects.create()
         team_player.pitching_stats = PlayerPitchingStats.objects.create()
         team_player.fielding_stats = PlayerFieldingStats.objects.create()
@@ -54,7 +56,7 @@ class TeamPlayer (SafeDeleteModel):
     active = models.BooleanField(default=False)
 
     # stats
-    batting_stats = None
+    batting_stats = models.OneToOneField(PlayerBattingStats, on_delete=models.SET_NULL, null=True, related_name='team_player')
     baserunning_stats = models.OneToOneField(PlayerBaserunningStats, on_delete=models.SET_NULL, null=True, related_name='team_player')
     pitching_stats = models.OneToOneField(PlayerPitchingStats, on_delete=models.SET_NULL, null=True, related_name='team_player')
     fielding_stats = models.OneToOneField(PlayerFieldingStats, on_delete=models.SET_NULL, null=True, related_name='team_player')
