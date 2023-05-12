@@ -19,3 +19,21 @@ class TestTeamPlayerModel (TestCase):
         """
         player_string_representation = str(self.test_team_player.player)+f' #{self.test_team_player.jersey_number}'
         self.assertEqual(player_string_representation, str(self.test_team_player))
+
+class TestPlayerPitchingStatsModel (TestCase):
+    """Tests for the player pitching stats model.
+    """
+    fixtures = ['organization', 'competition', 'team', 'competition_team', 'player', 'team_player']
+
+    def setUp(self) -> None:
+        self.test_team_player: TeamPlayer = TeamPlayer.objects.get(
+            player__first_name='Test',
+            player__last_name='Player'
+        )
+        return super().setUp()
+    
+    def test_games_started(self):
+        """Test the games_started property of the player pitching stats model.
+        """
+        # TODO: write this test
+        self.assertFalse(True)

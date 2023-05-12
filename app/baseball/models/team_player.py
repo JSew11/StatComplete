@@ -4,6 +4,8 @@ from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
 from .player import Player
+from .player_baserunning_stats import PlayerBaserunningStats
+from .player_pitching_stats import PlayerPitchingStats
 from .competition_team import CompetitionTeam, validate_team_jersey_number
 
 class TeamPlayer (SafeDeleteModel):
@@ -28,13 +30,15 @@ class TeamPlayer (SafeDeleteModel):
 
     # team-specific info
     jersey_number = models.PositiveSmallIntegerField(null=True, validators=[validate_team_jersey_number])
-    batting_totals = models.JSONField(default=dict)
-    fielding_totals = models.JSONField(default=dict)
-    pitching_totals = models.JSONField(default=dict)
-    baserunning_totals = models.JSONField(default=dict)
     joined_team = models.DateField(blank=True, null=True)
     left_team = models.DateField(blank=True, null=True)
     active = models.BooleanField(default=False)
+
+    # stats
+    batting_stats = None
+    baserunning_stats = models.OneToOneField(PlayerBaserunningStats, on_delete=models.CASCADE, null=True, related_name='team_player')
+    pitching_stats = models.OneToOneField(PlayerPitchingStats, on_delete=models.CASCADE, null=True, related_name='team_player')
+    fielding_stats = None
 
     # related models
     player = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
