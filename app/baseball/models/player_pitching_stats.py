@@ -35,6 +35,14 @@ class PlayerPitchingStats(SafeDeleteModel):
     def games_started(self):
         return self.stats_by_role.filter(role=0).first().games_pitched
     
+    # total stats
+    def wins(self, role=-1):
+        """Get the wins a pitcher has. Use the given role if valid, if not get the
+        total.
+        """
+        role_stats = self.stats_by_role.filter(role=role).first()
+        return role_stats.wins if role_stats else self.stats_by_role.all().aggregate(models.Sum('wins'))['wins__sum']
+
     def update_stats_by_role(self, role: int, stats: dict, **kwargs: Any) -> bool:
         """Update the player's pitching stats for a specific role by adding the
         given value to the current stat value.

@@ -36,6 +36,13 @@ class TestPlayerPitchingStatsModel (TestCase):
         )
         return super().setUp()
     
+    def test_wins(self):
+        """Test the wins method of the player pitching stats model.
+        """
+        self.assertEqual(4, self.test_team_player.pitching_stats.wins())
+        self.assertEqual(3, self.test_team_player.pitching_stats.wins(0))
+        self.assertEqual(1, self.test_team_player.pitching_stats.wins(1))
+    
     def test_games_started(self):
         """Test the games_started property of the player pitching stats model.
         """
