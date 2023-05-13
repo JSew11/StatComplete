@@ -25,8 +25,8 @@ class PlayerBattingStatsByLineupSpot(SafeDeleteModel):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    # fielding stats model
-    batting_stats = models.ForeignKey(PlayerBattingStats, on_delete=models.CASCADE, related_name='stats_by_position')
+    # batting stats model
+    batting_stats = models.ForeignKey(PlayerBattingStats, on_delete=models.CASCADE, related_name='stats_by_lineup_spot')
 
     # lineup spot
     lineup_spot = models.PositiveSmallIntegerField()
@@ -84,88 +84,6 @@ class PlayerBattingStatsByLineupSpot(SafeDeleteModel):
 
     double_plays_vs_right = models.PositiveIntegerField(default=0)
     double_plays_vs_left = models.PositiveIntegerField(default=0)
-
-    # combined stats (matchup vs right + matchup vs left)
-    @property
-    def singles(self):
-        return self.singles_vs_right + self.singles_vs_left
-    
-    @property
-    def doubles(self):
-        return self.doubles_vs_right + self.doubles_vs_left
-    
-    @property
-    def triples(self):
-        return self.triples_vs_right + self.triples_vs_left
-    
-    @property
-    def home_runs(self):
-        return self.home_runs_vs_right + self.home_runs_vs_left
-    
-    @property
-    def runs_batted_in(self):
-        return self.runs_batted_in_vs_right + self.runs_batted_in_vs_left
-    
-    @property
-    def walks(self):
-        return self.walks_vs_right + self.walks_vs_left
-    
-    @property
-    def intentional_walks(self):
-        return self.intentional_walks_vs_right + self.intentional_walks_vs_left
-    
-    @property
-    def hit_by_pitch(self):
-        return self.hit_by_pitch_vs_right + self.hit_by_pitch_vs_left
-    
-    @property
-    def sac_bunts(self):
-        return self.sac_bunts_vs_right + self.sac_bunts_vs_left
-    
-    @property
-    def sac_hits(self):
-        return self.sac_hits_vs_right + self.sac_hits_vs_left
-    
-    @property
-    def sac_flies(self):
-        return self.sac_flies_vs_right + self.sac_flies_vs_left
-    
-    @property
-    def fielders_choice(self):
-        return self.fielders_choice_vs_right + self.fielders_choice_vs_left
-    
-    @property
-    def ground_outs(self):
-        return self.ground_outs_vs_right + self.ground_outs_vs_left
-    
-    @property
-    def line_outs(self):
-        return self.line_outs_vs_right + self.line_outs_vs_left
-    
-    @property
-    def fly_outs(self):
-        return self.fly_outs_vs_right + self.fly_outs_vs_left
-    
-    @property
-    def pop_outs(self):
-        return self.pop_outs_vs_right + self.pop_outs_vs_left
-    
-    @property
-    def strikeouts_swinging(self):
-        return self.strikeouts_swinging_vs_right + self.strikeouts_swinging_vs_left
-    
-    @property
-    def strikeouts_looking(self):
-        return self.strikeouts_looking_vs_right + self.strikeouts_looking_vs_left
-    
-    @property
-    def double_plays(self):
-        return self.double_plays_vs_right + self.double_plays_vs_left
-    
-    # cumulative stats
-    @property
-    def hits(self):
-        return self.singles + self.doubles + self.triples + self.home_runs
 
     def save(self, keep_deleted=False, **kwargs):
         self.full_clean()

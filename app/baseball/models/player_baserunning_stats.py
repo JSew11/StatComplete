@@ -50,7 +50,7 @@ class PlayerBaserunningStats(SafeDeleteModel):
     caught_stealing_home_plate = models.PositiveIntegerField(default=0)
 
     # standard accumulated stats (less specific/more commonly used totals)
-    def picked_off(self, base: str = ''):
+    def picked_off(self, base: str = '') -> int:
         if base == FIRST_BASE:
             return self.picked_off_first_base
         if base == SECOND_BASE:
@@ -59,7 +59,7 @@ class PlayerBaserunningStats(SafeDeleteModel):
             return self.picked_off_third_base
         return self.picked_off_first_base + self.picked_off_second_base + self.picked_off_third_base
     
-    def pickoff_attempts(self, base: str = ''):
+    def pickoff_attempts(self, base: str = '') -> int:
         if base == FIRST_BASE:
             return self.pickoff_attempts_first_base
         if base == SECOND_BASE:
@@ -68,7 +68,7 @@ class PlayerBaserunningStats(SafeDeleteModel):
             return self.pickoff_attempts_third_base
         return self.pickoff_attempts_first_base + self.pickoff_attempts_second_base + self.pickoff_attempts_third_base
     
-    def steals(self, base: str = ''):
+    def steals(self, base: str = '') -> int:
         if base == SECOND_BASE:
             return self.steals_second_base
         if base == THIRD_BASE:
@@ -77,7 +77,7 @@ class PlayerBaserunningStats(SafeDeleteModel):
             return self.steals_home_plate
         return self.steals_second_base + self.steals_third_base + self.steals_home_plate
     
-    def caught_stealing(self, base: str = ''):
+    def caught_stealing(self, base: str = '') -> int:
         if base == SECOND_BASE:
             return self.caught_stealing_second_base
         if base == THIRD_BASE:
@@ -86,7 +86,7 @@ class PlayerBaserunningStats(SafeDeleteModel):
             return self.caught_stealing_home_plate
         return self.caught_stealing_second_base + self.caught_stealing_third_base + self.caught_stealing_home_plate
     
-    def bases_advanced(self, base: str = ''):
+    def bases_advanced(self, base: str = '') -> int:
         if base == SECOND_BASE:
             return self.advanced_to_second_base
         if base == THIRD_BASE:
@@ -95,7 +95,7 @@ class PlayerBaserunningStats(SafeDeleteModel):
             return self.runs_scored
         return self.advanced_to_second_base + self.advanced_to_third_base + self.runs_scored
     
-    def thrown_out(self, base: str = ''):
+    def thrown_out(self, base: str = '') -> int:
         if base == SECOND_BASE:
             return self.thrown_out_at_second_base
         if base == THIRD_BASE:
