@@ -65,6 +65,73 @@ class TeamPlayer (SafeDeleteModel):
     player = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
     competition_team = models.ForeignKey(CompetitionTeam, on_delete=models.SET_NULL, null=True, related_name='roster')
 
+    def update_stats(self, stats: dict):
+        """Update the player's stats using the given stats data.
+
+        stats JSON structure:
+        {
+            "batting": {
+                "stats_by_lineup_spot": {
+                    "1": {...},
+                    "2": {...},
+                    ...
+                }
+            },
+            "baserunning": {...},
+            "pitching": {
+                ...,
+                "stats_by_role": {
+                    "0": {...},
+                    "1": {...}
+                }
+            },
+            "fielding": {
+                "stats_by_position": {
+                    "1": {...},
+                    "2": {...},
+                    ...
+                    "9": {...}
+                }
+            }
+        }
+        """
+        # update batting stats
+        batting_stats: dict = stats['batting']
+        batting_stats_by_lineup_spot: dict = batting_stats.pop('stats_by_lineup_spot', dict())
+        for lineup_spot, stats_by_lineup_spot in batting_stats_by_lineup_spot.items():
+            self.batting_stats.update_stats_by_lineup_spot(lineup_spot, stats_by_lineup_spot)
+        self.batting_stats.save()
+
+        # update baserunning stats
+        baserunning_stats: dict = stats['baserunning']
+        for name, stat in baserunning_stats.items():
+            try:
+                prev_val = getattr(self.baserunning_stats, name)
+                setattr(self.baserunning_stats, name, (prev_val+stat))
+            except Exception:
+                continue
+        self.baserunning_stats.save()
+
+        # update pitching stats
+        pitching_stats: dict = stats['pitching']
+        pitching_stats_by_role: dict = pitching_stats.pop('stats_by_role', dict())
+        for name, stat in pitching_stats.items():
+            try:
+                prev_val = getattr(self.pitching_stats, name)
+                setattr(self.pitching_stats, name, (prev_val+stat))
+            except Exception:
+                continue
+        for role, stats_by_role in pitching_stats_by_role.items():
+            self.pitching_stats.update_stats_by_role(role, stats_by_role)
+        self.pitching_stats.save()
+
+        # update fielding stats
+        fielding_stats: dict = stats['fielding']
+        fielding_stats_by_position: dict = fielding_stats.pop('stats_by_position', dict())
+        for position, stats_by_position in fielding_stats_by_position.items():
+            self.fielding_stats.update_stats_by_position(position, stats_by_position)
+        self.fielding_stats.save()
+
     def __str__(self) -> str:
         string = str(self.player)
         if self.jersey_number:

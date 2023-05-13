@@ -269,7 +269,7 @@ class PlayerPitchingStats(SafeDeleteModel):
         return (self.strikeouts_swinging(roles=roles, matchup=matchup) +
                 self.strikeouts_looking(roles=roles, matchup=matchup))
 
-    def update_stats_by_role(self, role: int, stats: dict, **kwargs: Any) -> bool:
+    def update_stats_by_role(self, role: int, stats: dict) -> bool:
         """Update the player's pitching stats for a specific role by adding the
         given value to the current stat value.
         """

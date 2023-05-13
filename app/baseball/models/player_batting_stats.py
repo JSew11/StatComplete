@@ -25,7 +25,7 @@ class PlayerBattingStats (SafeDeleteModel):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     
-    def update_stats_by_lineup_spot(self, lineup_spot: int, stats: dict, **kwargs: Any) -> bool:
+    def update_stats_by_lineup_spot(self, lineup_spot: int, stats: dict) -> bool:
         """Update the player's batting stats for a specific lineup spot by adding
         the given value to the current stat value.
         """

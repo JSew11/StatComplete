@@ -24,7 +24,7 @@ class PlayerFieldingStats (SafeDeleteModel):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
         
-    def update_stats_by_position(self, position: int, stats: dict, **kwargs: Any) -> bool:
+    def update_stats_by_position(self, position: int, stats: dict) -> bool:
         """Update the player's fielding stats for a specific position by adding the
         given value to the current stat value.
         """
