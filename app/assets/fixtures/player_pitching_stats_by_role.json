@@ -13,6 +13,11 @@
         "no_decisions": 0,
         "games_pitched": 7,
         "games_finished": 0,
+        "runs": 9,
+        "earned_runs": 7,
+        "balks": 0,
+        "wild_pitches": 0,
+        "outs_pitched": 74,
         "strikes_thrown_vs_right": 297,
         "strikes_thrown_vs_left": 124,
         "balls_thrown_vs_right": 0,
@@ -44,11 +49,7 @@
         "fly_outs_forced_vs_right": 0,
         "fly_outs_forced_vs_left": 0,
         "pop_outs_forced_vs_right": 0,
-        "pop_outs_forced_vs_left": 0,
-        "runs": 0,
-        "earned_runs": 0,
-        "balks": 0,
-        "wild_pitches": 0
+        "pop_outs_forced_vs_left": 0
     }
 },
 {
@@ -65,6 +66,11 @@
         "no_decisions": 0,
         "games_pitched": 2,
         "games_finished": 0,
+        "runs": 2,
+        "earned_runs": 2,
+        "balks": 0,
+        "wild_pitches": 0,
+        "outs_pitched": 6,
         "strikes_thrown_vs_right": 24,
         "strikes_thrown_vs_left": 11,
         "balls_thrown_vs_right": 0,
@@ -96,11 +102,7 @@
         "fly_outs_forced_vs_right": 0,
         "fly_outs_forced_vs_left": 0,
         "pop_outs_forced_vs_right": 0,
-        "pop_outs_forced_vs_left": 0,
-        "runs": 0,
-        "earned_runs": 0,
-        "balks": 0,
-        "wild_pitches": 0
+        "pop_outs_forced_vs_left": 0
     }
 }
 ]

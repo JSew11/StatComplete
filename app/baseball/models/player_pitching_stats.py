@@ -239,6 +239,37 @@ class PlayerPitchingStats(SafeDeleteModel):
         pop_outs_forced_vs_left = role_stats.aggregate(models.Sum('pop_outs_forced_vs_left'))['pop_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('pop_outs_forced_vs_left'))['pop_outs_forced_vs_left__sum']
         return pop_outs_forced_vs_right + pop_outs_forced_vs_left
     
+    # calculated stat methods
+    def save_percentage(self) -> float:
+        return self.saves / self.save_opportunities
+    
+    def win_percentage(self, roles: list = []) -> float:
+        return self.wins(roles=roles) / self.games_pitched(roles=roles)
+    
+    def earned_run_average(self, roles: list = []) -> float:
+        return (self.earned_runs(roles=roles) / self.innings_pitched(roles=roles)) * self.team_player.competition_team.competition.innings_per_game
+
+    def innings_pitched(self, roles: list = [], formatted: bool = False) -> float:
+        if formatted:
+            return float(self.outs_pitched(roles=roles) // 3) + ((self.outs_pitched(roles=roles) % 3) / 10)
+        return self.outs_pitched(roles=roles) / 3
+    
+    def pitches_thrown(self, roles: list = [], matchup: str = '') -> int:
+        return (self.strikes_thrown(roles=roles, matchup=matchup) + 
+                self.balls_thrown(roles=roles, matchup=matchup) + 
+                self.hit_by_pitch(roles=roles, matchup=matchup))
+    
+    def hits_allowed(self, roles: list = [], matchup: str = '') -> int:
+        return (self.singles_allowed(roles=roles, matchup=matchup) +
+                self.doubles_allowed(roles=roles, matchup=matchup) +
+                self.triples_allowed(roles=roles, matchup=matchup) +
+                self.home_runs_allowed(roles=roles, matchup=matchup))
+    
+    def strikeouts(self, roles: list = [], matchup: str = '') -> int:
+        return (self.strikeouts_swinging(roles=roles, matchup=matchup) +
+                self.strikeouts_looking(roles=roles, matchup=matchup))
+
+
     def update_stats_by_role(self, role: int, stats: dict, **kwargs: Any) -> bool:
         """Update the player's pitching stats for a specific role by adding the
         given value to the current stat value.

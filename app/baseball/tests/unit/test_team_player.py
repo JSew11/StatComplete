@@ -58,7 +58,19 @@ class TestPlayerPitchingStatsModel (TestCase):
         """Test the games_started property of the player pitching stats model.
         """
         self.assertEqual(7, self.test_team_player.pitching_stats.games_started)
+
+    def test_innings_pitched(self):
+        """Test the innings_pitched method of the player pitching stats model.
+        """
+        self.assertEqual(80/3, self.test_team_player.pitching_stats.innings_pitched())
+        self.assertEqual(2.0, self.test_team_player.pitching_stats.innings_pitched(roles=[PitcherRole.RELIEF_PITCHER]))
+        self.assertEqual(24.2, self.test_team_player.pitching_stats.innings_pitched(roles=[PitcherRole.STARTING_PITCHER], formatted=True))
     
+    def test_earned_run_average(self):
+        """Test the earned_run_average method of the player pitching stats model.
+        """
+        self.assertAlmostEqual(3.0375, self.test_team_player.pitching_stats.earned_run_average())
+
     def test_update_stats_by_role(self):
         """Test the 'update_stats_by_role' method of the player pitching stats manager.
         """

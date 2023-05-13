@@ -41,6 +41,9 @@ class Competition (SafeDeleteModel):
     end_date = models.DateField(blank=True, null=True)
     game_rules = models.JSONField(default=dict)
 
+    # common rules
+    innings_per_game = models.PositiveSmallIntegerField(default=9)
+
     # related models
     organizer = models.ForeignKey(Organization, on_delete=models.SET_NULL, related_name='competitions', null=True)
 
