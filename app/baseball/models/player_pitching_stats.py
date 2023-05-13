@@ -35,11 +35,26 @@ class PlayerPitchingStats(SafeDeleteModel):
     def games_started(self):
         return self.stats_by_role.filter(role=0).first().games_pitched
     
-    # cumulative stat methods (total stat if role is invalid)
+    # cumulative stat methods (total stat if no valid roles)
     def wins(self, roles: list = []) -> int:
         role_stats = self.stats_by_role.filter(role__in=roles)
         return role_stats.aggregate(models.Sum('wins'))['wins__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('wins'))['wins__sum']
 
+    def losses(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('losses'))['losses__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('losses'))['losses__sum']
+    
+    # cumulative matchup stat methods (total if no valid roles and no valid matchup)
+    def strikes_thrown(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == 'right':
+            return role_stats.aggregate(models.Sum('strikes_thrown_vs_right'))['strikes_thrown_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikes_thrown_vs_right'))['strikes_thrown_vs_right__sum']
+        if matchup == 'left':
+            return role_stats.aggregate(models.Sum('strikes_thrown_vs_left'))['strikes_thrown_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikes_thrown_vs_left'))['strikes_thrown_vs_left__sum']
+        strikes_thrown_vs_right = role_stats.aggregate(models.Sum('strikes_thrown_vs_right'))['strikes_thrown_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikes_thrown_vs_right'))['strikes_thrown_vs_right__sum']
+        strikes_thrown_vs_left = role_stats.aggregate(models.Sum('strikes_thrown_vs_left'))['strikes_thrown_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikes_thrown_vs_left'))['strikes_thrown_vs_left__sum']
+        return strikes_thrown_vs_right + strikes_thrown_vs_left
+    
     def update_stats_by_role(self, role: int, stats: dict, **kwargs: Any) -> bool:
         """Update the player's pitching stats for a specific role by adding the
         given value to the current stat value.

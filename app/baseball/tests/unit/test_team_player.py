@@ -37,12 +37,19 @@ class TestPlayerPitchingStatsModel (TestCase):
         return super().setUp()
     
     def test_wins(self):
-        """Test the wins method of the player pitching stats model.
+        """Test the wins method of the player pitching stats model. Ensures the structure of
+        the "cumulative stat methods" work as expected.
         """
         self.assertEqual(4, self.test_team_player.pitching_stats.wins([-1]))
         self.assertEqual(3, self.test_team_player.pitching_stats.wins([3, 0]))
         self.assertEqual(1, self.test_team_player.pitching_stats.wins([1]))
     
+    def test_strikes_thrown(self):
+        """Test the strikes_thrown method of the palyer pitching stats model. Ensures the
+        structure of the "cumulative matchup stat methods" work as expected.
+        """
+        self.assertEqual(421, self.test_team_player.pitching_stats.strikes_thrown([-1], 'bleh'))
+
     def test_games_started(self):
         """Test the games_started property of the player pitching stats model.
         """
