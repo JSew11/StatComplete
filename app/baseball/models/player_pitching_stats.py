@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
+from .constants import RIGHT_HANDED_MATCHUP, LEFT_HANDED_MATCHUP
+
 class PlayerPitchingStats(SafeDeleteModel):
     """Model for an individual player's pitching stats.
     
@@ -44,16 +46,198 @@ class PlayerPitchingStats(SafeDeleteModel):
         role_stats = self.stats_by_role.filter(role__in=roles)
         return role_stats.aggregate(models.Sum('losses'))['losses__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('losses'))['losses__sum']
     
+    def no_decisions(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('no_decisions'))['no_decisions__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('no_decisions'))['no_decisions__sum']
+    
+    def games_pitched(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('games_pitched'))['games_pitched__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('games_pitched'))['games_pitched__sum']
+    
+    def games_finished(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('games_finished'))['games_finished__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('games_finished'))['games_finished__sum']
+
+    def runs(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('runs'))['runs__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('runs'))['runs__sum']
+
+    def earned_runs(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('earned_runs'))['earned_runs__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('earned_runs'))['earned_runs__sum']
+
+    def balks(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('balks'))['balks__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('balks'))['balks__sum']
+
+    def wild_pitches(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('wild_pitches'))['wild_pitches__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('wild_pitches'))['wild_pitches__sum']
+
+    def outs_pitched(self, roles: list = []) -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        return role_stats.aggregate(models.Sum('outs_pitched'))['outs_pitched__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('outs_pitched'))['outs_pitched__sum']
+
     # cumulative matchup stat methods (total if no valid roles and no valid matchup)
     def strikes_thrown(self, roles: list = [], matchup: str = '') -> int:
         role_stats = self.stats_by_role.filter(role__in=roles)
-        if matchup == 'right':
+        if matchup == RIGHT_HANDED_MATCHUP:
             return role_stats.aggregate(models.Sum('strikes_thrown_vs_right'))['strikes_thrown_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikes_thrown_vs_right'))['strikes_thrown_vs_right__sum']
-        if matchup == 'left':
+        if matchup == LEFT_HANDED_MATCHUP:
             return role_stats.aggregate(models.Sum('strikes_thrown_vs_left'))['strikes_thrown_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikes_thrown_vs_left'))['strikes_thrown_vs_left__sum']
         strikes_thrown_vs_right = role_stats.aggregate(models.Sum('strikes_thrown_vs_right'))['strikes_thrown_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikes_thrown_vs_right'))['strikes_thrown_vs_right__sum']
         strikes_thrown_vs_left = role_stats.aggregate(models.Sum('strikes_thrown_vs_left'))['strikes_thrown_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikes_thrown_vs_left'))['strikes_thrown_vs_left__sum']
         return strikes_thrown_vs_right + strikes_thrown_vs_left
+    
+    def balls_thrown(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('balls_thrown_vs_right'))['balls_thrown_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('balls_thrown_vs_right'))['balls_thrown_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('balls_thrown_vs_left'))['balls_thrown_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('balls_thrown_vs_left'))['balls_thrown_vs_left__sum']
+        balls_thrown_vs_right = role_stats.aggregate(models.Sum('balls_thrown_vs_right'))['balls_thrown_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('balls_thrown_vs_right'))['balls_thrown_vs_right__sum']
+        balls_thrown_vs_left = role_stats.aggregate(models.Sum('balls_thrown_vs_left'))['balls_thrown_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('balls_thrown_vs_left'))['balls_thrown_vs_left__sum']
+        return balls_thrown_vs_right + balls_thrown_vs_left
+
+    def batters_faced(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('batters_faced_vs_right'))['batters_faced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('batters_faced_vs_right'))['batters_faced_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('batters_faced_vs_left'))['batters_faced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('batters_faced_vs_left'))['batters_faced_vs_left__sum']
+        batters_faced_vs_right = role_stats.aggregate(models.Sum('batters_faced_vs_right'))['batters_faced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('batters_faced_vs_right'))['batters_faced_vs_right__sum']
+        batters_faced_vs_left = role_stats.aggregate(models.Sum('batters_faced_vs_left'))['batters_faced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('batters_faced_vs_left'))['batters_faced_vs_left__sum']
+        return batters_faced_vs_right + batters_faced_vs_left
+    
+    def singles_allowed(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('singles_allowed_vs_right'))['singles_allowed_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('singles_allowed_vs_right'))['singles_allowed_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('singles_allowed_vs_left'))['singles_allowed_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('singles_allowed_vs_left'))['singles_allowed_vs_left__sum']
+        singles_allowed_vs_right = role_stats.aggregate(models.Sum('singles_allowed_vs_right'))['singles_allowed_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('singles_allowed_vs_right'))['singles_allowed_vs_right__sum']
+        singles_allowed_vs_left = role_stats.aggregate(models.Sum('singles_allowed_vs_left'))['singles_allowed_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('singles_allowed_vs_left'))['singles_allowed_vs_left__sum']
+        return singles_allowed_vs_right + singles_allowed_vs_left
+        
+    def doubles_allowed(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('doubles_allowed_vs_right'))['doubles_allowed_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('doubles_allowed_vs_right'))['doubles_allowed_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('doubles_allowed_vs_left'))['doubles_allowed_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('doubles_allowed_vs_left'))['doubles_allowed_vs_left__sum']
+        doubles_allowed_vs_right = role_stats.aggregate(models.Sum('doubles_allowed_vs_right'))['doubles_allowed_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('doubles_allowed_vs_right'))['doubles_allowed_vs_right__sum']
+        doubles_allowed_vs_left = role_stats.aggregate(models.Sum('doubles_allowed_vs_left'))['doubles_allowed_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('doubles_allowed_vs_left'))['doubles_allowed_vs_left__sum']
+        return doubles_allowed_vs_right + doubles_allowed_vs_left
+        
+    def triples_allowed(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('triples_allowed_vs_right'))['triples_allowed_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('triples_allowed_vs_right'))['triples_allowed_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('triples_allowed_vs_left'))['triples_allowed_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('triples_allowed_vs_left'))['triples_allowed_vs_left__sum']
+        triples_allowed_vs_right = role_stats.aggregate(models.Sum('triples_allowed_vs_right'))['triples_allowed_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('triples_allowed_vs_right'))['triples_allowed_vs_right__sum']
+        triples_allowed_vs_left = role_stats.aggregate(models.Sum('triples_allowed_vs_left'))['triples_allowed_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('triples_allowed_vs_left'))['triples_allowed_vs_left__sum']
+        return triples_allowed_vs_right + triples_allowed_vs_left
+        
+    def home_runs_allowed(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('home_runs_allowed_vs_right'))['home_runs_allowed_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('home_runs_allowed_vs_right'))['home_runs_allowed_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('home_runs_allowed_vs_left'))['home_runs_allowed_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('home_runs_allowed_vs_left'))['home_runs_allowed_vs_left__sum']
+        home_runs_allowed_vs_right = role_stats.aggregate(models.Sum('home_runs_allowed_vs_right'))['home_runs_allowed_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('home_runs_allowed_vs_right'))['home_runs_allowed_vs_right__sum']
+        home_runs_allowed_vs_left = role_stats.aggregate(models.Sum('home_runs_allowed_vs_left'))['home_runs_allowed_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('home_runs_allowed_vs_left'))['home_runs_allowed_vs_left__sum']
+        return home_runs_allowed_vs_right + home_runs_allowed_vs_left
+        
+    def walks(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum']
+        walks_vs_right = role_stats.aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum']
+        walks_vs_left = role_stats.aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum']
+        return walks_vs_right + walks_vs_left
+        
+    def intentional_walks(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum']
+        intentional_walks_vs_right = role_stats.aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum']
+        intentional_walks_vs_left = role_stats.aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum']
+        return intentional_walks_vs_right + intentional_walks_vs_left
+        
+    def hit_by_pitch(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum']
+        hit_by_pitch_vs_right = role_stats.aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum']
+        hit_by_pitch_vs_left = role_stats.aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum']
+        return hit_by_pitch_vs_right + hit_by_pitch_vs_left
+        
+    def strikeouts_swinging(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum']
+        strikeouts_swinging_vs_right = role_stats.aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum']
+        strikeouts_swinging_vs_left = role_stats.aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum']
+        return strikeouts_swinging_vs_right + strikeouts_swinging_vs_left
+        
+    def strikeouts_looking(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum']
+        strikeouts_looking_vs_right = role_stats.aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum']
+        strikeouts_looking_vs_left = role_stats.aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum']
+        return strikeouts_looking_vs_right + strikeouts_looking_vs_left
+        
+    def ground_outs_forced(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('ground_outs_forced_vs_right'))['ground_outs_forced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('ground_outs_forced_vs_right'))['ground_outs_forced_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('ground_outs_forced_vs_left'))['ground_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('ground_outs_forced_vs_left'))['ground_outs_forced_vs_left__sum']
+        ground_outs_forced_vs_right = role_stats.aggregate(models.Sum('ground_outs_forced_vs_right'))['ground_outs_forced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('ground_outs_forced_vs_right'))['ground_outs_forced_vs_right__sum']
+        ground_outs_forced_vs_left = role_stats.aggregate(models.Sum('ground_outs_forced_vs_left'))['ground_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('ground_outs_forced_vs_left'))['ground_outs_forced_vs_left__sum']
+        return ground_outs_forced_vs_right + ground_outs_forced_vs_left
+        
+    def line_outs_forced(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('line_outs_forced_vs_right'))['line_outs_forced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('line_outs_forced_vs_right'))['line_outs_forced_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('line_outs_forced_vs_left'))['line_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('line_outs_forced_vs_left'))['line_outs_forced_vs_left__sum']
+        line_outs_forced_vs_right = role_stats.aggregate(models.Sum('line_outs_forced_vs_right'))['line_outs_forced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('line_outs_forced_vs_right'))['line_outs_forced_vs_right__sum']
+        line_outs_forced_vs_left = role_stats.aggregate(models.Sum('line_outs_forced_vs_left'))['line_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('line_outs_forced_vs_left'))['line_outs_forced_vs_left__sum']
+        return line_outs_forced_vs_right + line_outs_forced_vs_left
+        
+    def fly_outs_forced(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('fly_outs_forced_vs_right'))['fly_outs_forced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('fly_outs_forced_vs_right'))['fly_outs_forced_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('fly_outs_forced_vs_left'))['fly_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('fly_outs_forced_vs_left'))['fly_outs_forced_vs_left__sum']
+        fly_outs_forced_vs_right = role_stats.aggregate(models.Sum('fly_outs_forced_vs_right'))['fly_outs_forced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('fly_outs_forced_vs_right'))['fly_outs_forced_vs_right__sum']
+        fly_outs_forced_vs_left = role_stats.aggregate(models.Sum('fly_outs_forced_vs_left'))['fly_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('fly_outs_forced_vs_left'))['fly_outs_forced_vs_left__sum']
+        return fly_outs_forced_vs_right + fly_outs_forced_vs_left
+        
+    def pop_outs_forced(self, roles: list = [], matchup: str = '') -> int:
+        role_stats = self.stats_by_role.filter(role__in=roles)
+        if matchup == RIGHT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('pop_outs_forced_vs_right'))['pop_outs_forced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('pop_outs_forced_vs_right'))['pop_outs_forced_vs_right__sum']
+        if matchup == LEFT_HANDED_MATCHUP:
+            return role_stats.aggregate(models.Sum('pop_outs_forced_vs_left'))['pop_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('pop_outs_forced_vs_left'))['pop_outs_forced_vs_left__sum']
+        pop_outs_forced_vs_right = role_stats.aggregate(models.Sum('pop_outs_forced_vs_right'))['pop_outs_forced_vs_right__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('pop_outs_forced_vs_right'))['pop_outs_forced_vs_right__sum']
+        pop_outs_forced_vs_left = role_stats.aggregate(models.Sum('pop_outs_forced_vs_left'))['pop_outs_forced_vs_left__sum'] if role_stats else self.stats_by_role.all().aggregate(models.Sum('pop_outs_forced_vs_left'))['pop_outs_forced_vs_left__sum']
+        return pop_outs_forced_vs_right + pop_outs_forced_vs_left
     
     def update_stats_by_role(self, role: int, stats: dict, **kwargs: Any) -> bool:
         """Update the player's pitching stats for a specific role by adding the

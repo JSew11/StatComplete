@@ -1,5 +1,7 @@
 from django.test import TestCase
 
+from baseball.models.constants import RIGHT_HANDED_MATCHUP, LEFT_HANDED_MATCHUP
+from baseball.models.pitcher_role import PitcherRole
 from baseball.models.team_player import TeamPlayer
 
 class TestTeamPlayerModel (TestCase):
@@ -41,14 +43,16 @@ class TestPlayerPitchingStatsModel (TestCase):
         the "cumulative stat methods" work as expected.
         """
         self.assertEqual(4, self.test_team_player.pitching_stats.wins([-1]))
-        self.assertEqual(3, self.test_team_player.pitching_stats.wins([3, 0]))
-        self.assertEqual(1, self.test_team_player.pitching_stats.wins([1]))
+        self.assertEqual(3, self.test_team_player.pitching_stats.wins([3, PitcherRole.STARTING_PITCHER]))
+        self.assertEqual(1, self.test_team_player.pitching_stats.wins([PitcherRole.RELIEF_PITCHER]))
     
     def test_strikes_thrown(self):
         """Test the strikes_thrown method of the palyer pitching stats model. Ensures the
         structure of the "cumulative matchup stat methods" work as expected.
         """
-        self.assertEqual(421, self.test_team_player.pitching_stats.strikes_thrown([-1], 'bleh'))
+        self.assertEqual(456, self.test_team_player.pitching_stats.strikes_thrown([-1], 'invalid'))
+        self.assertEqual(321, self.test_team_player.pitching_stats.strikes_thrown([3], RIGHT_HANDED_MATCHUP))
+        self.assertEqual(297, self.test_team_player.pitching_stats.strikes_thrown([PitcherRole.STARTING_PITCHER], RIGHT_HANDED_MATCHUP))
 
     def test_games_started(self):
         """Test the games_started property of the player pitching stats model.

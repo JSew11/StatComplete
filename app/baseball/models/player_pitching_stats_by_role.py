@@ -3,6 +3,7 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
+from .pitcher_role import PitcherRole
 from .player_pitching_stats import PlayerPitchingStats
 
 class PlayerPitchingStatsByRole(SafeDeleteModel):
@@ -10,12 +11,6 @@ class PlayerPitchingStatsByRole(SafeDeleteModel):
     
     Tracks counted pitching stats for a player pitching in a certain role.
     """
-
-    class PitcherRole(models.IntegerChoices):
-        """Choices for the different roles a pitcher can have.
-        """
-        STARTING_PITCHER = 0, 'SP'
-        RELIEF_PITCHER = 1, 'RP'
 
     class Meta:
         ordering = ['created']
@@ -54,8 +49,8 @@ class PlayerPitchingStatsByRole(SafeDeleteModel):
     balls_thrown_vs_right = models.PositiveIntegerField(default=0)
     balls_thrown_vs_left = models.PositiveIntegerField(default=0)
 
-    righty_batters_faced = models.PositiveIntegerField(default=0)
-    lefty_batters_faced = models.PositiveIntegerField(default=0)
+    batters_faced_vs_right = models.PositiveIntegerField(default=0)
+    batters_faced_vs_left = models.PositiveIntegerField(default=0)
 
     singles_allowed_vs_right = models.PositiveIntegerField(default=0)
     singles_allowed_vs_left = models.PositiveIntegerField(default=0)
