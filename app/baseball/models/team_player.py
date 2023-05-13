@@ -65,7 +65,7 @@ class TeamPlayer (SafeDeleteModel):
     player = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, related_name='stats_by_team')
     competition_team = models.ForeignKey(CompetitionTeam, on_delete=models.SET_NULL, null=True, related_name='roster')
 
-    def update_stats(self, stats: dict):
+    def update_stats(self, stats: dict) -> None:
         """Update the player's stats using the given stats data.
 
         stats JSON structure:
