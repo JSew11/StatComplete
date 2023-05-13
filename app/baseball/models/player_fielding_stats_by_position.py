@@ -46,11 +46,19 @@ class PlayerFieldingStatsByPosition (SafeDeleteModel):
     double_plays = models.PositiveIntegerField(default=0)
 
     # catcher/pitcher exclusive stats
-    steals_against = models.PositiveIntegerField(default=0)
-    caught_stealing = models.PositiveIntegerField(default=0)
-    pickoffs = models.PositiveIntegerField(default=0)
-    pickoff_attempts = models.PositiveIntegerField(default=0)
     passed_balls = models.PositiveIntegerField(default=0)
+    pickoffs_first_base = models.PositiveIntegerField(default=0)
+    pickoff_attempts_first_base = models.PositiveIntegerField(default=0)
+    pickoffs_second_base = models.PositiveIntegerField(default=0)
+    pickoff_attempts_second_base = models.PositiveIntegerField(default=0)
+    steals_against_second_base = models.PositiveIntegerField(default=0)
+    caught_stealing_second_base = models.PositiveIntegerField(default=0)
+    pickoffs_third_base = models.PositiveIntegerField(default=0)
+    pickoff_attempts_third_base = models.PositiveIntegerField(default=0)
+    steals_against_third_base = models.PositiveIntegerField(default=0)
+    caught_stealing_third_base = models.PositiveIntegerField(default=0)
+    steals_against_home_plate = models.PositiveIntegerField(default=0)
+    caught_stealing_home_plate = models.PositiveIntegerField(default=0)
 
     def save(self, keep_deleted=False, **kwargs):
         self.full_clean()
