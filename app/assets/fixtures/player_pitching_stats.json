@@ -1,11 +1,11 @@
 [
 {
     "model": "baseball.playerpitchingstats",
-    "pk": "9824b1b9-1a1d-4ad7-902b-377776a4fcdd",
+    "pk": "781ef194-03fe-4376-9bcf-82eea0fe2785",
     "fields": {
         "deleted": null,
-        "created": "2023-05-12T17:31:06.778Z",
-        "updated": "2023-05-12T17:31:06.789Z",
+        "created": "2023-05-13T19:54:01.826Z",
+        "updated": "2023-05-13T19:54:01.826Z",
         "complete_games": 0,
         "shutouts": 0,
         "holds": 0,

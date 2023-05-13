@@ -9,7 +9,9 @@ class TestTeamPlayerModel (TestCase):
     """
     fixtures = ['organization', 'competition', 'team', 'competition_team', 
                 'player', 'team_player', 'player_baserunning_stats',
-                'player_pitching_stats', 'player_pitching_stats_by_role']
+                'player_batting_stats',
+                'player_pitching_stats', 'player_pitching_stats_by_role',
+                'player_fielding_stats']
 
     def setUp(self) -> None:
         self.test_team_player: TeamPlayer = TeamPlayer.objects.get(
@@ -29,7 +31,9 @@ class TestPlayerPitchingStatsModel (TestCase):
     """
     fixtures = ['organization', 'competition', 'team', 'competition_team', 
                 'player', 'team_player', 'player_baserunning_stats',
-                'player_pitching_stats', 'player_pitching_stats_by_role']
+                'player_batting_stats',
+                'player_pitching_stats', 'player_pitching_stats_by_role',
+                'player_fielding_stats']
 
     def setUp(self) -> None:
         self.test_team_player: TeamPlayer = TeamPlayer.objects.get(

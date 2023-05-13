@@ -1,0 +1,11 @@
+[
+{
+    "model": "baseball.playerfieldingstats",
+    "pk": "5654d69f-6f2f-4349-b141-1de712034502",
+    "fields": {
+        "deleted": null,
+        "created": "2023-05-13T19:54:01.828Z",
+        "updated": "2023-05-13T19:54:01.828Z"
+    }
+}
+]

@@ -171,8 +171,10 @@ class TestTeamPlayerApi (APITestCase):
     """Tests for team player endpoints defined in the competition viewset.
     """
     fixtures = ['user', 'organization', 'competition', 'team', 'competition_team',
-                 'player', 'team_player', 'player_baserunning_stats',
-                'player_pitching_stats', 'player_pitching_stats_by_role']
+                'player', 'team_player', 'player_baserunning_stats',
+                'player_batting_stats',
+                'player_pitching_stats', 'player_pitching_stats_by_role',
+                'player_fielding_stats']
 
     def setUp(self) -> None:
         """Set up necessary objects for testing.
