@@ -3,7 +3,7 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
-from constants import FIRST_BASE, SECOND_BASE, THIRD_BASE, HOME_PLATE
+from .constants import FIRST_BASE, SECOND_BASE, THIRD_BASE, HOME_PLATE
 
 class PlayerBaserunningStats(SafeDeleteModel):
     """Model for an individual player's baserunning stats.

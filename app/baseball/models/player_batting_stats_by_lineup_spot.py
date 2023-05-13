@@ -26,7 +26,7 @@ class PlayerBattingStatsByLineupSpot(SafeDeleteModel):
     updated = models.DateTimeField(auto_now=True)
 
     # fielding stats model
-    fielding_stats = models.ForeignKey(PlayerBattingStats, on_delete=models.CASCADE, related_name='stats_by_position')
+    batting_stats = models.ForeignKey(PlayerBattingStats, on_delete=models.CASCADE, related_name='stats_by_position')
 
     # lineup spot
     lineup_spot = models.PositiveSmallIntegerField()

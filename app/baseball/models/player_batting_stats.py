@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
+from .constants import RIGHT_HANDED_MATCHUP, LEFT_HANDED_MATCHUP
+
 class PlayerBattingStats (SafeDeleteModel):
     """Model for an individual player's batting stats.
     
