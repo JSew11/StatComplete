@@ -164,7 +164,7 @@ export default function Register() {
           <Input
             id='username'
             type='text'
-            placeholder='e.g. JSmith'
+            placeholder='e.g. Score_Keeper1'
             onChange={(e) => setUsername(e.target.value)}
             value={username}
             valid={usernameErrorMsg === '' && username !== ''}
@@ -179,7 +179,6 @@ export default function Register() {
             id='firstNameInput'
             type='text'
             ref={firstNameRef}
-            placeholder='e.g. John'
             onChange={(e) => setFirstName(e.target.value)}
             value={firstName}
             required
@@ -190,7 +189,6 @@ export default function Register() {
           <Input
             id='lastNameInput'
             type='text'
-            placeholder='e.g. Smith'
             onChange={(e) => setLastName(e.target.value)}
             value={lastName}
             required
@@ -201,7 +199,7 @@ export default function Register() {
           <Input
             id='emailInput'
             type='email'
-            placeholder='e.g. john.smith@email.com'
+            placeholder='e.g. user@statcomplete.com'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             valid={emailErrorMsg === '' && email !== ''}
