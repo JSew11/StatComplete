@@ -25,11 +25,15 @@ export default function Register() {
   const errorRef = useRef();
 
   const [ username, setUsername ] = useState('');
+  const [ usernameErrorMsg, setUsernameErrorMsg ] = useState('')
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
   const [ email, setEmail ] = useState('');
+  const [ emailErrorMsg, setEmailErrorMsg ] = useState('')
   const [ password, setPassword ] = useState('');
+  const [ passwordErrorMsg, setPasswordErrorMsg ] = useState('')
   const [ confirmPassword, setConfirmPassword ] = useState('');
+  const [ confirmPasswordErrorMsg, setConfirmPasswordErrorMsg ] = useState('')
   const [ errorMsg, setErrorMsg ] = useState('');
 
   useEffect(() => {
@@ -40,34 +44,48 @@ export default function Register() {
     setErrorMsg('');
   }, [firstName, lastName, username, email, password, confirmPassword])
 
-  const validatePassword = (formErrors) => {
-    if (password !== '' && confirmPassword !== '') {
+  useEffect(() => {
+    validatePassword()
+  }, [password, confirmPassword])
+
+  useEffect(() => {
+    validateUsername()
+  }, [username])
+
+  useEffect(() => {
+    validateEmail()
+  }, [email])
+
+  const validateUsername = () => {
+    // TODO: write this
+  }
+
+  const validateEmail = () => {
+    // TODO: write this
+  }
+
+  const validatePassword = () => {
+    if (password !== '' || confirmPassword != '') {
       if (password.length < MINIMUM_PASSWORD_LENGTH) {
-        formErrors.push(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
+        setPasswordErrorMsg(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
+      } else if (password !== confirmPassword) {
+        setPasswordErrorMsg('Passwords must match.')
+      } else {
+        setPasswordErrorMsg('');
       }
       if (password !== confirmPassword) {
-        formErrors.push('Passwords must match.')
+        setConfirmPasswordErrorMsg('Passwords must match.')
+      } else {
+        setConfirmPasswordErrorMsg('');
       }
     } else {
-      formErrors.push('Passwords cannot be empty.')
+      setPasswordErrorMsg('');
+      setConfirmPasswordErrorMsg('');
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    let formErrors = [];
-    validatePassword(formErrors);
-
-    if (formErrors.length > 0) {
-      let errorStr = '';
-      formErrors.forEach((error) => {
-        errorStr += error + '\n';
-      })
-      setErrorMsg(errorStr);
-      errorRef.current.focus();
-      return;
-    }
 
     try {
       const response = await axios.post(
@@ -131,6 +149,7 @@ export default function Register() {
             value={username}
             required
           />
+          <FormFeedback>{usernameErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='firstNameInput'>First Name</Label>
@@ -159,12 +178,14 @@ export default function Register() {
           <Label for='emailInput'>Email</Label>
           <Input
             id='emailInput'
-            type='text'
+            type='email'
             placeholder='e.g. john.smith@email.com'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            valid={emailErrorMsg === '' && email != ''}
             required
           />
+          <FormFeedback>{emailErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='passwordInput'>Password</Label>
@@ -173,7 +194,10 @@ export default function Register() {
             type='password'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            valid={passwordErrorMsg === '' && password != ''}
+            invalid={passwordErrorMsg != ''}
           />
+          <FormFeedback>{passwordErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='confirmPassword'>Confirm Password</Label>
@@ -182,9 +206,22 @@ export default function Register() {
             type='password'
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
+            valid={confirmPasswordErrorMsg === '' && confirmPassword != ''}
+            invalid={confirmPasswordErrorMsg !== ''}
           />
+          <FormFeedback>{confirmPasswordErrorMsg}</FormFeedback>
         </FormGroup>
-        <Button type='submit' color='primary'>
+        <Button
+          type='submit'
+          color='primary'
+          disabled={
+            username === '' ||
+            firstName === '' || lastName === '' ||
+            password === '' || passwordErrorMsg !== '' ||
+            email === '' ||
+            confirmPassword === '' || confirmPasswordErrorMsg !== ''
+          }
+        >
           Register
         </Button>
         <div className='btn btn-danger float-end' onClick={() => navigate('/')}>
