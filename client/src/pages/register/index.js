@@ -57,11 +57,31 @@ export default function Register() {
   }, [email])
 
   const validateUsername = () => {
-    // TODO: write this
+    if (username !== '') {
+      let re = /^[A-Za-z][\w]{7,29}$/;
+      if (re.test(username)) {
+        setUsernameErrorMsg('');
+        // TODO call the api endpoint to check if the username is valid
+      } else {
+        setUsernameErrorMsg('Username must be at least 8 characters, and use only letters, numbers  and \'_\'.')
+      }
+    } else {
+      setUsernameErrorMsg('');
+    }
   }
 
   const validateEmail = () => {
-    // TODO: write this
+    if (email !== '') {
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (re.test(email)) {
+        setEmailErrorMsg('');
+        // TODO: call the api endpoint to check if the email is valid
+      } else {
+        setEmailErrorMsg('Invalid email format.');
+      }
+    } else {
+      setEmailErrorMsg('');
+    }
   }
 
   const validatePassword = () => {
@@ -147,6 +167,8 @@ export default function Register() {
             placeholder='e.g. JSmith'
             onChange={(e) => setUsername(e.target.value)}
             value={username}
+            valid={usernameErrorMsg === '' && username !== ''}
+            invalid={usernameErrorMsg !== ''}
             required
           />
           <FormFeedback>{usernameErrorMsg}</FormFeedback>
@@ -182,7 +204,8 @@ export default function Register() {
             placeholder='e.g. john.smith@email.com'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            valid={emailErrorMsg === '' && email != ''}
+            valid={emailErrorMsg === '' && email !== ''}
+            invalid={emailErrorMsg !== ''}
             required
           />
           <FormFeedback>{emailErrorMsg}</FormFeedback>
