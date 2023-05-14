@@ -238,10 +238,10 @@ export default function Register() {
           type='submit'
           color='primary'
           disabled={
-            username === '' ||
+            username === '' || usernameErrorMsg !== '' ||
             firstName === '' || lastName === '' ||
             password === '' || passwordErrorMsg !== '' ||
-            email === '' ||
+            email === '' || emailErrorMsg !== '' ||
             confirmPassword === '' || confirmPasswordErrorMsg !== ''
           }
         >
