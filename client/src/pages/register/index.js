@@ -63,7 +63,7 @@ export default function Register() {
         setUsernameErrorMsg('');
         // TODO call the api endpoint to check if the username is valid
       } else {
-        setUsernameErrorMsg('Username must be at least 8 characters, and use only letters, numbers  and \'_\'.')
+        setUsernameErrorMsg('Username must be at least 8 characters and use only letters, numbers, and "_".')
       }
     } else {
       setUsernameErrorMsg('');
