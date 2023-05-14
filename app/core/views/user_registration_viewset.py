@@ -8,7 +8,7 @@ from rest_framework import status
 from ..models.user import User
 from ..serializers.register_user_serializer import RegisterUserSerializer
 
-class UserViewSet(ListCreateAPIView):
+class UserRegistrationViewSet(ListCreateAPIView):
     """Views for the user model.
     """
     queryset = User.objects.all()
