@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+
+from ..models.user import User
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     """Serializer to register a new user.

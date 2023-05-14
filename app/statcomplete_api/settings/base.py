@@ -167,3 +167,5 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_CREDENTIALS = True
+
+AUTH_USER_MODEL = 'core.User'

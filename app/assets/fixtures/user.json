@@ -1,18 +1,21 @@
 [
 {
-    "model": "auth.user",
-    "pk": 3,
+    "model": "core.user",
+    "pk": "267f113c-4cb8-468c-9471-12d31661b32a",
     "fields": {
-        "password": "pbkdf2_sha256$390000$mFta30GS8FJQHASJiYdWdT$hmylCaHRCzW2hUnohnsR9bxe6V3xcoCIBt6Txd13HLg=",
-        "last_login": "2023-02-28T23:34:11.988Z",
+        "password": "pbkdf2_sha256$600000$AkpWhFM9O8ckfP1eOAcft2$8dcNckHXNXsE6spY3/dpwivY2kFCS2ZOrpJ97VODGes=",
+        "last_login": null,
         "is_superuser": true,
-        "username": "DeveloperAdmin",
-        "first_name": "",
-        "last_name": "",
-        "email": "",
+        "first_name": "Developer",
+        "last_name": "Admin",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2023-02-28T23:32:22.715Z",
+        "date_joined": "2023-05-13T23:57:15.201Z",
+        "deleted": null,
+        "created": "2023-05-13T23:57:15.494Z",
+        "updated": "2023-05-13T23:57:15.494Z",
+        "email": "developer.admin@statcomplete.com",
+        "username": "DeveloperAdmin",
         "groups": [],
         "user_permissions": []
     }

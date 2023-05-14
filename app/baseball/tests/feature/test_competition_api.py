@@ -1,8 +1,8 @@
-from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.response import Response
 from rest_framework import status
 
+from core.models.user import User
 from baseball.models.organization import Organization
 from baseball.models.competition import Competition
 from baseball.models.team import Team
