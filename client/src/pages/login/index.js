@@ -98,7 +98,11 @@ export default function Login() {
           />
           <Label for='passwordInput'>Password</Label>
         </FormGroup>
-        <Button type='submit' color='primary'>
+        <Button
+          type='submit'
+          color='primary'
+          disabled={username === '' || password === ''}
+        >
           Sign In
         </Button>
         <div className='btn btn-danger float-end' onClick={() => {navigate('/')}}>
