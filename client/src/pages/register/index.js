@@ -60,7 +60,7 @@ export default function Register() {
 
   const validateUsername = async () => {
     if (username !== '') {
-      let re = /^[A-Za-z][\w]{7,29}$/;
+      let re = /^[A-Za-z][\w]{4,29}$/;
       if (re.test(username)) {
         setUsernameErrorMsg('');
         try {
@@ -85,7 +85,7 @@ export default function Register() {
           setUsernameErrorMsg('Could not determine if username is available. Please try again later.')
         }
       } else {
-        setUsernameErrorMsg('Username must be at least 8 characters and use only letters, numbers, and "_".')
+        setUsernameErrorMsg('Username must be at least 5 characters and use only letters, numbers, and "_".')
       }
     } else {
       setUsernameErrorMsg('');
@@ -127,7 +127,7 @@ export default function Register() {
   }
 
   const validatePassword = () => {
-    if (password !== '' || confirmPassword != '') {
+    if (password !== '' || confirmPassword !== '') {
       if (password.length < MINIMUM_PASSWORD_LENGTH) {
         setPasswordErrorMsg(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
       } else if (password !== confirmPassword) {
@@ -222,6 +222,7 @@ export default function Register() {
             type='text'
             ref={firstNameRef}
             onChange={(e) => setFirstName(e.target.value)}
+            valid={firstName !== ''}
             value={firstName}
             required
           />
@@ -232,6 +233,7 @@ export default function Register() {
             id='lastNameInput'
             type='text'
             onChange={(e) => setLastName(e.target.value)}
+            valid={lastName !== ''}
             value={lastName}
             required
           />
@@ -257,8 +259,8 @@ export default function Register() {
             type='password'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            valid={passwordErrorMsg === '' && password != ''}
-            invalid={passwordErrorMsg != ''}
+            valid={passwordErrorMsg === '' && password !== ''}
+            invalid={passwordErrorMsg !== ''}
           />
           <FormFeedback>{passwordErrorMsg}</FormFeedback>
         </FormGroup>
@@ -269,7 +271,7 @@ export default function Register() {
             type='password'
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
-            valid={confirmPasswordErrorMsg === '' && confirmPassword != ''}
+            valid={confirmPasswordErrorMsg === '' && confirmPassword !== ''}
             invalid={confirmPasswordErrorMsg !== ''}
           />
           <FormFeedback>{confirmPasswordErrorMsg}</FormFeedback>
