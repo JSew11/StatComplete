@@ -16,6 +16,8 @@ import axios from 'axios';
 import './index.css';
 
 const REGISTER_URL = 'register/';
+const CHECK_USERNAME_URL = 'check_username/'
+const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;
 
 export default function Register() {
@@ -56,12 +58,32 @@ export default function Register() {
     validateEmail()
   }, [email])
 
-  const validateUsername = () => {
+  const validateUsername = async () => {
     if (username !== '') {
       let re = /^[A-Za-z][\w]{7,29}$/;
       if (re.test(username)) {
         setUsernameErrorMsg('');
-        // TODO call the api endpoint to check if the username is valid
+        try {
+          const response = await axios.post(
+            CHECK_USERNAME_URL,
+            JSON.stringify({
+              username: username,
+            }),
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              withCredentials: true
+            }
+          );
+          if (response?.data?.username_available) {
+            setUsernameErrorMsg('');
+          } else {
+            setUsernameErrorMsg('This username is not available.');
+          }
+        } catch (err) {
+          setUsernameErrorMsg('Could not determine if username is available. Please try again later.')
+        }
       } else {
         setUsernameErrorMsg('Username must be at least 8 characters and use only letters, numbers, and "_".')
       }
@@ -70,12 +92,33 @@ export default function Register() {
     }
   }
 
-  const validateEmail = () => {
+  const validateEmail = async () => {
     if (email !== '') {
       let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (re.test(email)) {
         setEmailErrorMsg('');
         // TODO: call the api endpoint to check if the email is valid
+        try {
+          const response = await axios.post(
+            CHECK_EMAIL_URL,
+            JSON.stringify({
+              email: email,
+            }),
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              withCredentials: true
+            }
+          );
+          if (response?.data?.email_available) {
+            setEmailErrorMsg('');
+          } else {
+            setEmailErrorMsg('This email is not available.');
+          }
+        } catch (err) {
+          setEmailErrorMsg('Could not determine if email is available. Please try again later.')
+        }
       } else {
         setEmailErrorMsg('Invalid email format.');
       }
