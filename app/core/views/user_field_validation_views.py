@@ -30,3 +30,29 @@ def check_username_available(request: Request, format=None) -> Response:
         },
         status=status.HTTP_400_BAD_REQUEST
     )
+
+@api_view(['POST'])
+def check_email_available(request: Request, format=None) -> Response:
+    """Check if an email is available (if no existin user has it).
+    """
+    if email := request.data.get('email', None):
+        existing_users = User.objects.filter(email=email).all()
+        if existing_users.count() > 0:
+            return Response(
+                data={
+                    'email_available': False
+                },
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            data={
+                'email_available': True
+            },
+            status=status.HTTP_200_OK
+        )
+    return Response(
+        data={
+            'status': 'No email given'
+        },
+        status=status.HTTP_400_BAD_REQUEST
+    )
