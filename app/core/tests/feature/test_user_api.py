@@ -1,10 +1,10 @@
 from rest_framework.test import APITestCase, APIClient
+from rest_framework.response import Response
 from rest_framework import status
 
 class TestUserRegistrationApi(APITestCase):
     """Tests for endpoints defined in the registration view.
     """
-
     def setUp(self) -> None:
         """Set up necessary objects for testing.
         """
@@ -23,3 +23,32 @@ class TestUserRegistrationApi(APITestCase):
         }
         response = self.client.post(path='/api/register/', data=user_data, format='json')
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+class TestUSerFieldValidationApi(APITestCase):
+    """Test endpoints defined in the user field validation view.
+    """
+    fixtures = ['user']
+
+    def setUp(self) -> None:
+        self.client = APIClient()
+        return super().setUp()
+    
+    def test_check_username_available(self):
+        """Test the POST endpoint for checking if a username is available.
+        """
+        response: Response = self.client.post(path='/api/check_username/', data={}, format='json')
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+
+        username_data = {
+            'username': 'AvailableUsername'
+        }
+        response: Response = self.client.post(path='/api/check_username/', data=username_data, format='json')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertTrue(response.data['username_available'])
+
+        username_data = {
+            'username': 'DeveloperAdmin'
+        }
+        response: Response = self.client.post(path='/api/check_username/', data=username_data, format='json')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertFalse(response.data['username_available'])
