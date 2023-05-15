@@ -277,8 +277,8 @@ export default function Register() {
           <FormFeedback>{confirmPasswordErrorMsg}</FormFeedback>
         </FormGroup>
         <Button
+          className='btn btn-primary'
           type='submit'
-          color='primary'
           disabled={
             username === '' || usernameErrorMsg !== '' ||
             firstName === '' || lastName === '' ||
