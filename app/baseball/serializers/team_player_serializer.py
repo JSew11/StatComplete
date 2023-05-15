@@ -11,7 +11,9 @@ class StatsByGameField (serializers.RelatedField):
     def to_representation(self, value: PlayerGameStats):
         game: Game = value.game_box_score.game
         opposing_team = game.get_opposing_team(value.team_player.competition_team)
-        return 'Game stats' # TODO: return the opposing team name and game date
+        if value.game_box_score.is_home_team:
+            return f'vs {str(opposing_team.team)} ({game.date})'
+        return f'at {str(opposing_team.team)} ({game.date})'
 
 class TeamPlayerSerializer (serializers.ModelSerializer):
     """Serializer for the TeamCoach model.
