@@ -2,7 +2,8 @@
     background-color: var(--primary-color);
 }
 
-.link:link, .link:link:visited{
+.link:link, 
+.link:link:visited{
     color: white;
 }
 
