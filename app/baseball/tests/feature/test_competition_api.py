@@ -196,3 +196,26 @@ class TestTeamPlayerApi (APITestCase):
         response: Response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/teams/{self.test_team.id}/players/{self.test_player.id}/', data=test_player_data, format='json')
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+class TestGameApi(APITestCase):
+    """Tests for game endpoints defined in the competition viewset.
+    """
+    fixtures = ['user', 'organization', 'competition', 'team', 'competition_team']
+
+    def setUp(self) -> None:
+        self.test_competition: Competition = Competition.objects.get(name='Test Season')
+        self.client = APIClient()
+        user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(user)
+        return super().setUp()
+    
+    def test_create_game(self):
+        """Test the POST endpoint for creating a game as a part of the given competition.
+        """
+        response: Response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/games/')
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+        test_game_data = {
+
+        }
+        # TODO: test this endpoint when given initial data

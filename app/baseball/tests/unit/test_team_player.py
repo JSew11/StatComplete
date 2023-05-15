@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from baseball.models.constants import RIGHT_HANDED_MATCHUP, LEFT_HANDED_MATCHUP
-from baseball.models.pitcher_role import PitcherRole
+from baseball.models.choices.pitcher_role import PitcherRole
 from baseball.models.team_player import TeamPlayer
 
 class TestTeamPlayerModel (TestCase):

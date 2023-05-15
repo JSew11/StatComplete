@@ -4,6 +4,7 @@ from rest_framework import status
 from core.models.user import User
 from baseball.models.organization import Organization
 from baseball.models.competition import Competition
+from baseball.models.choices.competition_type import CompetitionType
 from baseball.models.team import Team
 
 class TestOrganizationDetailsApi (APITestCase):
@@ -144,7 +145,7 @@ class TestOrganizationCompetitionListApi (APITestCase):
         """
         competition_data = {
             'name' : 'Test Season',
-            'type' : Competition.CompetitionType.SEASON
+            'type' : CompetitionType.SEASON
         }
         response = self.client.post(f'/api/baseball/organizations/{self.test_organization.id}/competitions/', data=competition_data, format='json')
         

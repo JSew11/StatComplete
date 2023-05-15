@@ -3,7 +3,7 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
-from .pitcher_role import PitcherRole
+from .choices.pitcher_role import PitcherRole
 from .player_pitching_stats import PlayerPitchingStats
 
 class PlayerPitchingStatsByRole(SafeDeleteModel):

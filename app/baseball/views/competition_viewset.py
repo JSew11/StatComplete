@@ -7,10 +7,15 @@ from rest_framework import status, permissions
 from ..models.competition import Competition
 from ..models.competition_team import CompetitionTeam
 from ..models.team_coach import TeamCoach
+from ..models.choices.coach_role import CoachRole
+from ..models.team_player import TeamPlayer
+from ..models.game import Game
+from ..models.choices.game_status import GameStatus
 from ..serializers.competition_serializer import CompetitionSerializer
 from ..serializers.competition_team_serializer import CompetitionTeamSerializer
 from ..serializers.team_coach_serializer import TeamCoachSerializer
 from ..serializers.team_player_serializer import TeamPlayerSerializer
+from ..serializers.game_serializer import GameSerializer
 
 class CompetitionViewSet (ModelViewSet):
     """Views for the competition model.
@@ -163,7 +168,7 @@ class CompetitionViewSet (ModelViewSet):
                 'competition_team': competition_team.id,
                 'coach': coach_id,
                 'jersey_number': int(request.data.get('jersey_number')),
-                'role': int(request.data.get('role', TeamCoach.CoachRole.COACH)), # TODO: validate this to make sure it is a valid role
+                'role': int(request.data.get('role', CoachRole.COACH)), # TODO: validate this to make sure it is a valid role
             }
             serializer = TeamCoachSerializer(data=team_coach_data)
             if serializer.is_valid():
@@ -257,4 +262,29 @@ class CompetitionViewSet (ModelViewSet):
             return Response(
                 data={'status': f'No team with the id \'{team_id}\' is registered for the competition with the id \'{competition_id}\''},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+    
+    # game endpoints
+    def create_game(self, request: Request, competition_id: str, *args, **kwargs) -> Response:
+        """Add a new game to the competition's schedule.
+        """
+        game_data = {
+            'competition': competition_id,
+            'date': request.POST.get('date', None),
+            'venue': request.POST.get('venue', {}),
+            'status': int(request.POST.get('status', GameStatus.SCHEDULED)),
+            'rules': request.POST.get('rules', {}),
+        }
+        serializer: GameSerializer = GameSerializer(data=game_data)
+        if serializer.is_valid():
+            game: Game = serializer.save()
+            # TODO: if home and away teams are given, create team box scores and add them to the model
+            return Response(
+                data=serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        else:
+            return Response(
+                data=serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
             )

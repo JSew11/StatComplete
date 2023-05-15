@@ -3,7 +3,7 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
-from .fielding_position import FieldingPosition
+from .choices.fielding_position import FieldingPosition
 from .player_fielding_stats import PlayerFieldingStats
 
 class PlayerFieldingStatsByPosition (SafeDeleteModel):
