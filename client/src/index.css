@@ -35,8 +35,7 @@ code {
   border-color: transparent;
   background-color: var(--primary-color);
 }
-.btn-primary:active,
-.btn-primary:focus {
+.btn-primary:active{
   border-color: transparent;
   background-color: var(--primary-color-active);
 }
@@ -55,8 +54,7 @@ code {
   border-color: transparent;
   background-color: var(--secondary-color);
 }
-.btn-secondary:active,
-.btn-secondary:focus {
+.btn-secondary:active{
   border-color: transparent;
   background-color: var(--secondary-color-active);
 }
