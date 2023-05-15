@@ -278,7 +278,34 @@ class CompetitionViewSet (ModelViewSet):
         serializer: GameSerializer = GameSerializer(data=game_data)
         if serializer.is_valid():
             game: Game = serializer.save()
-            # TODO: if home and away teams are given, create team box scores and add them to the model
+            if home_team_id := request.POST.get('home_team', None):
+                try:
+                    home_team: CompetitionTeam = CompetitionTeam.objects.get(id=home_team_id)
+                    message, success = game.add_team(home_team, is_home_team=True)
+                    if not success:
+                        return Response(
+                            data={'status': message},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+                except CompetitionTeam.DoesNotExist:
+                    return Response(
+                        data={'status': f'No team with the id \'{home_team_id}\' is registered for the competition with the id \'{competition_id}\''},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+            if away_team_id := request.POST.get('away_team', None):
+                try:
+                    away_team: CompetitionTeam = CompetitionTeam.objects.get(id=away_team_id)
+                    message, success = game.add_team(away_team, is_home_team=False)
+                    if not success:
+                        return Response(
+                            data={'status': message},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+                except CompetitionTeam.DoesNotExist:
+                    return Response(
+                        data={'status': f'No team with the id \'{away_team_id}\' is registered for the competition with the id \'{competition_id}\''},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
             return Response(
                 data=serializer.data,
                 status=status.HTTP_201_CREATED

@@ -1,4 +1,5 @@
 from uuid import uuid4
+from typing import Tuple
 from django.db import models
 from django.core.exceptions import ValidationError
 from safedelete.models import SafeDeleteModel
@@ -47,11 +48,40 @@ class Game (SafeDeleteModel):
     
     @property
     def home_team(self) -> CompetitionTeam:
-        return self.teams.filter(is_home_team=True).first().competition_team
+        try:
+            return self.teams.get(is_home_team=True).competition_team
+        except Exception:
+            return None
     
     @property
     def away_team(self) -> CompetitionTeam:
-        return self.teams.filter(is_home_team=False).first().competition_team
+        try:
+            return self.teams.get(is_home_team=False).competition_team
+        except Exception:
+            return None
+    
+    def add_team(self, competition_team: CompetitionTeam, is_home_team: bool) -> Tuple[str, bool]:
+        """Add a team to the current game. 
+        
+        Returns false if game is full (already 2 teams), team is invalid(there is
+        already a home/away team and you want the team to be home/away), or if the
+        team has already been added to the game.
+        """
+        if self.teams.count() == 0:
+            self.teams.create(competition_team=competition_team, is_home_team=is_home_team)
+            return f'Successfully added CompetitionTeam \'{competition_team.id}\'.', True
+        if self.teams.count() < 2:
+            try:
+                self.teams.get(competition_team=competition_team)
+                return f'CompetitionTeam \'{competition_team.id}\' is already added to this game.', False
+            except Exception:
+                if is_home_team and self.home_team != None:
+                    return 'There is already a home team in this game.', False
+                if not is_home_team and self.away_team != None:
+                    return 'There is already an away team in this game.', False
+                self.teams.create(competition_team=competition_team, game=self, is_home_team=is_home_team)
+                return f'Successfully added CompetitionTeam \'{competition_team.id}\'.', True
+        return 'There are already 2 teams registered for this game.', False
     
     def get_opposing_team(self, competition_team: CompetitionTeam) -> CompetitionTeam | None:
         """Get the opposing team for the given team.

@@ -204,6 +204,8 @@ class TestGameApi(APITestCase):
 
     def setUp(self) -> None:
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
+        self.test_home_team: CompetitionTeam = CompetitionTeam.objects.get(id='ff829ff9-e0c4-4ba3-8ee2-5a391fd257bc')
+        self.test_away_team: CompetitionTeam = CompetitionTeam.objects.get(id='b59e9d57-0e60-4da8-a023-32b37c2a1333')
         self.client = APIClient()
         user = User.objects.get(username='DeveloperAdmin')
         self.client.force_authenticate(user)
@@ -216,6 +218,8 @@ class TestGameApi(APITestCase):
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
         test_game_data = {
-
+            'home_team': self.test_home_team.id,
+            'away_team': self.test_away_team.id
         }
-        # TODO: test this endpoint when given initial data
+        response: Response = self.client.post(f'/api/baseball/competitions/{self.test_competition.id}/games/', data=test_game_data, format='json')
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
