@@ -56,3 +56,9 @@ class TestGameModel (TestCase):
 
         _, success = self.test_competition_game.add_team(self.test_away_competition_team, is_home_team=False)
         self.assertTrue(success)
+
+    def test_get_opposing_team(self):
+        """Test the get_opposing_team method for the game model.
+        """
+        self.assertEqual(self.test_away_competition_team, self.test_game.get_opposing_team(self.test_home_competition_team))
+        self.assertIsNone(self.test_competition_game.get_opposing_team(self.test_home_competition_team))

@@ -87,8 +87,8 @@ class Game (SafeDeleteModel):
         """Get the opposing team for the given team.
         """
         try:
-            return self.teams.filter(competition_team=competition_team).exclude()
-        except CompetitionTeam.DoesNotExist:
+            return self.teams.exclude(competition_team=competition_team).first().competition_team
+        except Exception:
             return None
         
     def save(self, keep_deleted=False, **kwargs):
