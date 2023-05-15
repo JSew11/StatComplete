@@ -33,8 +33,8 @@ class TestGameModel (TestCase):
     def test_home_team_property(self):
         """Test the home_team property of the game model.
         """
-        home_team = self.test_game.home_team
-        self.assertEqual(home_team, self.test_home_competition_team)
+        self.assertEqual(self.test_home_competition_team, self.test_game.home_team)
+        self.assertIsNone(self.test_competition_game.home_team)
 
     def test_add_team(self):
         """Test the add_team method for the game model.
