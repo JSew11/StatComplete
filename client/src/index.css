@@ -20,13 +20,13 @@ code {
 
 :root {
   --primary-color: #192841;
-  --primary-color-active: #24395d;
-  --primary-color-disabled: #345488;
-  --primary-color-hover: #29426c;
-  --secondary-color: #7a98cc;
+  --primary-color-active: #1e314f;
+  --primary-color-disabled: #29426c;
+  --primary-color-hover: #24395d;
+  --secondary-color: #96aed7;
   --secondary-color-active: #88a3d1;
   --secondary-color-disabled: #a4b9dc;
-  --secondary-color-hover: #96aed7;
+  --secondary-color-hover: #7a98cc;
 }
 
 /* primary button color override */
