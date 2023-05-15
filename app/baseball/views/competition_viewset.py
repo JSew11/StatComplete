@@ -300,7 +300,7 @@ class CompetitionViewSet (ModelViewSet):
                 competition_team__team=team_id,
                 player=player_id
             )
-            team_player.update_stats(request.data.get('stats', {}))
+            team_player.update_all_stats(request.data.get('stats', {}))
             return Response(
                 data={'status': f'Updated stats for player \'{player_id}\' on team \'{team_id}\' in competition \'{competition_id}\''},
                 status=status.HTTP_200_OK
