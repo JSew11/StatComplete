@@ -45,7 +45,7 @@ export default function Header() {
         </Col>
         <Col className='text-end'>
           { isTokenExpired(token) ? 
-            <Link className='btn btn-secondary' to='/login'>Sign In</Link> 
+            <Link className='btn btn-primary' to='/login'>Sign In</Link> 
             : 
             <Dropdown isOpen={isProfileDropdownOpen} toggle={toggleProfileDropdown}>
               <DropdownToggle className='p-0 m-0 profile-button'>

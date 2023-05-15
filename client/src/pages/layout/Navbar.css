@@ -6,18 +6,18 @@
     color: white;
 }
 
-.link:link:hover, .link:link:focus {
-    color: #b1f2ff;
-    background-color: #23395d;
+.link:link:hover,
+.link:link:focus {
+    background-color: #273f66;
 }
 
-.dropdown-link:link, .dropdown-link:visited {
+.dropdown-link:link,
+.dropdown-link:visited {
     color: black;
 }
 
 .dropdown-link:link:hover, 
 .dropdown-link:link:focus, 
 .dropdown-link:link:active {
-    color: #013349;
     background-color: #dadada;
 }

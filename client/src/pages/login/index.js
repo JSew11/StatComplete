@@ -99,8 +99,8 @@ export default function Login() {
           <Label for='passwordInput'>Password</Label>
         </FormGroup>
         <Button
+          className='btn btn-primary'
           type='submit'
-          color='primary'
           disabled={username === '' || password === ''}
         >
           Sign In

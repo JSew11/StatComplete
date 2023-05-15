@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn,
+.btn:hover { 
+  border-radius: 0;
+  border-color: transparent;
+}
+
+.btn-primary {
+  border-color: transparent;
+  background-color: #192841;
+}
+
+.btn-primary:hover {
+  background-color: #273f66;
+}
+
+.btn-primary:disabled {
+  background-color: #2e4a78
+}
