@@ -100,6 +100,7 @@ export default function Login() {
         </FormGroup>
         <Button
           className='btn btn-primary'
+          color='primary'
           type='submit'
           disabled={username === '' || password === ''}
         >

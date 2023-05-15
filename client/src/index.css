@@ -18,15 +18,53 @@ code {
   border-color: transparent;
 }
 
-.btn-primary {
+:root {
+  --primary-color: #192841;
+  --primary-color-active: #24395d;
+  --primary-color-disabled: #345488;
+  --primary-color-hover: #29426c;
+  --secondary-color: #7a98cc;
+  --secondary-color-active: #88a3d1;
+  --secondary-color-disabled: #a4b9dc;
+  --secondary-color-hover: #96aed7;
+}
+
+/* primary button color override */
+.btn-primary,
+.btn-primary:visited {
   border-color: transparent;
-  background-color: #192841;
+  background-color: var(--primary-color);
 }
-
-.btn-primary:hover {
-  background-color: #273f66;
+.btn-primary:active,
+.btn-primary:focus {
+  border-color: transparent;
+  background-color: var(--primary-color-active);
 }
-
 .btn-primary:disabled {
-  background-color: #2e4a78
+  border-color: transparent;
+  background-color: var(--primary-color-disabled);
+}
+.btn-primary:hover {
+  border-color: transparent;
+  background-color: var(--primary-color-hover);
+}
+
+/* secondary button color override */
+.btn-secondary,
+.btn-secondary:visited {
+  border-color: transparent;
+  background-color: var(--secondary-color);
+}
+.btn-secondary:active,
+.btn-secondary:focus {
+  border-color: transparent;
+  background-color: var(--secondary-color-active);
+}
+.btn-secondary:disabled {
+  border-color: transparent;
+  background-color: var(--secondary-color-disabled);
+}
+.btn-secondary:hover {
+  border-color: transparent;
+  background-color: var(--secondary-color-hover);
 }

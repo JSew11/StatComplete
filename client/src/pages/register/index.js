@@ -278,6 +278,7 @@ export default function Register() {
         </FormGroup>
         <Button
           className='btn btn-primary'
+          color='primary'
           type='submit'
           disabled={
             username === '' || usernameErrorMsg !== '' ||

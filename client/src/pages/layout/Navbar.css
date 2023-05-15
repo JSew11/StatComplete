@@ -1,14 +1,17 @@
 .navbar {
-    background-color: #192841;
+    background-color: var(--primary-color);
 }
 
 .link:link, .link:link:visited{
     color: white;
 }
 
-.link:link:hover,
+.link:link:hover {
+    background-color: var(--primary-color-hover);
+}
+
 .link:link:focus {
-    background-color: #273f66;
+    background-color: var(--primary-color-active);
 }
 
 .dropdown-link:link,
