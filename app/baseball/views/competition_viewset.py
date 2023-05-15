@@ -263,6 +263,53 @@ class CompetitionViewSet (ModelViewSet):
                 data={'status': f'No team with the id \'{team_id}\' is registered for the competition with the id \'{competition_id}\''},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        
+    def update_player_stats(self, request: Request, competition_id: str, team_id: str, player_id: str, *args, **kwargs) -> Response:
+        """Update the given team player's stats.
+
+        stats JSON structure:
+        {
+            "batting": {
+                "stats_by_lineup_spot": {
+                    "1": {...},
+                    "2": {...},
+                    ...
+                }
+            },
+            "baserunning": {...},
+            "pitching": {
+                ...,
+                "stats_by_role": {
+                    "0": {...},
+                    "1": {...}
+                }
+            },
+            "fielding": {
+                "stats_by_position": {
+                    "1": {...},
+                    "2": {...},
+                    ...
+                    "9": {...}
+                }
+            }
+        }
+        """
+        try:
+            team_player: TeamPlayer = TeamPlayer.objects.get(
+                competition_team__competition=competition_id,
+                competition_team__team=team_id,
+                player=player_id
+            )
+            team_player.update_stats(request.data.get('stats', {}))
+            return Response(
+                data={'status': f'Updated stats for player \'{player_id}\' on team \'{team_id}\' in competition \'{competition_id}\''},
+                status=status.HTTP_200_OK
+            )
+        except TeamPlayer.DoesNotExist:
+            return Response(
+                data={'status': f'No player with the id \'{player_id}\' is on the team \'{team_id}\' registered for the competition \'{competition_id}\''},
+                status=status.HTTP_404_NOT_FOUND,
+            )
     
     # game endpoints
     def create_game(self, request: Request, competition_id: str, *args, **kwargs) -> Response:
@@ -270,15 +317,15 @@ class CompetitionViewSet (ModelViewSet):
         """
         game_data = {
             'competition': competition_id,
-            'date': request.POST.get('date', None),
-            'venue': request.POST.get('venue', {}),
-            'status': int(request.POST.get('status', GameStatus.SCHEDULED)),
-            'rules': request.POST.get('rules', {}),
+            'date': request.data.get('date', None),
+            'venue': request.data.get('venue', {}),
+            'status': int(request.data.get('status', GameStatus.SCHEDULED)),
+            'rules': request.data.get('rules', {}),
         }
         serializer: GameSerializer = GameSerializer(data=game_data)
         if serializer.is_valid():
             game: Game = serializer.save()
-            if home_team_id := request.POST.get('home_team', None):
+            if home_team_id := request.data.get('home_team', None):
                 try:
                     home_team: CompetitionTeam = CompetitionTeam.objects.get(id=home_team_id)
                     message, success = game.add_team(home_team, is_home_team=True)
@@ -292,7 +339,7 @@ class CompetitionViewSet (ModelViewSet):
                         data={'status': f'No team with the id \'{home_team_id}\' is registered for the competition with the id \'{competition_id}\''},
                         status=status.HTTP_400_BAD_REQUEST
                     )
-            if away_team_id := request.POST.get('away_team', None):
+            if away_team_id := request.data.get('away_team', None):
                 try:
                     away_team: CompetitionTeam = CompetitionTeam.objects.get(id=away_team_id)
                     message, success = game.add_team(away_team, is_home_team=False)

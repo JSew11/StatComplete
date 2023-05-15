@@ -1,7 +1,8 @@
 from django.test import TestCase
 
-from baseball.models.constants import RIGHT_HANDED_MATCHUP, LEFT_HANDED_MATCHUP
+from baseball.models.constants import RIGHT_HANDED_MATCHUP
 from baseball.models.choices.pitcher_role import PitcherRole
+from baseball.models.choices.fielding_position import FieldingPosition
 from baseball.models.team_player import TeamPlayer
 
 class TestTeamPlayerModel (TestCase):
@@ -76,19 +77,51 @@ class TestPlayerPitchingStatsModel (TestCase):
         self.assertAlmostEqual(3.0375, self.test_team_player.pitching_stats.earned_run_average())
 
     def test_update_stats_by_role(self):
-        """Test the 'update_stats_by_role' method of the player pitching stats manager.
+        """Test the 'update_stats_by_role' method of the player pitching stats model.
         """
         stat_updates = {
             'games_played': 9,
             'games_pitched': 2,
             'losses': 1,
-            'no-decisions': 3
+            'fake_stat': 3
         }
         # invlid role
         updated = self.test_team_player.pitching_stats.update_stats_by_role(-1, stat_updates)
         self.assertFalse(updated)
 
         # valid role
-        updated = self.test_team_player.pitching_stats.update_stats_by_role(0, stat_updates)
+        updated = self.test_team_player.pitching_stats.update_stats_by_role(PitcherRole.STARTING_PITCHER, stat_updates)
         self.assertTrue(updated)
         self.assertEqual(9, self.test_team_player.pitching_stats.games_started)
+
+class TestPlayerFieldingStatsModel (TestCase):
+    """Tests for the player fielding stats model.
+    """
+    fixtures = ['organization', 'competition', 'team', 'competition_team', 
+                'player', 'team_player', 'player_baserunning_stats',
+                'player_batting_stats',
+                'player_pitching_stats',
+                'player_fielding_stats']
+    
+    def setUp(self) -> None:
+        self.test_team_player: TeamPlayer = TeamPlayer.objects.get(
+            player__first_name='Test',
+            player__last_name='Player'
+        )
+        return super().setUp()
+    
+    def test_update_stats_by_position(self):
+        """Test the 'update_stats_by_position' method of the player fielding stats model.
+        """
+        stat_updates = {
+            'games_started': 6,
+            'putouts': 15,
+            'fake_stat': 194
+        }
+
+        # invalid role
+        updated = self.test_team_player.fielding_stats.update_stats_by_position(0, stat_updates)
+        self.assertFalse(updated)
+
+        updated = self.test_team_player.fielding_stats.update_stats_by_position(FieldingPosition.SECOND_BASE, stat_updates)
+        self.assertTrue(updated)

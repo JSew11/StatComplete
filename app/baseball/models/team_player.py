@@ -67,33 +67,6 @@ class TeamPlayer (SafeDeleteModel):
 
     def update_stats(self, stats: dict) -> None:
         """Update the player's stats using the given stats data.
-
-        stats JSON structure:
-        {
-            "batting": {
-                "stats_by_lineup_spot": {
-                    "1": {...},
-                    "2": {...},
-                    ...
-                }
-            },
-            "baserunning": {...},
-            "pitching": {
-                ...,
-                "stats_by_role": {
-                    "0": {...},
-                    "1": {...}
-                }
-            },
-            "fielding": {
-                "stats_by_position": {
-                    "1": {...},
-                    "2": {...},
-                    ...
-                    "9": {...}
-                }
-            }
-        }
         """
         # update batting stats
         batting_stats: dict = stats['batting']
