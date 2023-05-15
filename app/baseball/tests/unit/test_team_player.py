@@ -27,6 +27,35 @@ class TestTeamPlayerModel (TestCase):
         player_string_representation = str(self.test_team_player.player)+f' #{self.test_team_player.jersey_number}'
         self.assertEqual(player_string_representation, str(self.test_team_player))
 
+class TestPlayerBattingStatsModel (TestCase):
+    """Tests for the player batting stats model.
+    """
+    fixtures = ['organization', 'competition', 'team', 'competition_team', 
+                'player', 'team_player', 'player_baserunning_stats',
+                'player_batting_stats',
+                'player_pitching_stats',
+                'player_fielding_stats']
+    
+    def setUp(self) -> None:
+        self.test_team_player: TeamPlayer = TeamPlayer.objects.get(
+            player__first_name='Test',
+            player__last_name='Player'
+        )
+        return super().setUp()
+    
+    def test_update_stats_by_lineup_spot(self):
+        """Test the 'update_stats_by_lineup_spot' method of the player pitching stats model.
+        """
+        stat_updates = {
+            'games_started': 6,
+            'singles_vs_right': 4,
+            'fake_stat': 194
+        }
+        updated = self.test_team_player.batting_stats.update_stats_by_lineup_spot(lineup_spot=2, stats=stat_updates)
+        self.assertTrue(updated)
+        self.assertEqual(6, self.test_team_player.batting_stats.games_started())
+
+
 class TestPlayerPitchingStatsModel (TestCase):
     """Tests for the player pitching stats model.
     """
@@ -80,7 +109,6 @@ class TestPlayerPitchingStatsModel (TestCase):
         """Test the 'update_stats_by_role' method of the player pitching stats model.
         """
         stat_updates = {
-            'games_played': 9,
             'games_pitched': 2,
             'losses': 1,
             'fake_stat': 3
@@ -93,6 +121,7 @@ class TestPlayerPitchingStatsModel (TestCase):
         updated = self.test_team_player.pitching_stats.update_stats_by_role(PitcherRole.STARTING_PITCHER, stat_updates)
         self.assertTrue(updated)
         self.assertEqual(9, self.test_team_player.pitching_stats.games_started)
+        self.assertEqual(9, self.test_team_player.pitching_stats.losses())
 
 class TestPlayerFieldingStatsModel (TestCase):
     """Tests for the player fielding stats model.
