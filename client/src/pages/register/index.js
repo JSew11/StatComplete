@@ -12,10 +12,12 @@ import {
   FormFeedback
 } from 'reactstrap';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
+import { register } from '../../state/token/actions';
+import { clearMessage } from '../../state/message/actions';
 
-const REGISTER_URL = 'register/';
 const CHECK_USERNAME_URL = 'check_username/'
 const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;
@@ -36,14 +38,16 @@ export default function Register() {
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState('')
   const [ confirmPassword, setConfirmPassword ] = useState('');
   const [ confirmPasswordErrorMsg, setConfirmPasswordErrorMsg ] = useState('')
-  const [ errorMsg, setErrorMsg ] = useState('');
+  
+  const { message } = useSelector(state => state.message);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     firstNameRef.current.focus();
   }, []);
 
   useEffect(() => {
-    setErrorMsg('');
+    clearMessage();
   }, [firstName, lastName, username, email, password, confirmPassword])
 
   useEffect(() => {
@@ -149,40 +153,10 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        REGISTER_URL,
-        JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          username: username,
-          email: email,
-          password: password 
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true
-        }
-      );
-      const accessToken = response?.data?.access;
-      // store token in localstorage
-      localStorage.setItem('token', accessToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      navigate('/');
-    } catch (err) {
-      if (!err?.response) {
-        setErrorMsg('No Server Response');
-      } else if (err.response?.status === 400) {
-        setErrorMsg('Missing Information');
-      } else if (err.response?.status === 401) {
-        setErrorMsg('Unauthorized');
-      } else {
-        setErrorMsg('Registration Failed');
-      }
-      errorRef.current.focus();
-    }
+    dispatch(register(username, firstName, lastName, email, password))
+      .then(() => {
+        navigate('/');
+      });
   }
 
   return (
@@ -194,9 +168,9 @@ export default function Register() {
       </Row>
       <Row>
         <Col>
-          <div ref={errorRef} className={errorMsg ? 'error-msg' : 'offscreen'}
+          <div ref={errorRef} className={message ? 'error-msg' : 'offscreen'}
             aria-live='assertive'>
-              {errorMsg}
+              {message}
           </div>
         </Col>
       </Row>
