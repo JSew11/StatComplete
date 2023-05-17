@@ -1,11 +1,11 @@
-import instance from './api';
+import { publicAxios } from './axios';
 
 const REGISTER_URL = 'register/';
 const LOGIN_URL = 'login/';
 const LOGOUT_URL = 'logout/';
 
 const register = async (username, firstName, lastName, email, password) => {
-  return await instance.post(REGISTER_URL, {
+  return await publicAxios.post(REGISTER_URL, {
     first_name: firstName,
     last_name: lastName,
     username: username,
@@ -22,7 +22,7 @@ const register = async (username, firstName, lastName, email, password) => {
 };
 
 const login = async (username, password) => {
-  return await instance.post(LOGIN_URL, {
+  return await publicAxios.post(LOGIN_URL, {
     username: username,
     password: password,
   })
