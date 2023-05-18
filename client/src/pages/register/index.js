@@ -51,24 +51,32 @@ export default function Register() {
   }, [firstName, lastName, username, email, password, confirmPassword])
 
   useEffect(() => {
-    validatePassword()
+    if (password !== '' || confirmPassword !== '') {
+      if (password.length < MINIMUM_PASSWORD_LENGTH) {
+        setPasswordErrorMsg(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
+      } else if (password !== confirmPassword) {
+        setPasswordErrorMsg('Passwords must match.')
+      } else {
+        setPasswordErrorMsg('');
+      }
+      if (password !== confirmPassword) {
+        setConfirmPasswordErrorMsg('Passwords must match.')
+      } else {
+        setConfirmPasswordErrorMsg('');
+      }
+    } else {
+      setPasswordErrorMsg('');
+      setConfirmPasswordErrorMsg('');
+    }
   }, [password, confirmPassword])
 
   useEffect(() => {
-    validateUsername()
-  }, [username])
-
-  useEffect(() => {
-    validateEmail()
-  }, [email])
-
-  const validateUsername = async () => {
     if (username !== '') {
       let re = /^[A-Za-z][\w]{4,29}$/;
       if (re.test(username)) {
         setUsernameErrorMsg('');
         try {
-          const response = await axios.post(
+          const response = axios.post(
             CHECK_USERNAME_URL,
             JSON.stringify({
               username: username,
@@ -94,15 +102,15 @@ export default function Register() {
     } else {
       setUsernameErrorMsg('');
     }
-  }
+  }, [username])
 
-  const validateEmail = async () => {
+  useEffect(() => {
     if (email !== '') {
       let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (re.test(email)) {
         setEmailErrorMsg('');
         try {
-          const response = await axios.post(
+          const response = axios.post(
             CHECK_EMAIL_URL,
             JSON.stringify({
               email: email,
@@ -128,27 +136,7 @@ export default function Register() {
     } else {
       setEmailErrorMsg('');
     }
-  }
-
-  const validatePassword = () => {
-    if (password !== '' || confirmPassword !== '') {
-      if (password.length < MINIMUM_PASSWORD_LENGTH) {
-        setPasswordErrorMsg(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
-      } else if (password !== confirmPassword) {
-        setPasswordErrorMsg('Passwords must match.')
-      } else {
-        setPasswordErrorMsg('');
-      }
-      if (password !== confirmPassword) {
-        setConfirmPasswordErrorMsg('Passwords must match.')
-      } else {
-        setConfirmPasswordErrorMsg('');
-      }
-    } else {
-      setPasswordErrorMsg('');
-      setConfirmPasswordErrorMsg('');
-    }
-  }
+  }, [email])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
