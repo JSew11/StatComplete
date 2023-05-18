@@ -10,7 +10,6 @@ import {
   DropdownItem
 } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
 import { CgProfile } from 'react-icons/cg';
 import { useDispatch, useSelector} from 'react-redux';
 
