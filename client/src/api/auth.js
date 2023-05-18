@@ -1,8 +1,12 @@
-import { publicAxios } from './axios';
+import { publicAxios, privateAxios } from './axios';
+import { Cookies } from 'react-cookie';
 
 const REGISTER_URL = 'register/';
 const LOGIN_URL = 'login/';
 const LOGOUT_URL = 'logout/';
+const REFRESH_TOKEN_URL = 'login/refresh/';
+
+const cookies = new Cookies();
 
 const register = async (username, firstName, lastName, email, password) => {
   return await publicAxios.post(REGISTER_URL, {
@@ -13,6 +17,16 @@ const register = async (username, firstName, lastName, email, password) => {
     password: password,
   })
   .then((response) => {
+    if (response.data.refresh) {
+      try {
+        cookies.set('refresh', response.data.refresh, {
+          httpOnly: true,
+          secure: true,
+        });
+      } catch (error) {
+        return error;
+      }
+    }
     if (response.data.access) {
       localStorage.setItem('token', response.data.access);
     }
@@ -27,6 +41,16 @@ const login = async (username, password) => {
     password: password,
   })
   .then((response) => {
+    if (response.data.refresh) {
+      try {
+        cookies.set('refresh', response.data.refresh, {
+          httpOnly: true,
+          secure: true,
+        });
+      } catch (error) {
+        return error;
+      }
+    }
     if (response.data.access) {
       localStorage.setItem('token',response.data.access);
     }
@@ -40,8 +64,20 @@ const logout = () => {
   localStorage.removeItem('token');
 };
 
+const refreshToken = () => {
+  privateAxios.post(REFRESH_TOKEN_URL)
+  .then((response) => {
+    if (response.data.access) {
+      localStorage.setItem('token', response.data.access);
+    }
+
+    return response.data;
+  });
+}
+
 export default {
   register,
   login,
   logout,
+  refreshToken,
 };

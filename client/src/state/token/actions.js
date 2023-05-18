@@ -4,9 +4,10 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAIL,
   SET_MESSAGE,
 } from '../actionTypes';
-
 import AuthApi from '../../api/auth';
 
 export const register = (username, firstName, lastName, email, password) => (dispatch) => {
@@ -15,7 +16,6 @@ export const register = (username, firstName, lastName, email, password) => (dis
       dispatch({
         type: REGISTER_SUCCESS,
         payload: {
-          refresh: data.refresh,
           access: data.access,
         }
       });
@@ -54,8 +54,7 @@ export const login = (username, password) => (dispatch) => {
     (data) => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: { 
-          refresh: data.refresh,
+        payload: {
           access: data.access,
         }
       });
@@ -64,7 +63,7 @@ export const login = (username, password) => (dispatch) => {
     },
     (error) => {
       let message = 'Login Failed';
-      if (error.response && error.response.status == 401) {
+      if (error.response && error.response.status === 401) {
         message = 'Invalid Login Credentials';
       } else {
         message =
@@ -96,3 +95,42 @@ export const logout = () => (dispatch) => {
     type: LOGOUT,
   });
 };
+
+export const refreshToken = () => (dispatch) => {
+  return AuthApi.refreshToken().then(
+    (data) => {
+      dispatch({
+        type: REFRESH_TOKEN_SUCCESS,
+        payload: {
+          access: data.access,
+        }
+      });
+
+      return Promise.resolve();
+    },
+    (error) => {
+      let message = 'Token refresh failed.';
+      if (error.response && error.response.status === 401) {
+        message = 'Refresh token expired, please login again.';
+      } else {
+        message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+
+      dispatch({
+        type: REFRESH_TOKEN_FAIL
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  );
+}

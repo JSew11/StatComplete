@@ -4,11 +4,13 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAIL,
 } from '../actionTypes';
 
 const accessToken = localStorage.getItem('token');
 
-const initialState = accessToken ? {isLoggedIn: true, token: accessToken } : { isLoggedIn: false, token: null}
+const initialState = accessToken ? {isLoggedIn: true, access: accessToken } : { isLoggedIn: false, access: null}
 
 export default function (state=initialState, action) {
   const { type, payload } = action;
@@ -28,20 +30,32 @@ export default function (state=initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
-        user: payload.user,
+        access: payload.access,
       };
     case LOGIN_FAIL:
       return {
         ...state,
         isLoggedIn: false,
-        user: null,
+        access: null,
       };
     case LOGOUT:
       return {
         ...state,
         isLoggedIn: false,
-        user: null,
+        access: null,
       };
+    case REFRESH_TOKEN_SUCCESS: 
+      return {
+        ...state,
+        isLoggedIn: true,
+        access: payload.access,
+      }
+    case REFRESH_TOKEN_FAIL:
+      return {
+        ...state,
+        isLoggedIn: false,
+        access: null,
+      }
     default:
       return state;
   }
