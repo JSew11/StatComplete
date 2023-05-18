@@ -23,9 +23,7 @@ export default function Header() {
 
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
 
-  const { isLoggedIn, access, refresh } = useSelector(state => state.auth);
-  console.log(access);
-  console.log(refresh);
+  const { isLoggedIn } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const toggleProfileDropdown = () => {
