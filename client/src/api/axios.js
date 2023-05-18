@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import store from '../state/store';
 import { refreshToken } from '../state/token/actions';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -21,9 +22,10 @@ const privateAxios = axios.create({
 
 privateAxios.interceptors.request.use(
   async (config) => {
-    const accessToken = localStorage.getItem('token');
+    const state = store.getState();
+    const accessToken = state.auth.access;
 
-    if (accessToken && accessToken != '') {
+    if (accessToken && accessToken !== '') {
       config.headers = {
         ...config.headers,
         authorization: `Bearer ${accessToken}`,

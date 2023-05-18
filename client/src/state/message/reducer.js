@@ -5,7 +5,7 @@ import {
 
 const initialState = { message: '' };
 
-export default function (state=initialState, action) {
+export default function message(state=initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -18,4 +18,4 @@ export default function (state=initialState, action) {
     default:
       return state;
   }
-}
+};

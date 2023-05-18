@@ -91,11 +91,18 @@ export const login = (username, password) => (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
-  AuthApi.logout();
+  AuthApi.logout().then(
+    () => {  
+      dispatch({
+        type: LOGOUT,
+      });
 
-  dispatch({
-    type: LOGOUT,
-  });
+      return Promise.resolve();
+    },
+    () => {
+      return Promise.reject();
+    }
+  );
 };
 
 export const refreshToken = () => (dispatch) => {

@@ -23,7 +23,9 @@ export default function Header() {
 
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
 
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const { isLoggedIn, access, refresh } = useSelector(state => state.auth);
+  console.log(access);
+  console.log(refresh);
   const dispatch = useDispatch();
 
   const toggleProfileDropdown = () => {
@@ -32,7 +34,6 @@ export default function Header() {
 
   const logoutUser = () => {
     dispatch(logout());
-    navigate('/');
   }
 
   return (

@@ -8,11 +8,10 @@ import {
   REFRESH_TOKEN_FAIL,
 } from '../actionTypes';
 
-const accessToken = localStorage.getItem('token');
 
-const initialState = accessToken ? {isLoggedIn: true, refresh: null, access: accessToken } : { isLoggedIn: false, access: null}
+const initialState = { isLoggedIn: false, access: null, refresh: null}
 
-export default function (state=initialState, action) {
+export default function auth(state=initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -20,8 +19,8 @@ export default function (state=initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
-        refresh: payload.refresh,
         access: payload.access,
+        refresh: payload.refresh,
       };
     case REGISTER_FAIL:
       return {
@@ -32,21 +31,22 @@ export default function (state=initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
-        refresh: payload.refresh,
         access: payload.access,
+        refresh: payload.refresh,
       };
     case LOGIN_FAIL:
       return {
         ...state,
         isLoggedIn: false,
         access: null,
+        refresh: null,
       };
     case LOGOUT:
       return {
         ...state,
         isLoggedIn: false,
-        refresh: null,
         access: null,
+        refresh: null,
       };
     case REFRESH_TOKEN_SUCCESS: 
       return {
