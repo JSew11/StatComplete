@@ -9,7 +9,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { useDispatch, useSelector} from 'react-redux';
 
@@ -19,8 +19,6 @@ import Navbar from './Navbar';
 import './Header.css';
 
 export default function Header() {
-  const navigate = useNavigate();
-
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
 
   const { isLoggedIn } = useSelector(state => state.auth);
