@@ -1,6 +1,8 @@
 import { publicAxios, privateAxios } from './axios';
 import { Cookies } from 'react-cookie';
 
+import store from '../state/store';
+
 const REGISTER_URL = 'register/';
 const LOGIN_URL = 'login/';
 const LOGOUT_URL = 'logout/';
@@ -41,16 +43,6 @@ const login = async (username, password) => {
     password: password,
   })
   .then((response) => {
-    if (response.data.refresh) {
-      try {
-        cookies.set('refresh', response.data.refresh, {
-          httpOnly: true,
-          secure: true,
-        });
-      } catch (error) {
-        return error;
-      }
-    }
     if (response.data.access) {
       localStorage.setItem('token',response.data.access);
     }
@@ -60,12 +52,25 @@ const login = async (username, password) => {
 };
 
 const logout = () => {
-  // TODO: call the logout api endpoint
-  localStorage.removeItem('token');
+  const state = store.getState();
+
+  privateAxios.post(LOGOUT_URL, {
+    refresh: state.auth.refresh,
+  }).then(
+    (response) => {
+      localStorage.removeItem('token');
+
+      return response.data;
+    }
+  );
 };
 
 const refreshToken = () => {
-  privateAxios.post(REFRESH_TOKEN_URL)
+  const state = store.getState();
+
+  privateAxios.post(REFRESH_TOKEN_URL, {
+    refresh: state.auth.refresh,
+  })
   .then((response) => {
     if (response.data.access) {
       localStorage.setItem('token', response.data.access);

@@ -10,7 +10,7 @@ import {
 
 const accessToken = localStorage.getItem('token');
 
-const initialState = accessToken ? {isLoggedIn: true, access: accessToken } : { isLoggedIn: false, access: null}
+const initialState = accessToken ? {isLoggedIn: true, refresh: null, access: accessToken } : { isLoggedIn: false, access: null}
 
 export default function (state=initialState, action) {
   const { type, payload } = action;
@@ -19,7 +19,9 @@ export default function (state=initialState, action) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        isLoggedIn: false,
+        isLoggedIn: true,
+        refresh: payload.refresh,
+        access: payload.access,
       };
     case REGISTER_FAIL:
       return {
@@ -30,6 +32,7 @@ export default function (state=initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
+        refresh: payload.refresh,
         access: payload.access,
       };
     case LOGIN_FAIL:
@@ -42,6 +45,7 @@ export default function (state=initialState, action) {
       return {
         ...state,
         isLoggedIn: false,
+        refresh: null,
         access: null,
       };
     case REFRESH_TOKEN_SUCCESS: 
