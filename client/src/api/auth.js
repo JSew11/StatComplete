@@ -1,6 +1,6 @@
 import { Cookies } from 'react-cookie';
 
-import { publicAxios } from './axios';
+import { privateAxios, publicAxios } from './axios';
 
 const REGISTER_URL = 'register/';
 const LOGIN_URL = 'login/';
@@ -24,6 +24,7 @@ const register = async (username, firstName, lastName, email, password) => {
           httpOnly: true
         })
       }
+      return response;
     }
   );
 };
@@ -32,15 +33,25 @@ const login = async (username, password) => {
   return await publicAxios.post(LOGIN_URL, {
     username: username,
     password: password,
-  });
+  })
+  .then(
+    (response) => {
+      if (response.data.refresh) {
+        cookies.set('refresh', response.data.refresh, {
+          httpOnly: true
+        })
+      }
+      return response;
+    }
+  );
 };
 
 const logout = async () => {
-  publicAxios.post(LOGOUT_URL);
+  privateAxios.post(LOGOUT_URL);
 };
 
 const refreshToken = async () => {
-  publicAxios.post(REFRESH_TOKEN_URL);
+  privateAxios.post(REFRESH_TOKEN_URL);
 }
 
 const AuthApi = {
