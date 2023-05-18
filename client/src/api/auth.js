@@ -1,11 +1,13 @@
-import { publicAxios } from './axios';
+import { Cookies } from 'react-cookie';
 
-import store from '../state/store';
+import { publicAxios } from './axios';
 
 const REGISTER_URL = 'register/';
 const LOGIN_URL = 'login/';
 const LOGOUT_URL = 'logout/';
 const REFRESH_TOKEN_URL = 'login/refresh/';
+
+const cookies = new Cookies();
 
 const register = async (username, firstName, lastName, email, password) => {
   return await publicAxios.post(REGISTER_URL, {
@@ -14,7 +16,16 @@ const register = async (username, firstName, lastName, email, password) => {
     username: username,
     email: email,
     password: password,
-  });
+  })
+  .then(
+    (response) => {
+      if (response.data.refresh) {
+        cookies.set('refresh', response.data.refresh, {
+          httpOnly: true
+        })
+      }
+    }
+  );
 };
 
 const login = async (username, password) => {
@@ -25,19 +36,11 @@ const login = async (username, password) => {
 };
 
 const logout = async () => {
-  const state = store.getState();
-
-  publicAxios.post(LOGOUT_URL, {
-    refresh: state.auth.refresh,
-  });
+  publicAxios.post(LOGOUT_URL);
 };
 
 const refreshToken = async () => {
-  const state = store.getState();
-
-  publicAxios.post(REFRESH_TOKEN_URL, {
-    refresh: state.auth.refresh,
-  });
+  publicAxios.post(REFRESH_TOKEN_URL);
 }
 
 const AuthApi = {

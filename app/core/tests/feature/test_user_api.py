@@ -1,6 +1,10 @@
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
+from http.cookies import SimpleCookie
+
+from core.models.user import User
 
 class TestUserRegistrationApi(APITestCase):
     """Tests for endpoints defined in the registration view.
@@ -23,6 +27,45 @@ class TestUserRegistrationApi(APITestCase):
         }
         response = self.client.post(path='/api/register/', data=user_data, format='json')
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+
+class TestRefreshTokenApi(APITestCase):
+    """Test the refresh_token endpoint.
+    """
+    fixtures = ['user']
+
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.test_user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(self.test_user)
+        token = RefreshToken.for_user(self.test_user)
+        self.client.cookies = SimpleCookie({'refresh': str(token)})
+        return super().setUp()
+    
+    def test_refresh_token(self):
+        """Test the POST endpoint for getting a new access token.
+        """
+        response: Response = self.client.post(path='/api/login/refresh/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertNotEqual('', response.data.get('access'))
+
+class TestLogoutApi(APITestCase):
+    """Test the logout endpoint.
+    """
+    fixtures = ['user']
+
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.test_user = User.objects.get(username='DeveloperAdmin')
+        self.client.force_authenticate(self.test_user)
+        token = RefreshToken.for_user(self.test_user)
+        self.client.cookies = SimpleCookie({'refresh': str(token)})
+        return super().setUp()
+    
+    def test_logout(self):
+        """Test the POST endpoint for logging a user out.
+        """
+        response: Response = self.client.post('/api/logout/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
 
 class TestUserFieldValidationApi(APITestCase):
     """Test endpoints defined in the user field validation view.
