@@ -35,7 +35,7 @@ class PlayerPitchingStats(SafeDeleteModel):
 
     @property
     def games_started(self):
-        return self.stats_by_role.filter(role=0).first().games_pitched
+        return self.stats_by_role.filter(role=0).first().games_pitched or 0
     
     # cumulative stat methods (total stat if no valid roles)
     def wins(self, roles: list = []) -> int:
