@@ -46,8 +46,8 @@ class TestTeamPlayerModel (TestCase):
                     'games_started': 6,
                     'singles_vs_right': 4,
                     'fake_stat': 194
-                }
-            }
+                },
+            },
         }
         self.test_team_player.update_batting_stats(invalid_lineup_spot)
         self.assertEqual(0, self.test_team_player.batting_stats.games_started())
@@ -58,16 +58,147 @@ class TestTeamPlayerModel (TestCase):
                 1: {
                     'games_started': 6,
                     'singles_vs_right': 4,
-                    'fake_stat': 194
                 },
                 3: {
                     'singles_vs_left': 6,
-                }
-            }
+                },
+            },
         }
         self.test_team_player.update_batting_stats(valid_stats)
         self.assertEqual(6, self.test_team_player.batting_stats.games_started())
         self.assertEqual(10, self.test_team_player.batting_stats.singles())
+
+    def test_update_baserunning_stats(self):
+        """Test the update_baserunning_stats method of the team_player model.
+        """
+        stat_updates = {
+            'games_pinch_run': 7,
+            'steals_second_base': 5,
+            'caught_stealing_second_base': 1,
+            'steals_third_base': 1,
+            'caught_stealing_third_base': 2,
+            'games_run': 999
+        }
+        self.test_team_player.update_baserunning_stats(stat_updates)
+        self.assertEqual(7, self.test_team_player.baserunning_stats.games_pinch_run)
+        self.assertEqual(6, self.test_team_player.baserunning_stats.steals())
+
+    def test_update_pitching_stats(self):
+        """Test the update_pitching_stats method of the team_player model.
+        """
+        # invalid stats
+        invalid_stats = {
+            'games_pitched': 2,
+            'losses': 1,
+        }
+        self.test_team_player.update_pitching_stats(invalid_stats)
+        self.assertEqual(0, self.test_team_player.pitching_stats.losses())
+
+        # valid stats
+        valid_stats = {
+            'complete_games': 1,
+            'holds': 1,
+            'saves': 2,
+            'save_opportunities': 3,
+            'stats_by_role': {
+                0: {
+                    'games_pitched': 2,
+                    'losses': 1,
+                },
+            },
+        }
+        self.test_team_player.update_pitching_stats(valid_stats)
+        self.assertEqual(1, self.test_team_player.pitching_stats.complete_games)
+        self.assertEqual(9, self.test_team_player.pitching_stats.games_started)
+        self.assertEqual(1, self.test_team_player.pitching_stats.losses())
+
+    def test_update_fielding_stats(self):
+        """Test the update_fielding_stats method of the team_player model.
+        """
+        # invalid stats
+        invalid_stats = {
+            'games_started': 6,
+            'putouts': 32,
+        }
+        self.test_team_player.update_fielding_stats(invalid_stats)
+        self.assertEqual(0, self.test_team_player.fielding_stats.games_started())
+        self.assertEqual(0, self.test_team_player.fielding_stats.putouts())
+
+        valid_stats = {
+            'stats_by_position': {
+                3: {
+                    'games_started': 6,
+                    'putouts': 32,
+                },
+                6: {
+                    'games_started': 2,
+                    'assists': 10,
+                },
+            },
+        }
+        self.test_team_player.update_fielding_stats(valid_stats)
+        self.assertEqual(8, self.test_team_player.fielding_stats.games_started())
+        self.assertEqual(32, self.test_team_player.fielding_stats.putouts())
+        self.assertEqual(10, self.test_team_player.fielding_stats.assists())
+
+    def test_update_all_stats(self):
+        """Test the update_all_stats method of the team player model.
+        """
+        stat_updates = {
+            'batting': {
+                'stats_by_lineup_spot': {
+                    1: {
+                        'games_started': 6,
+                        'singles_vs_right': 4,
+                    },
+                    3: {
+                        'singles_vs_left': 6,
+                    },
+                },
+            },
+            'baserunning': {
+                'games_pinch_run': 7,
+                'steals_second_base': 5,
+                'caught_stealing_second_base': 1,
+                'steals_third_base': 1,
+                'caught_stealing_third_base': 2,
+            },
+            'pitching': {
+                'complete_games': 1,
+                'holds': 1,
+                'saves': 2,
+                'save_opportunities': 3,
+                'stats_by_role': {
+                    0: {
+                        'games_pitched': 2,
+                        'losses': 1,
+                    },
+                },
+            },
+            'fielding': {
+                'stats_by_position': {
+                    3: {
+                        'games_started': 6,
+                        'putouts': 32,
+                    },
+                    6: {
+                        'games_started': 2,
+                        'assists': 10,
+                    },
+                },
+            },
+        }
+        self.test_team_player.update_all_stats(stat_updates)
+        self.assertEqual(6, self.test_team_player.batting_stats.games_started())
+        self.assertEqual(10, self.test_team_player.batting_stats.singles())
+        self.assertEqual(7, self.test_team_player.baserunning_stats.games_pinch_run)
+        self.assertEqual(6, self.test_team_player.baserunning_stats.steals())
+        self.assertEqual(1, self.test_team_player.pitching_stats.complete_games)
+        self.assertEqual(9, self.test_team_player.pitching_stats.games_started)
+        self.assertEqual(1, self.test_team_player.pitching_stats.losses())
+        self.assertEqual(8, self.test_team_player.fielding_stats.games_started())
+        self.assertEqual(32, self.test_team_player.fielding_stats.putouts())
+        self.assertEqual(10, self.test_team_player.fielding_stats.assists())
 
 class TestPlayerBattingStatsModel (TestCase):
     """Tests for the player batting stats model.
@@ -163,7 +294,7 @@ class TestPlayerPitchingStatsModel (TestCase):
         updated = self.test_team_player.pitching_stats.update_stats_by_role(PitcherRole.STARTING_PITCHER, stat_updates)
         self.assertTrue(updated)
         self.assertEqual(9, self.test_team_player.pitching_stats.games_started)
-        self.assertEqual(9, self.test_team_player.pitching_stats.losses())
+        self.assertEqual(1, self.test_team_player.pitching_stats.losses())
 
 class TestPlayerFieldingStatsModel (TestCase):
     """Tests for the player fielding stats model.

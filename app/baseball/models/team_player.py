@@ -109,13 +109,13 @@ class TeamPlayer (SafeDeleteModel):
     def update_all_stats(self, stats: dict) -> None:
         """Update the player's stats using the given stats data.
         """
-        if batting_stats := stats['batting']:
+        if batting_stats := stats.pop('batting', {}):
             self.update_batting_stats(batting_stats=batting_stats)
-        if baserunning_stats := stats['baserunning']:
+        if baserunning_stats := stats.pop('baserunning', {}):
             self.update_baserunning_stats(baserunning_stats=baserunning_stats)
-        if pitching_stats := stats['pitching']:
+        if pitching_stats := stats.pop('pitching', {}):
             self.update_pitching_stats(pitching_stats=pitching_stats)
-        if fielding_stats := stats['fielding']:
+        if fielding_stats := stats.pop('fielding', {}):
             self.update_fielding_stats(fielding_stats=fielding_stats)
 
     def __str__(self) -> str:
