@@ -48,192 +48,192 @@ class PlayerBattingStats (SafeDeleteModel):
     def singles(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('singles_vs_right'))['singles_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('singles_vs_right'))['singles_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('singles_vs_right'))['singles_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('singles_vs_right'))['singles_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('singles_vs_left'))['singles_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('singles_vs_left'))['singles_vs_left__sum']
-        singles_vs_right = lineup_spot_stats.aggregate(models.Sum('singles_vs_right'))['singles_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('singles_vs_right'))['singles_vs_right__sum']
-        singles_vs_left = lineup_spot_stats.aggregate(models.Sum('singles_vs_left'))['singles_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('singles_vs_left'))['singles_vs_left__sum']
-        return (singles_vs_right + singles_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('singles_vs_left'))['singles_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('singles_vs_left'))['singles_vs_left__sum'] or 0
+        singles_vs_right = lineup_spot_stats.aggregate(models.Sum('singles_vs_right'))['singles_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('singles_vs_right'))['singles_vs_right__sum'] or 0
+        singles_vs_left = lineup_spot_stats.aggregate(models.Sum('singles_vs_left'))['singles_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('singles_vs_left'))['singles_vs_left__sum'] or 0
+        return singles_vs_right + singles_vs_left
 
     def doubles(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('doubles_vs_right'))['doubles_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('doubles_vs_right'))['doubles_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('doubles_vs_right'))['doubles_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('doubles_vs_right'))['doubles_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('doubles_vs_left'))['doubles_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('doubles_vs_left'))['doubles_vs_left__sum']
-        doubles_vs_right = lineup_spot_stats.aggregate(models.Sum('doubles_vs_right'))['doubles_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('doubles_vs_right'))['doubles_vs_right__sum']
-        doubles_vs_left = lineup_spot_stats.aggregate(models.Sum('doubles_vs_left'))['doubles_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('doubles_vs_left'))['doubles_vs_left__sum']
-        return (doubles_vs_right + doubles_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('doubles_vs_left'))['doubles_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('doubles_vs_left'))['doubles_vs_left__sum'] or 0
+        doubles_vs_right = lineup_spot_stats.aggregate(models.Sum('doubles_vs_right'))['doubles_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('doubles_vs_right'))['doubles_vs_right__sum'] or 0
+        doubles_vs_left = lineup_spot_stats.aggregate(models.Sum('doubles_vs_left'))['doubles_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('doubles_vs_left'))['doubles_vs_left__sum'] or 0
+        return doubles_vs_right + doubles_vs_left
 
     def triples(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('triples_vs_right'))['triples_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('triples_vs_right'))['triples_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('triples_vs_right'))['triples_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('triples_vs_right'))['triples_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('triples_vs_left'))['triples_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('triples_vs_left'))['triples_vs_left__sum']
-        triples_vs_right = lineup_spot_stats.aggregate(models.Sum('triples_vs_right'))['triples_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('triples_vs_right'))['triples_vs_right__sum']
-        triples_vs_left = lineup_spot_stats.aggregate(models.Sum('triples_vs_left'))['triples_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('triples_vs_left'))['triples_vs_left__sum']
-        return (triples_vs_right + triples_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('triples_vs_left'))['triples_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('triples_vs_left'))['triples_vs_left__sum'] or 0
+        triples_vs_right = lineup_spot_stats.aggregate(models.Sum('triples_vs_right'))['triples_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('triples_vs_right'))['triples_vs_right__sum'] or 0
+        triples_vs_left = lineup_spot_stats.aggregate(models.Sum('triples_vs_left'))['triples_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('triples_vs_left'))['triples_vs_left__sum'] or 0
+        return triples_vs_right + triples_vs_left
 
     def home_runs(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('home_runs_vs_right'))['home_runs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('home_runs_vs_right'))['home_runs_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('home_runs_vs_right'))['home_runs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('home_runs_vs_right'))['home_runs_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('home_runs_vs_left'))['home_runs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('home_runs_vs_left'))['home_runs_vs_left__sum']
-        home_runs_vs_right = lineup_spot_stats.aggregate(models.Sum('home_runs_vs_right'))['home_runs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('home_runs_vs_right'))['home_runs_vs_right__sum']
-        home_runs_vs_left = lineup_spot_stats.aggregate(models.Sum('home_runs_vs_left'))['home_runs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('home_runs_vs_left'))['home_runs_vs_left__sum']
-        return (home_runs_vs_right + home_runs_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('home_runs_vs_left'))['home_runs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('home_runs_vs_left'))['home_runs_vs_left__sum'] or 0
+        home_runs_vs_right = lineup_spot_stats.aggregate(models.Sum('home_runs_vs_right'))['home_runs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('home_runs_vs_right'))['home_runs_vs_right__sum'] or 0
+        home_runs_vs_left = lineup_spot_stats.aggregate(models.Sum('home_runs_vs_left'))['home_runs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('home_runs_vs_left'))['home_runs_vs_left__sum'] or 0
+        return home_runs_vs_right + home_runs_vs_left
 
     def runs_batted_in(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('runs_batted_in_vs_right'))['runs_batted_in_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('runs_batted_in_vs_right'))['runs_batted_in_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('runs_batted_in_vs_right'))['runs_batted_in_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('runs_batted_in_vs_right'))['runs_batted_in_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('runs_batted_in_vs_left'))['runs_batted_in_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('runs_batted_in_vs_left'))['runs_batted_in_vs_left__sum']
-        runs_batted_in_vs_right = lineup_spot_stats.aggregate(models.Sum('runs_batted_in_vs_right'))['runs_batted_in_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('runs_batted_in_vs_right'))['runs_batted_in_vs_right__sum']
-        runs_batted_in_vs_left = lineup_spot_stats.aggregate(models.Sum('runs_batted_in_vs_left'))['runs_batted_in_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('runs_batted_in_vs_left'))['runs_batted_in_vs_left__sum']
-        return (runs_batted_in_vs_right + runs_batted_in_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('runs_batted_in_vs_left'))['runs_batted_in_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('runs_batted_in_vs_left'))['runs_batted_in_vs_left__sum'] or 0
+        runs_batted_in_vs_right = lineup_spot_stats.aggregate(models.Sum('runs_batted_in_vs_right'))['runs_batted_in_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('runs_batted_in_vs_right'))['runs_batted_in_vs_right__sum'] or 0
+        runs_batted_in_vs_left = lineup_spot_stats.aggregate(models.Sum('runs_batted_in_vs_left'))['runs_batted_in_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('runs_batted_in_vs_left'))['runs_batted_in_vs_left__sum'] or 0
+        return runs_batted_in_vs_right + runs_batted_in_vs_left
 
     def walks(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum']
-        walks_vs_right = lineup_spot_stats.aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum']
-        walks_vs_left = lineup_spot_stats.aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum']
-        return (walks_vs_right + walks_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum'] or 0
+        walks_vs_right = lineup_spot_stats.aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('walks_vs_right'))['walks_vs_right__sum'] or 0
+        walks_vs_left = lineup_spot_stats.aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('walks_vs_left'))['walks_vs_left__sum'] or 0
+        return walks_vs_right + walks_vs_left
 
     def intentional_walks(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum']
-        intentional_walks_vs_right = lineup_spot_stats.aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum']
-        intentional_walks_vs_left = lineup_spot_stats.aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum']
-        return (intentional_walks_vs_right + intentional_walks_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum'] or 0
+        intentional_walks_vs_right = lineup_spot_stats.aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('intentional_walks_vs_right'))['intentional_walks_vs_right__sum'] or 0
+        intentional_walks_vs_left = lineup_spot_stats.aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('intentional_walks_vs_left'))['intentional_walks_vs_left__sum'] or 0
+        return intentional_walks_vs_right + intentional_walks_vs_left
 
     def hit_by_pitch(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum']
-        hit_by_pitch_vs_right = lineup_spot_stats.aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum']
-        hit_by_pitch_vs_left = lineup_spot_stats.aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum']
-        return (hit_by_pitch_vs_right + hit_by_pitch_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum'] or 0
+        hit_by_pitch_vs_right = lineup_spot_stats.aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('hit_by_pitch_vs_right'))['hit_by_pitch_vs_right__sum'] or 0
+        hit_by_pitch_vs_left = lineup_spot_stats.aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('hit_by_pitch_vs_left'))['hit_by_pitch_vs_left__sum'] or 0
+        return hit_by_pitch_vs_right + hit_by_pitch_vs_left
 
     def sac_bunts(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('sac_bunts_vs_right'))['sac_bunts_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_bunts_vs_right'))['sac_bunts_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('sac_bunts_vs_right'))['sac_bunts_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_bunts_vs_right'))['sac_bunts_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('sac_bunts_vs_left'))['sac_bunts_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_bunts_vs_left'))['sac_bunts_vs_left__sum']
-        sac_bunts_vs_right = lineup_spot_stats.aggregate(models.Sum('sac_bunts_vs_right'))['sac_bunts_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_bunts_vs_right'))['sac_bunts_vs_right__sum']
-        sac_bunts_vs_left = lineup_spot_stats.aggregate(models.Sum('sac_bunts_vs_left'))['sac_bunts_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_bunts_vs_left'))['sac_bunts_vs_left__sum']
-        return (sac_bunts_vs_right + sac_bunts_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('sac_bunts_vs_left'))['sac_bunts_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_bunts_vs_left'))['sac_bunts_vs_left__sum'] or 0
+        sac_bunts_vs_right = lineup_spot_stats.aggregate(models.Sum('sac_bunts_vs_right'))['sac_bunts_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_bunts_vs_right'))['sac_bunts_vs_right__sum'] or 0
+        sac_bunts_vs_left = lineup_spot_stats.aggregate(models.Sum('sac_bunts_vs_left'))['sac_bunts_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_bunts_vs_left'))['sac_bunts_vs_left__sum'] or 0
+        return sac_bunts_vs_right + sac_bunts_vs_left
 
     def sac_hits(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('sac_hits_vs_right'))['sac_hits_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_hits_vs_right'))['sac_hits_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('sac_hits_vs_right'))['sac_hits_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_hits_vs_right'))['sac_hits_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('sac_hits_vs_left'))['sac_hits_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_hits_vs_left'))['sac_hits_vs_left__sum']
-        sac_hits_vs_right = lineup_spot_stats.aggregate(models.Sum('sac_hits_vs_right'))['sac_hits_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_hits_vs_right'))['sac_hits_vs_right__sum']
-        sac_hits_vs_left = lineup_spot_stats.aggregate(models.Sum('sac_hits_vs_left'))['sac_hits_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_hits_vs_left'))['sac_hits_vs_left__sum']
-        return (sac_hits_vs_right + sac_hits_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('sac_hits_vs_left'))['sac_hits_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_hits_vs_left'))['sac_hits_vs_left__sum'] or 0
+        sac_hits_vs_right = lineup_spot_stats.aggregate(models.Sum('sac_hits_vs_right'))['sac_hits_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_hits_vs_right'))['sac_hits_vs_right__sum'] or 0
+        sac_hits_vs_left = lineup_spot_stats.aggregate(models.Sum('sac_hits_vs_left'))['sac_hits_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_hits_vs_left'))['sac_hits_vs_left__sum'] or 0
+        return sac_hits_vs_right + sac_hits_vs_left
 
     def sac_flies(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('sac_flies_vs_right'))['sac_flies_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_flies_vs_right'))['sac_flies_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('sac_flies_vs_right'))['sac_flies_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_flies_vs_right'))['sac_flies_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('sac_flies_vs_left'))['sac_flies_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_flies_vs_left'))['sac_flies_vs_left__sum']
-        sac_flies_vs_right = lineup_spot_stats.aggregate(models.Sum('sac_flies_vs_right'))['sac_flies_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_flies_vs_right'))['sac_flies_vs_right__sum']
-        sac_flies_vs_left = lineup_spot_stats.aggregate(models.Sum('sac_flies_vs_left'))['sac_flies_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_flies_vs_left'))['sac_flies_vs_left__sum']
-        return (sac_flies_vs_right + sac_flies_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('sac_flies_vs_left'))['sac_flies_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_flies_vs_left'))['sac_flies_vs_left__sum'] or 0
+        sac_flies_vs_right = lineup_spot_stats.aggregate(models.Sum('sac_flies_vs_right'))['sac_flies_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_flies_vs_right'))['sac_flies_vs_right__sum'] or 0
+        sac_flies_vs_left = lineup_spot_stats.aggregate(models.Sum('sac_flies_vs_left'))['sac_flies_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('sac_flies_vs_left'))['sac_flies_vs_left__sum'] or 0
+        return sac_flies_vs_right + sac_flies_vs_left
 
     def fielders_choice(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('fielders_choice_vs_right'))['fielders_choice_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fielders_choice_vs_right'))['fielders_choice_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('fielders_choice_vs_right'))['fielders_choice_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fielders_choice_vs_right'))['fielders_choice_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('fielders_choice_vs_left'))['fielders_choice_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fielders_choice_vs_left'))['fielders_choice_vs_left__sum']
-        fielders_choice_vs_right = lineup_spot_stats.aggregate(models.Sum('fielders_choice_vs_right'))['fielders_choice_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fielders_choice_vs_right'))['fielders_choice_vs_right__sum']
-        fielders_choice_vs_left = lineup_spot_stats.aggregate(models.Sum('fielders_choice_vs_left'))['fielders_choice_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fielders_choice_vs_left'))['fielders_choice_vs_left__sum']
-        return (fielders_choice_vs_right + fielders_choice_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('fielders_choice_vs_left'))['fielders_choice_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fielders_choice_vs_left'))['fielders_choice_vs_left__sum'] or 0
+        fielders_choice_vs_right = lineup_spot_stats.aggregate(models.Sum('fielders_choice_vs_right'))['fielders_choice_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fielders_choice_vs_right'))['fielders_choice_vs_right__sum'] or 0
+        fielders_choice_vs_left = lineup_spot_stats.aggregate(models.Sum('fielders_choice_vs_left'))['fielders_choice_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fielders_choice_vs_left'))['fielders_choice_vs_left__sum'] or 0
+        return fielders_choice_vs_right + fielders_choice_vs_left
 
     def ground_outs(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('ground_outs_vs_right'))['ground_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('ground_outs_vs_right'))['ground_outs_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('ground_outs_vs_right'))['ground_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('ground_outs_vs_right'))['ground_outs_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('ground_outs_vs_left'))['ground_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('ground_outs_vs_left'))['ground_outs_vs_left__sum']
-        ground_outs_vs_right = lineup_spot_stats.aggregate(models.Sum('ground_outs_vs_right'))['ground_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('ground_outs_vs_right'))['ground_outs_vs_right__sum']
-        ground_outs_vs_left = lineup_spot_stats.aggregate(models.Sum('ground_outs_vs_left'))['ground_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('ground_outs_vs_left'))['ground_outs_vs_left__sum']
-        return (ground_outs_vs_right + ground_outs_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('ground_outs_vs_left'))['ground_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('ground_outs_vs_left'))['ground_outs_vs_left__sum'] or 0
+        ground_outs_vs_right = lineup_spot_stats.aggregate(models.Sum('ground_outs_vs_right'))['ground_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('ground_outs_vs_right'))['ground_outs_vs_right__sum'] or 0
+        ground_outs_vs_left = lineup_spot_stats.aggregate(models.Sum('ground_outs_vs_left'))['ground_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('ground_outs_vs_left'))['ground_outs_vs_left__sum'] or 0
+        return ground_outs_vs_right + ground_outs_vs_left
 
     def line_outs(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('line_outs_vs_right'))['line_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('line_outs_vs_right'))['line_outs_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('line_outs_vs_right'))['line_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('line_outs_vs_right'))['line_outs_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('line_outs_vs_left'))['line_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('line_outs_vs_left'))['line_outs_vs_left__sum']
-        line_outs_vs_right = lineup_spot_stats.aggregate(models.Sum('line_outs_vs_right'))['line_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('line_outs_vs_right'))['line_outs_vs_right__sum']
-        line_outs_vs_left = lineup_spot_stats.aggregate(models.Sum('line_outs_vs_left'))['line_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('line_outs_vs_left'))['line_outs_vs_left__sum']
-        return (line_outs_vs_right + line_outs_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('line_outs_vs_left'))['line_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('line_outs_vs_left'))['line_outs_vs_left__sum'] or 0
+        line_outs_vs_right = lineup_spot_stats.aggregate(models.Sum('line_outs_vs_right'))['line_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('line_outs_vs_right'))['line_outs_vs_right__sum'] or 0
+        line_outs_vs_left = lineup_spot_stats.aggregate(models.Sum('line_outs_vs_left'))['line_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('line_outs_vs_left'))['line_outs_vs_left__sum'] or 0
+        return line_outs_vs_right + line_outs_vs_left
 
     def fly_outs(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('fly_outs_vs_right'))['fly_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fly_outs_vs_right'))['fly_outs_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('fly_outs_vs_right'))['fly_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fly_outs_vs_right'))['fly_outs_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('fly_outs_vs_left'))['fly_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fly_outs_vs_left'))['fly_outs_vs_left__sum']
-        fly_outs_vs_right = lineup_spot_stats.aggregate(models.Sum('fly_outs_vs_right'))['fly_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fly_outs_vs_right'))['fly_outs_vs_right__sum']
-        fly_outs_vs_left = lineup_spot_stats.aggregate(models.Sum('fly_outs_vs_left'))['fly_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fly_outs_vs_left'))['fly_outs_vs_left__sum']
-        return (fly_outs_vs_right + fly_outs_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('fly_outs_vs_left'))['fly_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fly_outs_vs_left'))['fly_outs_vs_left__sum'] or 0
+        fly_outs_vs_right = lineup_spot_stats.aggregate(models.Sum('fly_outs_vs_right'))['fly_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fly_outs_vs_right'))['fly_outs_vs_right__sum'] or 0
+        fly_outs_vs_left = lineup_spot_stats.aggregate(models.Sum('fly_outs_vs_left'))['fly_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('fly_outs_vs_left'))['fly_outs_vs_left__sum'] or 0
+        return fly_outs_vs_right + fly_outs_vs_left
 
     def pop_outs(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('pop_outs_vs_right'))['pop_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('pop_outs_vs_right'))['pop_outs_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('pop_outs_vs_right'))['pop_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('pop_outs_vs_right'))['pop_outs_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('pop_outs_vs_left'))['pop_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('pop_outs_vs_left'))['pop_outs_vs_left__sum']
-        pop_outs_vs_right = lineup_spot_stats.aggregate(models.Sum('pop_outs_vs_right'))['pop_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('pop_outs_vs_right'))['pop_outs_vs_right__sum']
-        pop_outs_vs_left = lineup_spot_stats.aggregate(models.Sum('pop_outs_vs_left'))['pop_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('pop_outs_vs_left'))['pop_outs_vs_left__sum']
-        return (pop_outs_vs_right + pop_outs_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('pop_outs_vs_left'))['pop_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('pop_outs_vs_left'))['pop_outs_vs_left__sum'] or 0
+        pop_outs_vs_right = lineup_spot_stats.aggregate(models.Sum('pop_outs_vs_right'))['pop_outs_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('pop_outs_vs_right'))['pop_outs_vs_right__sum'] or 0
+        pop_outs_vs_left = lineup_spot_stats.aggregate(models.Sum('pop_outs_vs_left'))['pop_outs_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('pop_outs_vs_left'))['pop_outs_vs_left__sum'] or 0
+        return pop_outs_vs_right + pop_outs_vs_left
 
     def strikeouts_swinging(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum']
-        strikeouts_swinging_vs_right = lineup_spot_stats.aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum']
-        strikeouts_swinging_vs_left = lineup_spot_stats.aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum']
-        return (strikeouts_swinging_vs_right + strikeouts_swinging_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum'] or 0
+        strikeouts_swinging_vs_right = lineup_spot_stats.aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_swinging_vs_right'))['strikeouts_swinging_vs_right__sum'] or 0
+        strikeouts_swinging_vs_left = lineup_spot_stats.aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_swinging_vs_left'))['strikeouts_swinging_vs_left__sum'] or 0
+        return strikeouts_swinging_vs_right + strikeouts_swinging_vs_left
 
     def strikeouts_looking(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum']
-        strikeouts_looking_vs_right = lineup_spot_stats.aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum']
-        strikeouts_looking_vs_left = lineup_spot_stats.aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum']
-        return (strikeouts_looking_vs_right + strikeouts_looking_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum'] or 0
+        strikeouts_looking_vs_right = lineup_spot_stats.aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_looking_vs_right'))['strikeouts_looking_vs_right__sum'] or 0
+        strikeouts_looking_vs_left = lineup_spot_stats.aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('strikeouts_looking_vs_left'))['strikeouts_looking_vs_left__sum'] or 0
+        return strikeouts_looking_vs_right + strikeouts_looking_vs_left
 
     def double_plays(self, lineup_spots: list = [], matchup: str = '') -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
         if matchup == RIGHT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('double_plays_vs_right'))['double_plays_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('double_plays_vs_right'))['double_plays_vs_right__sum']
+            return lineup_spot_stats.aggregate(models.Sum('double_plays_vs_right'))['double_plays_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('double_plays_vs_right'))['double_plays_vs_right__sum'] or 0
         if matchup == LEFT_HANDED_MATCHUP:
-            return lineup_spot_stats.aggregate(models.Sum('double_plays_vs_left'))['double_plays_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('double_plays_vs_left'))['double_plays_vs_left__sum']
-        double_plays_vs_right = lineup_spot_stats.aggregate(models.Sum('double_plays_vs_right'))['double_plays_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('double_plays_vs_right'))['double_plays_vs_right__sum']
-        double_plays_vs_left = lineup_spot_stats.aggregate(models.Sum('double_plays_vs_left'))['double_plays_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('double_plays_vs_left'))['double_plays_vs_left__sum']
-        return (double_plays_vs_right + double_plays_vs_left) or 0
+            return lineup_spot_stats.aggregate(models.Sum('double_plays_vs_left'))['double_plays_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('double_plays_vs_left'))['double_plays_vs_left__sum'] or 0
+        double_plays_vs_right = lineup_spot_stats.aggregate(models.Sum('double_plays_vs_right'))['double_plays_vs_right__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('double_plays_vs_right'))['double_plays_vs_right__sum'] or 0
+        double_plays_vs_left = lineup_spot_stats.aggregate(models.Sum('double_plays_vs_left'))['double_plays_vs_left__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('double_plays_vs_left'))['double_plays_vs_left__sum'] or 0
+        return double_plays_vs_right + double_plays_vs_left
 
     def update_stats_by_lineup_spot(self, lineup_spot: int, stats: dict) -> bool:
         """Update the player's batting stats for a specific lineup spot by adding
