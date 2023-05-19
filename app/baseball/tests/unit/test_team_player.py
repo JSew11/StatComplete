@@ -27,6 +27,48 @@ class TestTeamPlayerModel (TestCase):
         player_string_representation = str(self.test_team_player.player)+f' #{self.test_team_player.jersey_number}'
         self.assertEqual(player_string_representation, str(self.test_team_player))
 
+    def test_update_batting_stats(self):
+        """Test the update_batting_stats method for the team_player model.
+        """
+        # invalid format
+        invalid_stats = {
+            'games_started': 6,
+            'singles_vs_right': 4,
+            'fake_stat': 194
+        }
+        self.test_team_player.update_batting_stats(invalid_stats)
+        self.assertEqual(0, self.test_team_player.batting_stats.games_started())
+
+        # invalid lineup spot
+        invalid_lineup_spot = {
+            'stats_by_lineup_spot': {
+                0: {
+                    'games_started': 6,
+                    'singles_vs_right': 4,
+                    'fake_stat': 194
+                }
+            }
+        }
+        self.test_team_player.update_batting_stats(invalid_lineup_spot)
+        self.assertEqual(0, self.test_team_player.batting_stats.games_started())
+
+        # valid format
+        valid_stats = {
+            'stats_by_lineup_spot': {
+                1: {
+                    'games_started': 6,
+                    'singles_vs_right': 4,
+                    'fake_stat': 194
+                },
+                3: {
+                    'singles_vs_left': 6,
+                }
+            }
+        }
+        self.test_team_player.update_batting_stats(valid_stats)
+        self.assertEqual(6, self.test_team_player.batting_stats.games_started())
+        self.assertEqual(10, self.test_team_player.batting_stats.singles())
+
 class TestPlayerBattingStatsModel (TestCase):
     """Tests for the player batting stats model.
     """

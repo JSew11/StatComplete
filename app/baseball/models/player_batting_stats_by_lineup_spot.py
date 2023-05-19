@@ -1,5 +1,6 @@
 from uuid import uuid4
 from django.db import models
+from django.core.validators import MinValueValidator
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
@@ -29,7 +30,7 @@ class PlayerBattingStatsByLineupSpot(SafeDeleteModel):
     batting_stats = models.ForeignKey(PlayerBattingStats, on_delete=models.CASCADE, related_name='stats_by_lineup_spot')
 
     # lineup spot
-    lineup_spot = models.PositiveSmallIntegerField()
+    lineup_spot = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
 
     # counted stats
     games_started = models.PositiveIntegerField(default=0)

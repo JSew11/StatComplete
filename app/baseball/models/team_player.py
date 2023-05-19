@@ -70,7 +70,7 @@ class TeamPlayer (SafeDeleteModel):
         """
         batting_stats_by_lineup_spot: dict = batting_stats.pop('stats_by_lineup_spot', dict())
         for lineup_spot, stats_by_lineup_spot in batting_stats_by_lineup_spot.items():
-            self.batting_stats.update_stats_by_lineup_spot(lineup_spot, stats_by_lineup_spot)
+            self.batting_stats.update_stats_by_lineup_spot(int(lineup_spot), stats_by_lineup_spot)
         self.batting_stats.save()
 
     def update_baserunning_stats(self, baserunning_stats: dict) -> None:
