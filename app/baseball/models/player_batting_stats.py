@@ -30,8 +30,7 @@ class PlayerBattingStats (SafeDeleteModel):
     # cumulative stat methods (total stat if no valid lineup spot)
     def games_started(self, lineup_spots: list = []) -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
-        games_started = lineup_spot_stats.aggregate(models.Sum('games_started'))['games_started__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('games_started'))['games_started__sum']
-        return games_started if games_started else 0
+        return lineup_spot_stats.aggregate(models.Sum('games_started'))['games_started__sum'] if lineup_spot_stats else self.stats_by_lineup_spot.all().aggregate(models.Sum('games_started'))['games_started__sum'] or 0
     
     def games_pinch_hit(self, lineup_spots: list = []) -> int:
         lineup_spot_stats = self.stats_by_lineup_spot.filter(lineup_spot__in=lineup_spots)
