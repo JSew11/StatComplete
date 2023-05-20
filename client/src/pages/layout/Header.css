@@ -7,15 +7,16 @@
 .profile-button:hover,
 .profile-button:focus,
 .profile-button:active {
+    border-radius: 50%;
     border-color: transparent;
-    background-color: #b1f2ff;
+    background-color: var(--secondary-color-hover);
 }
 
 .profile-icon,
 .profile-icon:focus {
     height: 40px;
     width: 40px;
-    color: #192841;
+    color: var(--primary-color);
     background-color: transparent;
     font-weight: lighter;
 }
@@ -31,6 +32,6 @@
 .user-dropdown-link:link:active {
     text-align: end;
     margin-right: 10%;
-    color: #013349;
+    color: var(--primary-color-active);
     background-color: #dadada;
 }

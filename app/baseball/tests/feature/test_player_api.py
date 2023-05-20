@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 
+from core.models.user import User
 from baseball.models.player import Player
 
 class TestPlayerDetailsApi (APITestCase):

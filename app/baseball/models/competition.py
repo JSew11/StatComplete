@@ -3,23 +3,18 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
-from ..models.organization import Organization
+from .organization import Organization
+from .choices.competition_type import CompetitionType
 
 class Competition (SafeDeleteModel):
     """Model for a baseball competition.
 
-    Includes the type (season, tournament, etc.), standings, schedule and
+    Includes the type (season, tournament, etc.), standings and
     start/end dates.
     """
 
     deleted_by_cascade = None # removes this default field from the db table
     _safedelete_policy = SOFT_DELETE_CASCADE
-
-    class CompetitionType (models.IntegerChoices):
-        """Choices for the different types of competitions.
-        """
-        SEASON = 1, 'Season'
-        TOURNAMENT = 2, 'Tournament'
 
     class Meta:
         ordering = ['created']

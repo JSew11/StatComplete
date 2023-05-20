@@ -10,31 +10,26 @@ import {
   DropdownItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
 import { CgProfile } from 'react-icons/cg';
+import { useDispatch, useSelector} from 'react-redux';
+
+import { logout } from '../../state/token/actions';
 
 import Navbar from './Navbar';
 import './Header.css';
 
 export default function Header() {
-  const token = localStorage.getItem('token');
-
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
 
-  const isTokenExpired = (token) => {
-    if (token === null || !token) return true;
-    const decodedToken = jwtDecode(token);
-    const currentDate = new Date();
-    return (decodedToken.exp * 1000) < currentDate.getTime();
-  }
+  const { isLoggedIn } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
   }
 
   const logoutUser = () => {
-    // TODO: call the api logout endpoint
-    localStorage.clear();
+    dispatch(logout());
   }
 
   return (
@@ -44,8 +39,8 @@ export default function Header() {
           <h1>StatComplete</h1>
         </Col>
         <Col className='text-end'>
-          { isTokenExpired(token) ? 
-            <Link className='btn btn-secondary' to='/login'>Sign In</Link> 
+          { isLoggedIn === false ?
+            <Link className='btn btn-primary' to='/login'>Sign In</Link> 
             : 
             <Dropdown isOpen={isProfileDropdownOpen} toggle={toggleProfileDropdown}>
               <DropdownToggle className='p-0 m-0 profile-button'>

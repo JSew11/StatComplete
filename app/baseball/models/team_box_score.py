@@ -3,8 +3,8 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
-from ..models.competition_team import CompetitionTeam
-from ..models.game import Game, limit_teams
+from .competition_team import CompetitionTeam
+from .game import Game, limit_teams
 
 class TeamBoxScore (SafeDeleteModel):
     """Model for a team's box score in a game.

@@ -7,10 +7,15 @@ from rest_framework import status, permissions
 from ..models.competition import Competition
 from ..models.competition_team import CompetitionTeam
 from ..models.team_coach import TeamCoach
+from ..models.choices.coach_role import CoachRole
+from ..models.team_player import TeamPlayer
+from ..models.game import Game
+from ..models.choices.game_status import GameStatus
 from ..serializers.competition_serializer import CompetitionSerializer
 from ..serializers.competition_team_serializer import CompetitionTeamSerializer
 from ..serializers.team_coach_serializer import TeamCoachSerializer
 from ..serializers.team_player_serializer import TeamPlayerSerializer
+from ..serializers.game_serializer import GameSerializer
 
 class CompetitionViewSet (ModelViewSet):
     """Views for the competition model.
@@ -163,7 +168,7 @@ class CompetitionViewSet (ModelViewSet):
                 'competition_team': competition_team.id,
                 'coach': coach_id,
                 'jersey_number': int(request.data.get('jersey_number')),
-                'role': int(request.data.get('role', TeamCoach.CoachRole.COACH)), # TODO: validate this to make sure it is a valid role
+                'role': int(request.data.get('role', CoachRole.COACH)), # TODO: validate this to make sure it is a valid role
             }
             serializer = TeamCoachSerializer(data=team_coach_data)
             if serializer.is_valid():
@@ -257,4 +262,103 @@ class CompetitionViewSet (ModelViewSet):
             return Response(
                 data={'status': f'No team with the id \'{team_id}\' is registered for the competition with the id \'{competition_id}\''},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+        
+    def update_player_stats(self, request: Request, competition_id: str, team_id: str, player_id: str, *args, **kwargs) -> Response:
+        """Update the given team player's stats.
+
+        stats JSON structure:
+        {
+            "batting": {
+                "stats_by_lineup_spot": {
+                    "1": {...},
+                    "2": {...},
+                    ...
+                }
+            },
+            "baserunning": {...},
+            "pitching": {
+                ...,
+                "stats_by_role": {
+                    "0": {...},
+                    "1": {...}
+                }
+            },
+            "fielding": {
+                "stats_by_position": {
+                    "1": {...},
+                    "2": {...},
+                    ...
+                    "9": {...}
+                }
+            }
+        }
+        """
+        try:
+            team_player: TeamPlayer = TeamPlayer.objects.get(
+                competition_team__competition=competition_id,
+                competition_team__team=team_id,
+                player=player_id
+            )
+            team_player.update_all_stats(request.data.get('stats', {}))
+            return Response(
+                data={'status': f'Updated stats for player \'{player_id}\' on team \'{team_id}\' in competition \'{competition_id}\''},
+                status=status.HTTP_200_OK
+            )
+        except TeamPlayer.DoesNotExist:
+            return Response(
+                data={'status': f'No player with the id \'{player_id}\' is on the team \'{team_id}\' registered for the competition \'{competition_id}\''},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+    
+    # game endpoints
+    def create_game(self, request: Request, competition_id: str, *args, **kwargs) -> Response:
+        """Add a new game to the competition's schedule.
+        """
+        game_data = {
+            'competition': competition_id,
+            'date': request.data.get('date', None),
+            'venue': request.data.get('venue', {}),
+            'status': int(request.data.get('status', GameStatus.SCHEDULED)),
+            'rules': request.data.get('rules', {}),
+        }
+        serializer: GameSerializer = GameSerializer(data=game_data)
+        if serializer.is_valid():
+            game: Game = serializer.save()
+            if home_team_id := request.data.get('home_team', None):
+                try:
+                    home_team: CompetitionTeam = CompetitionTeam.objects.get(id=home_team_id)
+                    message, success = game.add_team(home_team, is_home_team=True)
+                    if not success:
+                        return Response(
+                            data={'status': message},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+                except CompetitionTeam.DoesNotExist:
+                    return Response(
+                        data={'status': f'No team with the id \'{home_team_id}\' is registered for the competition with the id \'{competition_id}\''},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+            if away_team_id := request.data.get('away_team', None):
+                try:
+                    away_team: CompetitionTeam = CompetitionTeam.objects.get(id=away_team_id)
+                    message, success = game.add_team(away_team, is_home_team=False)
+                    if not success:
+                        return Response(
+                            data={'status': message},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+                except CompetitionTeam.DoesNotExist:
+                    return Response(
+                        data={'status': f'No team with the id \'{away_team_id}\' is registered for the competition with the id \'{competition_id}\''},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+            return Response(
+                data=serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        else:
+            return Response(
+                data=serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
             )

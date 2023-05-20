@@ -12,5 +12,19 @@
         "rules": [],
         "competition": null
     }
+},
+{
+    "model": "baseball.game",
+    "pk": "d2186785-cb0b-463e-a346-436bbdb8cfa6",
+    "fields": {
+        "deleted": null,
+        "created": "2023-05-15T17:50:20.507Z",
+        "updated": "2023-05-15T17:50:20.507Z",
+        "date": null,
+        "venue": {},
+        "status": 0,
+        "rules": {},
+        "competition": "3ef131ec-47e2-46e8-8be2-21c33d57e9aa"
+    }
 }
 ]

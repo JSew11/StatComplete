@@ -12,10 +12,14 @@ import {
   FormFeedback
 } from 'reactstrap';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
+import { register } from '../../state/token/actions';
+import { clearMessage } from '../../state/message/actions';
 
-const REGISTER_URL = 'register/';
+const CHECK_USERNAME_URL = 'check_username/'
+const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;
 
 export default function Register() {
@@ -25,84 +29,122 @@ export default function Register() {
   const errorRef = useRef();
 
   const [ username, setUsername ] = useState('');
+  const [ usernameErrorMsg, setUsernameErrorMsg ] = useState('')
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
   const [ email, setEmail ] = useState('');
+  const [ emailErrorMsg, setEmailErrorMsg ] = useState('')
   const [ password, setPassword ] = useState('');
+  const [ passwordErrorMsg, setPasswordErrorMsg ] = useState('')
   const [ confirmPassword, setConfirmPassword ] = useState('');
-  const [ errorMsg, setErrorMsg ] = useState('');
+  const [ confirmPasswordErrorMsg, setConfirmPasswordErrorMsg ] = useState('')
+  
+  const { message } = useSelector(state => state.message);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     firstNameRef.current.focus();
   }, []);
 
   useEffect(() => {
-    setErrorMsg('');
+    clearMessage();
   }, [firstName, lastName, username, email, password, confirmPassword])
 
-  const validatePassword = (formErrors) => {
-    if (password !== '' && confirmPassword !== '') {
+  useEffect(() => {
+    if (password !== '' || confirmPassword !== '') {
       if (password.length < MINIMUM_PASSWORD_LENGTH) {
-        formErrors.push(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
+        setPasswordErrorMsg(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
+      } else if (password !== confirmPassword) {
+        setPasswordErrorMsg('Passwords must match.')
+      } else {
+        setPasswordErrorMsg('');
       }
       if (password !== confirmPassword) {
-        formErrors.push('Passwords must match.')
+        setConfirmPasswordErrorMsg('Passwords must match.')
+      } else {
+        setConfirmPasswordErrorMsg('');
       }
     } else {
-      formErrors.push('Passwords cannot be empty.')
+      setPasswordErrorMsg('');
+      setConfirmPasswordErrorMsg('');
     }
-  }
+  }, [password, confirmPassword])
+
+  useEffect(() => {
+    if (username !== '') {
+      let re = /^[A-Za-z][\w]{4,29}$/;
+      if (re.test(username)) {
+        setUsernameErrorMsg('');
+        try {
+          const response = axios.post(
+            CHECK_USERNAME_URL,
+            JSON.stringify({
+              username: username,
+            }),
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              withCredentials: true
+            }
+          );
+          if (response?.data?.username_available) {
+            setUsernameErrorMsg('');
+          } else {
+            setUsernameErrorMsg('This username is not available.');
+          }
+        } catch (err) {
+          setUsernameErrorMsg('Could not determine if username is available. Please try again later.')
+        }
+      } else {
+        setUsernameErrorMsg('Username must be at least 5 characters and use only letters, numbers, and "_".')
+      }
+    } else {
+      setUsernameErrorMsg('');
+    }
+  }, [username])
+
+  useEffect(() => {
+    if (email !== '') {
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (re.test(email)) {
+        setEmailErrorMsg('');
+        try {
+          const response = axios.post(
+            CHECK_EMAIL_URL,
+            JSON.stringify({
+              email: email,
+            }),
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              withCredentials: true
+            }
+          );
+          if (response?.data?.email_available) {
+            setEmailErrorMsg('');
+          } else {
+            setEmailErrorMsg('This email is not available.');
+          }
+        } catch (err) {
+          setEmailErrorMsg('Could not determine if email is available. Please try again later.')
+        }
+      } else {
+        setEmailErrorMsg('Invalid email format.');
+      }
+    } else {
+      setEmailErrorMsg('');
+    }
+  }, [email])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let formErrors = [];
-    validatePassword(formErrors);
-
-    if (formErrors.length > 0) {
-      let errorStr = '';
-      formErrors.forEach((error) => {
-        errorStr += error + '\n';
-      })
-      setErrorMsg(errorStr);
-      errorRef.current.focus();
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        REGISTER_URL,
-        JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          username: username,
-          email: email,
-          password: password 
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true
-        }
-      );
-      const accessToken = response?.data?.access;
-      // store token in localstorage
-      localStorage.setItem('token', accessToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      navigate('/');
-    } catch (err) {
-      if (!err?.response) {
-        setErrorMsg('No Server Response');
-      } else if (err.response?.status === 400) {
-        setErrorMsg('Missing Information');
-      } else if (err.response?.status === 401) {
-        setErrorMsg('Unauthorized');
-      } else {
-        setErrorMsg('Registration Failed');
-      }
-      errorRef.current.focus();
-    }
+    dispatch(register(username, firstName, lastName, email, password))
+      .then(() => {
+        navigate('/');
+      });
   }
 
   return (
@@ -114,9 +156,9 @@ export default function Register() {
       </Row>
       <Row>
         <Col>
-          <div ref={errorRef} className={errorMsg ? 'error-msg' : 'offscreen'}
+          <div ref={errorRef} className={message ? 'error-msg' : 'offscreen'}
             aria-live='assertive'>
-              {errorMsg}
+              {message}
           </div>
         </Col>
       </Row>
@@ -126,11 +168,14 @@ export default function Register() {
           <Input
             id='username'
             type='text'
-            placeholder='e.g. JSmith'
+            placeholder='e.g. Score_Keeper1'
             onChange={(e) => setUsername(e.target.value)}
             value={username}
+            valid={usernameErrorMsg === '' && username !== ''}
+            invalid={usernameErrorMsg !== ''}
             required
           />
+          <FormFeedback>{usernameErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='firstNameInput'>First Name</Label>
@@ -138,8 +183,8 @@ export default function Register() {
             id='firstNameInput'
             type='text'
             ref={firstNameRef}
-            placeholder='e.g. John'
             onChange={(e) => setFirstName(e.target.value)}
+            valid={firstName !== ''}
             value={firstName}
             required
           />
@@ -149,8 +194,8 @@ export default function Register() {
           <Input
             id='lastNameInput'
             type='text'
-            placeholder='e.g. Smith'
             onChange={(e) => setLastName(e.target.value)}
+            valid={lastName !== ''}
             value={lastName}
             required
           />
@@ -159,12 +204,15 @@ export default function Register() {
           <Label for='emailInput'>Email</Label>
           <Input
             id='emailInput'
-            type='text'
-            placeholder='e.g. john.smith@email.com'
+            type='email'
+            placeholder='e.g. user@statcomplete.com'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            valid={emailErrorMsg === '' && email !== ''}
+            invalid={emailErrorMsg !== ''}
             required
           />
+          <FormFeedback>{emailErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='passwordInput'>Password</Label>
@@ -173,7 +221,10 @@ export default function Register() {
             type='password'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            valid={passwordErrorMsg === '' && password !== ''}
+            invalid={passwordErrorMsg !== ''}
           />
+          <FormFeedback>{passwordErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='confirmPassword'>Confirm Password</Label>
@@ -182,9 +233,23 @@ export default function Register() {
             type='password'
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
+            valid={confirmPasswordErrorMsg === '' && confirmPassword !== ''}
+            invalid={confirmPasswordErrorMsg !== ''}
           />
+          <FormFeedback>{confirmPasswordErrorMsg}</FormFeedback>
         </FormGroup>
-        <Button type='submit' color='primary'>
+        <Button
+          className='btn btn-primary'
+          color='primary'
+          type='submit'
+          disabled={
+            username === '' || usernameErrorMsg !== '' ||
+            firstName === '' || lastName === '' ||
+            password === '' || passwordErrorMsg !== '' ||
+            email === '' || emailErrorMsg !== '' ||
+            confirmPassword === '' || confirmPasswordErrorMsg !== ''
+          }
+        >
           Register
         </Button>
         <div className='btn btn-danger float-end' onClick={() => navigate('/')}>

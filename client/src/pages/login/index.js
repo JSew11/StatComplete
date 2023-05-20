@@ -9,60 +9,41 @@ import {
   Input,
   Button,
 } from 'reactstrap';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-const LOGIN_URL = 'login/';
+import './index.css';
+import { login } from '../../state/token/actions';
+import { clearMessage } from '../../state/message/actions';
+
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const usernameRef = useRef();
   const errorRef = useRef();
+  const usernameRef = useRef();
 
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
-  const [ errorMsg, setErrorMsg ] = useState('');
+
+  const { message } = useSelector(state => state.message)
+  const dispatch = useDispatch();
 
   useEffect(() => {
-      usernameRef.current.focus();
-  }, [])
-  
+    usernameRef.current.focus();
+  }, []);
+
   useEffect(() => {
-    setErrorMsg('');
+    clearMessage();
   }, [username, password])
 
   const handleSubmit = async (e) => {
      e.preventDefault();
     
-    try {
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ username: username, password: password }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true
-        }
-      );
-      const accessToken = response?.data?.access;
-      // store token in localstorage
-      localStorage.setItem('token', accessToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      navigate(-1);
-    } catch (err) {
-      if (!err?.response) {
-        setErrorMsg('No Server Response');
-      } else if (err.response?.status === 400) {
-        setErrorMsg('Missing Username or Password');
-      } else if (err.response?.status === 401) {
-        setErrorMsg('Unauthorized');
-      } else {
-        setErrorMsg('Login Failed');
-      }
-      errorRef.current.focus();
-    }
+    dispatch(login(username, password))
+      .then(() => {
+        navigate('/');
+      })
   }
 
   return (
@@ -70,9 +51,9 @@ export default function Login() {
       <div>
         <h2 className='p-1 m-1 text-center'>Sign In to StatComplete</h2>
       </div>
-      <div ref={errorRef} className={errorMsg ? 'errorMsg' : 'offscreen'}
+      <div ref={errorRef} className={message ? 'error-msg' : 'offscreen'}
         aria-live='assertive'>
-          {errorMsg}
+          {message}
       </div>
       <Form onSubmit={handleSubmit}>
         <FormGroup floating>
@@ -98,7 +79,12 @@ export default function Login() {
           />
           <Label for='passwordInput'>Password</Label>
         </FormGroup>
-        <Button type='submit' color='primary'>
+        <Button
+          className='btn btn-primary'
+          color='primary'
+          type='submit'
+          disabled={username === '' || password === ''}
+        >
           Sign In
         </Button>
         <div className='btn btn-danger float-end' onClick={() => {navigate('/')}}>

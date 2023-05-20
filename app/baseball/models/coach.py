@@ -1,4 +1,4 @@
-from uuid import uuid4, UUID
+from uuid import uuid4
 from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE

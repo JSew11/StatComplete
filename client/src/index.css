@@ -11,3 +11,58 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn,
+.btn:hover { 
+  border-radius: 0;
+  border-color: transparent;
+}
+
+:root {
+  --primary-color: #192841;
+  --primary-color-active: #1e314f;
+  --primary-color-disabled: #29426c;
+  --primary-color-hover: #24395d;
+  --secondary-color: #96aed7;
+  --secondary-color-active: #88a3d1;
+  --secondary-color-disabled: #a4b9dc;
+  --secondary-color-hover: #7a98cc;
+}
+
+/* primary button color override */
+.btn-primary,
+.btn-primary:visited {
+  border-color: transparent;
+  background-color: var(--primary-color);
+}
+.btn-primary:active{
+  border-color: transparent;
+  background-color: var(--primary-color-active);
+}
+.btn-primary:disabled {
+  border-color: transparent;
+  background-color: var(--primary-color-disabled);
+}
+.btn-primary:hover {
+  border-color: transparent;
+  background-color: var(--primary-color-hover);
+}
+
+/* secondary button color override */
+.btn-secondary,
+.btn-secondary:visited {
+  border-color: transparent;
+  background-color: var(--secondary-color);
+}
+.btn-secondary:active{
+  border-color: transparent;
+  background-color: var(--secondary-color-active);
+}
+.btn-secondary:disabled {
+  border-color: transparent;
+  background-color: var(--secondary-color-disabled);
+}
+.btn-secondary:hover {
+  border-color: transparent;
+  background-color: var(--secondary-color-hover);
+}
