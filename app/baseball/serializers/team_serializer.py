@@ -14,7 +14,7 @@ class CompetitionTeamsField (serializers.RelatedField):
 class TeamSerializer (serializers.ModelSerializer):
     """Serializer for the team model.
     """
-    competitions = CompetitionTeamsField(many=True, read_only=True)
+    competition_teams = CompetitionTeamsField(many=True, read_only=True)
 
     class Meta:
         model = Team
