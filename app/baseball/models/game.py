@@ -2,6 +2,7 @@ from uuid import uuid4
 from typing import Tuple
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
@@ -36,6 +37,7 @@ class Game (SafeDeleteModel):
         choices=GameStatus.choices,
         default=GameStatus.SCHEDULED
     )
+    regulation_innings = models.PositiveSmallIntegerField(default=9, validators=[MinValueValidator(3)])
     rules = models.JSONField(default=dict, blank=True, null=True)
 
     # related models
