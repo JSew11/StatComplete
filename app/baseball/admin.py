@@ -17,6 +17,7 @@ from .models.player_fielding_stats import PlayerFieldingStats
 from .models.player_fielding_stats_by_position import PlayerFieldingStatsByPosition
 from .models.game import Game
 from .models.team_box_score import TeamBoxScore
+from .models.player_game_stats import PlayerGameStats
 
 # Register your models here.
 admin.site.register(Coach)

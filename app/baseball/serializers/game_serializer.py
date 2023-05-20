@@ -1,23 +1,11 @@
 from rest_framework import serializers
 
 from ..models.game import Game
-from ..models.team_box_score import TeamBoxScore
-
-class TeamsField (serializers.RelatedField):
-    """Custom relational field for a game's teams field.
-    """
-    def to_representation(self, value: TeamBoxScore):
-        team = str(value.competition_team.team)
-        if value.is_home_team:
-            team = team + ' (Home)'
-        else:
-            team = team + ' (Away)'
-        return team
 
 class GameSerializer (serializers.ModelSerializer):
     """Serializer for the game model.
     """
-    teams = TeamsField(many=True, read_only=True)
+    teams = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Game
