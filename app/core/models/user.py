@@ -24,3 +24,7 @@ class User(AbstractUser, SafeDeleteModel):
     # user info
     email = models.EmailField(unique=True)
     username = models.TextField(unique=True)
+    first_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50)
+    suffix = models.CharField(max_length=10, blank=True, null=True)
