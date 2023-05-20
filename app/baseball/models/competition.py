@@ -9,7 +9,7 @@ from .choices.competition_type import CompetitionType
 class Competition (SafeDeleteModel):
     """Model for a baseball competition.
 
-    Includes the type (season, tournament, etc.), standings, schedule and
+    Includes the type (season, tournament, etc.), standings and
     start/end dates.
     """
 

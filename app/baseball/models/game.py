@@ -41,7 +41,7 @@ class Game (SafeDeleteModel):
     rules = models.JSONField(default=dict, blank=True, null=True)
 
     # related models
-    competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='schedule', null=True)
+    competition = models.ForeignKey(Competition, on_delete=models.SET_NULL, related_name='games', null=True)
 
     def __str__(self) -> str:
         if self.teams.count() == 2:
