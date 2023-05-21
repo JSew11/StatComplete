@@ -161,6 +161,20 @@ export default function Register() {
       </Row>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
+          <Label for='emailInput'>Email</Label>
+          <Input
+            id='emailInput'
+            type='email'
+            placeholder='e.g. user@statcomplete.com'
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            valid={emailErrorMsg === '' && email !== ''}
+            invalid={emailErrorMsg !== '' || email === ''}
+            required
+          />
+          <FormFeedback>{emailErrorMsg}</FormFeedback>
+        </FormGroup>
+        <FormGroup>
           <Label for='firstNameInput'>First Name</Label>
           <Input
             id='firstNameInput'
@@ -206,20 +220,6 @@ export default function Register() {
             valid={suffix !== ''}
             value={suffix}
           />
-        </FormGroup>
-        <FormGroup>
-          <Label for='emailInput'>Email</Label>
-          <Input
-            id='emailInput'
-            type='email'
-            placeholder='e.g. user@statcomplete.com'
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            valid={emailErrorMsg === '' && email !== ''}
-            invalid={emailErrorMsg !== '' || email === ''}
-            required
-          />
-          <FormFeedback>{emailErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='passwordInput'>Password</Label>
