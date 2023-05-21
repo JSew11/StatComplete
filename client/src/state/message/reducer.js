@@ -1,7 +1,7 @@
 import {
   SET_MESSAGE,
   CLEAR_MESSAGE,
-} from '../actionTypes';
+} from 'src/state/actionTypes';
 
 const initialState = { message: '' };
 

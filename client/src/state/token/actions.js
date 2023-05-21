@@ -7,8 +7,8 @@ import {
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAIL,
   SET_MESSAGE,
-} from '../actionTypes';
-import AuthApi from '../../api/auth';
+} from 'src/state/actionTypes';
+import AuthApi from 'src/api/auth';
 
 export const register = (userRegistrationData) => (dispatch) => {
   return AuthApi.register(userRegistrationData).then(

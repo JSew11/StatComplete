@@ -9,7 +9,8 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
-import './Navbar.css';
+
+import 'src/pages/layout/Navbar.css';
 
 export default class Navbar extends Component {
   constructor(props) {

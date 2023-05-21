@@ -6,7 +6,7 @@ import {
   LOGOUT,
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAIL,
-} from '../actionTypes';
+} from 'src/state/actionTypes';
 
 
 const initialState = { isLoggedIn: false, access: null}

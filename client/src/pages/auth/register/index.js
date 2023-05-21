@@ -14,9 +14,9 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
-import { publicAxios } from '../../api/axios';
-import { register } from '../../state/token/actions';
-import { clearMessage } from '../../state/message/actions';
+import { publicAxios } from 'src/api/axios';
+import { register } from 'src/state/token/actions';
+import { clearMessage } from 'src/state/message/actions';
 
 const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;

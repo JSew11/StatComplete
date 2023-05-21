@@ -13,10 +13,10 @@ import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { useDispatch, useSelector} from 'react-redux';
 
-import { logout } from '../../state/token/actions';
+import { logout } from 'src/state/token/actions';
 
-import Navbar from './Navbar';
-import './Header.css';
+import Navbar from 'src/pages/layout/Navbar';
+import 'src/pages/layout/Header.css';
 
 export default function Header() {
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);

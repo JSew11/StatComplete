@@ -13,8 +13,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
-import { login } from '../../state/token/actions';
-import { clearMessage } from '../../state/message/actions';
+import { login } from 'src/state/token/actions';
+import { clearMessage } from 'src/state/message/actions';
 
 
 export default function Login() {
