@@ -11,10 +11,10 @@ import {
   Col,
   FormFeedback
 } from 'reactstrap';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
+import { publicAxios } from '../../api/axios';
 import { register } from '../../state/token/actions';
 import { clearMessage } from '../../state/message/actions';
 
@@ -31,7 +31,9 @@ export default function Register() {
   const [ username, setUsername ] = useState('');
   const [ usernameErrorMsg, setUsernameErrorMsg ] = useState('')
   const [ firstName, setFirstName ] = useState('');
+  const [ middleName, setMiddleName ] = useState('');
   const [ lastName, setLastName ] = useState('');
+  const [ suffix, setSuffix ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ emailErrorMsg, setEmailErrorMsg ] = useState('')
   const [ password, setPassword ] = useState('');
@@ -48,7 +50,7 @@ export default function Register() {
 
   useEffect(() => {
     clearMessage();
-  }, [firstName, lastName, username, email, password, confirmPassword])
+  }, [firstName, middleName, lastName, suffix, username, email, password, confirmPassword])
 
   useEffect(() => {
     if (password !== '' || confirmPassword !== '') {
@@ -71,31 +73,29 @@ export default function Register() {
   }, [password, confirmPassword])
 
   useEffect(() => {
+    const checkUsername = async () => {
+      try {
+        const response = await publicAxios.post(
+          CHECK_USERNAME_URL,
+          JSON.stringify({
+            username: username,
+          })
+        );
+        if (response?.data?.username_available) {
+          setUsernameErrorMsg('');
+        } else {
+          setUsernameErrorMsg('This username is not available.');
+        }
+      } catch (err) {
+        setUsernameErrorMsg('Could not determine if username is available. Please try again later.')
+      }
+    };
+
     if (username !== '') {
       let re = /^[A-Za-z][\w]{4,29}$/;
       if (re.test(username)) {
         setUsernameErrorMsg('');
-        try {
-          const response = axios.post(
-            CHECK_USERNAME_URL,
-            JSON.stringify({
-              username: username,
-            }),
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              withCredentials: true
-            }
-          );
-          if (response?.data?.username_available) {
-            setUsernameErrorMsg('');
-          } else {
-            setUsernameErrorMsg('This username is not available.');
-          }
-        } catch (err) {
-          setUsernameErrorMsg('Could not determine if username is available. Please try again later.')
-        }
+        checkUsername();
       } else {
         setUsernameErrorMsg('Username must be at least 5 characters and use only letters, numbers, and "_".')
       }
@@ -105,31 +105,29 @@ export default function Register() {
   }, [username])
 
   useEffect(() => {
+    const checkEmail = async () => {
+      try {
+        const response = await publicAxios.post(
+          CHECK_EMAIL_URL,
+          JSON.stringify({
+            email: email,
+          })
+        );
+        if (response?.data?.email_available) {
+          setEmailErrorMsg('');
+        } else {
+          setEmailErrorMsg('This email is not available.');
+        }
+      } catch (err) {
+        setEmailErrorMsg('Could not determine if email is available. Please try again later.')
+      }
+    }
+
     if (email !== '') {
       let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (re.test(email)) {
         setEmailErrorMsg('');
-        try {
-          const response = axios.post(
-            CHECK_EMAIL_URL,
-            JSON.stringify({
-              email: email,
-            }),
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              withCredentials: true
-            }
-          );
-          if (response?.data?.email_available) {
-            setEmailErrorMsg('');
-          } else {
-            setEmailErrorMsg('This email is not available.');
-          }
-        } catch (err) {
-          setEmailErrorMsg('Could not determine if email is available. Please try again later.')
-        }
+        checkEmail();
       } else {
         setEmailErrorMsg('Invalid email format.');
       }
@@ -141,7 +139,23 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(register(username, firstName, lastName, email, password))
+    const userRegistrationData = {
+      username: username,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+    }
+
+    if (middleName !== '') {
+      userRegistrationData['middle_name'] = middleName;
+    }
+
+    if (suffix !== '') {
+      userRegistrationData['suffix'] = suffix;
+    }
+
+    dispatch(register(userRegistrationData))
       .then(() => {
         navigate('/');
       });
@@ -172,7 +186,7 @@ export default function Register() {
             onChange={(e) => setUsername(e.target.value)}
             value={username}
             valid={usernameErrorMsg === '' && username !== ''}
-            invalid={usernameErrorMsg !== ''}
+            invalid={usernameErrorMsg !== '' || username === ''}
             required
           />
           <FormFeedback>{usernameErrorMsg}</FormFeedback>
@@ -185,8 +199,19 @@ export default function Register() {
             ref={firstNameRef}
             onChange={(e) => setFirstName(e.target.value)}
             valid={firstName !== ''}
+            invalid={firstName === ''}
             value={firstName}
             required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for='middleNameInput'>Middle Name</Label>
+          <Input
+            id='middleNameInput'
+            type='text'
+            onChange={(e) => setMiddleName(e.target.value)}
+            valid={middleName !== ''}
+            value={middleName}
           />
         </FormGroup>
         <FormGroup>
@@ -196,8 +221,19 @@ export default function Register() {
             type='text'
             onChange={(e) => setLastName(e.target.value)}
             valid={lastName !== ''}
+            invalid={lastName === ''}
             value={lastName}
             required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for='suffixInput'>Suffix</Label>
+          <Input
+            id='suffixInput'
+            type='text'
+            onChange={(e) => setSuffix(e.target.value)}
+            valid={suffix !== ''}
+            value={suffix}
           />
         </FormGroup>
         <FormGroup>
@@ -209,7 +245,7 @@ export default function Register() {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             valid={emailErrorMsg === '' && email !== ''}
-            invalid={emailErrorMsg !== ''}
+            invalid={emailErrorMsg !== '' || email === ''}
             required
           />
           <FormFeedback>{emailErrorMsg}</FormFeedback>
@@ -222,7 +258,7 @@ export default function Register() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             valid={passwordErrorMsg === '' && password !== ''}
-            invalid={passwordErrorMsg !== ''}
+            invalid={passwordErrorMsg !== '' || password === ''}
           />
           <FormFeedback>{passwordErrorMsg}</FormFeedback>
         </FormGroup>
@@ -234,7 +270,7 @@ export default function Register() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
             valid={confirmPasswordErrorMsg === '' && confirmPassword !== ''}
-            invalid={confirmPasswordErrorMsg !== ''}
+            invalid={confirmPasswordErrorMsg !== '' || confirmPassword === ''}
           />
           <FormFeedback>{confirmPasswordErrorMsg}</FormFeedback>
         </FormGroup>

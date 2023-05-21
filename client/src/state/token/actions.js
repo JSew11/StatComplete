@@ -10,8 +10,8 @@ import {
 } from '../actionTypes';
 import AuthApi from '../../api/auth';
 
-export const register = (username, firstName, lastName, email, password) => (dispatch) => {
-  return AuthApi.register(username, firstName, lastName, email, password).then(
+export const register = (userRegistrationData) => (dispatch) => {
+  return AuthApi.register(userRegistrationData).then(
     (data) => {
       dispatch({
         type: REGISTER_SUCCESS,
