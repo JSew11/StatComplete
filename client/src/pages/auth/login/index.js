@@ -59,7 +59,7 @@ export default function Login() {
         <FormGroup floating>
           <Input 
             id='emailInput' 
-            type='text'
+            type='email'
             ref={emailRef}
             placeholder='Email'
             onChange={(e) => setEmail(e.target.value)}
