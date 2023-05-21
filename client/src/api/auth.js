@@ -18,6 +18,11 @@ const register = async (userRegistrationData) => {
           httpOnly: true
         })
       }
+
+      if (response.data.access) {
+        localStorage.setItem('token', response.data.access);
+      }
+
       return response;
     }
   );
@@ -35,6 +40,11 @@ const login = async (email, password) => {
           httpOnly: true
         })
       }
+
+      if (response.data.access) {
+        localStorage.setItem('token', response.data.access);
+      }
+
       return response;
     }
   );

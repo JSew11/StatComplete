@@ -8,8 +8,9 @@ import {
   REFRESH_TOKEN_FAIL,
 } from 'src/state/actionTypes';
 
+const token = localStorage.getItem('token');
 
-const initialState = { isLoggedIn: false, access: null}
+const initialState = token ? {isLoggedIn: true, access: token} : { isLoggedIn: false, access: null};
 
 export default function auth(state=initialState, action) {
   const { type, payload } = action;
