@@ -18,7 +18,6 @@ import { publicAxios } from '../../api/axios';
 import { register } from '../../state/token/actions';
 import { clearMessage } from '../../state/message/actions';
 
-const CHECK_USERNAME_URL = 'check_username/'
 const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;
 const REQUIRED_FIELD_MESSAGE = 'This field is required.';
@@ -29,8 +28,6 @@ export default function Register() {
   const firstNameRef = useRef();
   const errorRef = useRef();
 
-  const [ username, setUsername ] = useState('');
-  const [ usernameErrorMsg, setUsernameErrorMsg ] = useState('')
   const [ firstName, setFirstName ] = useState('');
   const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState('');
   const [ middleName, setMiddleName ] = useState('');
@@ -53,55 +50,7 @@ export default function Register() {
 
   useEffect(() => {
     clearMessage();
-  }, [firstName, middleName, lastName, suffix, username, email, password, confirmPassword])
-
-  useEffect(() => {
-    const checkUsername = async () => {
-      try {
-        const response = await publicAxios.post(
-          CHECK_USERNAME_URL,
-          JSON.stringify({
-            username: username,
-          })
-        );
-        if (response?.data?.username_available) {
-          setUsernameErrorMsg('');
-        } else {
-          setUsernameErrorMsg('This username is not available.');
-        }
-      } catch (err) {
-        setUsernameErrorMsg('Could not determine if username is available. Please try again later.')
-      }
-    };
-
-    if (username !== '') {
-      let re = /^[A-Za-z][\w]{4,29}$/;
-      if (re.test(username)) {
-        setUsernameErrorMsg('');
-        checkUsername();
-      } else {
-        setUsernameErrorMsg('Username must be at least 5 characters and use only letters, numbers, and "_".')
-      }
-    } else {
-      setUsernameErrorMsg(REQUIRED_FIELD_MESSAGE);
-    }
-  }, [username]);
-
-  useEffect(() => {
-    if (firstName !== '') {
-      setFirstNameErrorMsg('');
-    } else {
-      setFirstNameErrorMsg(REQUIRED_FIELD_MESSAGE);
-    }
-  }, [firstName])
-
-  useEffect(() => {
-    if (lastName !== '') {
-      setLastNameErrorMsg('');
-    } else {
-      setLastNameErrorMsg(REQUIRED_FIELD_MESSAGE);
-    }
-  }, [lastName])
+  }, [firstName, middleName, lastName, suffix, email, password, confirmPassword])
 
   useEffect(() => {
     const checkEmail = async () => {
@@ -136,6 +85,22 @@ export default function Register() {
   }, [email]);
 
   useEffect(() => {
+    if (firstName !== '') {
+      setFirstNameErrorMsg('');
+    } else {
+      setFirstNameErrorMsg(REQUIRED_FIELD_MESSAGE);
+    }
+  }, [firstName])
+
+  useEffect(() => {
+    if (lastName !== '') {
+      setLastNameErrorMsg('');
+    } else {
+      setLastNameErrorMsg(REQUIRED_FIELD_MESSAGE);
+    }
+  }, [lastName])
+
+  useEffect(() => {
     if (password !== '' || confirmPassword !== '') {
       if (password.length < MINIMUM_PASSWORD_LENGTH) {
         setPasswordErrorMsg(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
@@ -159,7 +124,6 @@ export default function Register() {
     e.preventDefault();
 
     const userRegistrationData = {
-      username: username,
       first_name: firstName,
       last_name: lastName,
       email: email,
@@ -196,20 +160,6 @@ export default function Register() {
         </Col>
       </Row>
       <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label for='usernameInput'>Username</Label>
-          <Input
-            id='username'
-            type='text'
-            placeholder='e.g. Score_Keeper1'
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-            valid={usernameErrorMsg === '' && username !== ''}
-            invalid={usernameErrorMsg !== '' || username === ''}
-            required
-          />
-          <FormFeedback>{usernameErrorMsg}</FormFeedback>
-        </FormGroup>
         <FormGroup>
           <Label for='firstNameInput'>First Name</Label>
           <Input
@@ -300,7 +250,6 @@ export default function Register() {
           color='primary'
           type='submit'
           disabled={
-            username === '' || usernameErrorMsg !== '' ||
             firstName === '' || lastName === '' ||
             password === '' || passwordErrorMsg !== '' ||
             email === '' || emailErrorMsg !== '' ||

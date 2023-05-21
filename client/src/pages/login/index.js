@@ -21,26 +21,26 @@ export default function Login() {
   const navigate = useNavigate();
 
   const errorRef = useRef();
-  const usernameRef = useRef();
+  const emailRef = useRef();
 
-  const [ username, setUsername ] = useState('');
+  const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
   const { message } = useSelector(state => state.message)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    usernameRef.current.focus();
+    emailRef.current.focus();
   }, []);
 
   useEffect(() => {
     clearMessage();
-  }, [username, password])
+  }, [email, password])
 
   const handleSubmit = async (e) => {
      e.preventDefault();
     
-    dispatch(login(username, password))
+    dispatch(login(email, password))
       .then(() => {
         navigate('/');
       })
@@ -58,15 +58,15 @@ export default function Login() {
       <Form onSubmit={handleSubmit}>
         <FormGroup floating>
           <Input 
-            id='usernameInput' 
+            id='emailInput' 
             type='text'
-            ref={usernameRef}
-            placeholder='Username'
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
+            ref={emailRef}
+            placeholder='Email'
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
             required
           />
-          <Label for='usernameInput'>Username</Label>
+          <Label for='emailInput'>Email</Label>
         </FormGroup>
         <FormGroup floating>
           <Input 
@@ -83,7 +83,7 @@ export default function Login() {
           className='btn btn-primary'
           color='primary'
           type='submit'
-          disabled={username === '' || password === ''}
+          disabled={email === '' || password === ''}
         >
           Sign In
         </Button>
