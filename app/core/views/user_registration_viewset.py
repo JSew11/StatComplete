@@ -9,7 +9,7 @@ from ..models.user import User
 from ..serializers.register_user_serializer import RegisterUserSerializer
 
 class UserRegistrationViewSet(ListCreateAPIView):
-    """Views for the user model.
+    """Views for creating a new user model.
     """
     queryset = User.objects.all()
 
