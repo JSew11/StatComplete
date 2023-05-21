@@ -14,7 +14,7 @@ class TestPlayerDetailsApi (APITestCase):
         """
         self.test_player = Player.objects.get(first_name='Test', last_name='Player')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -56,7 +56,7 @@ class TestPlayerListApi (APITestCase):
         Player.objects.get(first_name = 'Test', last_name = 'Player')
         Player.objects.get(first_name='Another', last_name='Player')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
 

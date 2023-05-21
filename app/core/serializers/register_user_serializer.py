@@ -7,7 +7,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ('id','username','password','first_name', 'middle_name', 'last_name', 'suffix', 'email')
+        fields = ('id','password','first_name', 'middle_name', 'last_name', 'suffix', 'email')
         extra_kwargs = {
             'password':{'write_only': True},
         }
@@ -16,7 +16,6 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         """Method for creating the new user based on the given data.
         """
         user_data = {
-            'username': validated_data.pop('username'),
             'password': validated_data.pop('password'),
             'first_name': validated_data.pop('first_name'),
             'last_name': validated_data.pop('last_name'),

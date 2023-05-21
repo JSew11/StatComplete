@@ -15,7 +15,7 @@ class TestTeamListApi (APITestCase):
         Team.objects.get(location='Test', name='Team')
         Team.objects.get(location='Another', name='Team')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -37,7 +37,7 @@ class TestTeamDetailsApi (APITestCase):
         """
         self.test_team = Team.objects.get(location = 'Test', name = 'Team')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     

@@ -17,7 +17,7 @@ class TestOrganizationDetailsApi (APITestCase):
         """
         self.test_organization: Organization = Organization.objects.get(name='Test Organization')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -59,7 +59,7 @@ class TestOrganizationListApi (APITestCase):
         Organization.objects.get(name='Test Organization')
         Organization.objects.get(name = 'Test Organization 2')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -94,7 +94,7 @@ class TestOrganizationCompetitionDetailsApi (APITestCase):
         self.test_organization: Organization = Organization.objects.get(name='Test Organization')
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -136,7 +136,7 @@ class TestOrganizationCompetitionListApi (APITestCase):
         """
         self.test_organization: Organization = Organization.objects.get(name='Test Organization')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -172,7 +172,7 @@ class TestOrganizationTeamDetailsApi (APITestCase):
         self.test_organization = Organization.objects.get(name='Test Organization')
         self.test_team = Team.objects.get(location = 'Test', name = 'Team')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -215,7 +215,7 @@ class TestOrganizationTeamListApi (APITestCase):
         Team.objects.get(location='Test', name='Team')
         Team.objects.get(location='Another', name='Team')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
 

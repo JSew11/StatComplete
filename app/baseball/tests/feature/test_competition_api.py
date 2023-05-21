@@ -22,7 +22,7 @@ class TestCompetitionDetailsApi (APITestCase):
         self.test_organization: Organization = Organization.objects.get(name='Test Organization')
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -43,7 +43,7 @@ class TestCompetitionListApi (APITestCase):
         """Set up necessary objects for testing.
         """
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -65,7 +65,7 @@ class TestCompetitionTeamListApi (APITestCase):
         """
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -89,7 +89,7 @@ class TestCompetitionTeamApi (APITestCase):
         self.test_team: Team = Team.objects.get(location='Test', name='Team')
         self.test_competition_team: CompetitionTeam = CompetitionTeam.objects.get(competition=self.test_competition, team=self.test_team)
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
 
@@ -137,7 +137,7 @@ class TestTeamCoachApi (APITestCase):
         self.test_team: Team = Team.objects.get(location='Test', name='Team')
         self.test_coach: Coach = Coach.objects.get(first_name='Test', last_name='Coach')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -189,7 +189,7 @@ class TestTeamPlayerApi (APITestCase):
             player=self.test_player
         )
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
@@ -273,7 +273,7 @@ class TestGameApi(APITestCase):
         self.test_home_team: CompetitionTeam = CompetitionTeam.objects.get(id='ff829ff9-e0c4-4ba3-8ee2-5a391fd257bc')
         self.test_away_team: CompetitionTeam = CompetitionTeam.objects.get(id='b59e9d57-0e60-4da8-a023-32b37c2a1333')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
     
