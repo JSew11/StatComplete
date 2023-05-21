@@ -21,6 +21,7 @@ import { clearMessage } from '../../state/message/actions';
 const CHECK_USERNAME_URL = 'check_username/'
 const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;
+const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -31,8 +32,10 @@ export default function Register() {
   const [ username, setUsername ] = useState('');
   const [ usernameErrorMsg, setUsernameErrorMsg ] = useState('')
   const [ firstName, setFirstName ] = useState('');
+  const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState('');
   const [ middleName, setMiddleName ] = useState('');
   const [ lastName, setLastName ] = useState('');
+  const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState('');
   const [ suffix, setSuffix ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ emailErrorMsg, setEmailErrorMsg ] = useState('')
@@ -51,26 +54,6 @@ export default function Register() {
   useEffect(() => {
     clearMessage();
   }, [firstName, middleName, lastName, suffix, username, email, password, confirmPassword])
-
-  useEffect(() => {
-    if (password !== '' || confirmPassword !== '') {
-      if (password.length < MINIMUM_PASSWORD_LENGTH) {
-        setPasswordErrorMsg(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
-      } else if (password !== confirmPassword) {
-        setPasswordErrorMsg('Passwords must match.')
-      } else {
-        setPasswordErrorMsg('');
-      }
-      if (password !== confirmPassword) {
-        setConfirmPasswordErrorMsg('Passwords must match.')
-      } else {
-        setConfirmPasswordErrorMsg('');
-      }
-    } else {
-      setPasswordErrorMsg('');
-      setConfirmPasswordErrorMsg('');
-    }
-  }, [password, confirmPassword])
 
   useEffect(() => {
     const checkUsername = async () => {
@@ -100,9 +83,25 @@ export default function Register() {
         setUsernameErrorMsg('Username must be at least 5 characters and use only letters, numbers, and "_".')
       }
     } else {
-      setUsernameErrorMsg('');
+      setUsernameErrorMsg(REQUIRED_FIELD_MESSAGE);
     }
-  }, [username])
+  }, [username]);
+
+  useEffect(() => {
+    if (firstName !== '') {
+      setFirstNameErrorMsg('');
+    } else {
+      setFirstNameErrorMsg(REQUIRED_FIELD_MESSAGE);
+    }
+  }, [firstName])
+
+  useEffect(() => {
+    if (lastName !== '') {
+      setLastNameErrorMsg('');
+    } else {
+      setLastNameErrorMsg(REQUIRED_FIELD_MESSAGE);
+    }
+  }, [lastName])
 
   useEffect(() => {
     const checkEmail = async () => {
@@ -132,9 +131,29 @@ export default function Register() {
         setEmailErrorMsg('Invalid email format.');
       }
     } else {
-      setEmailErrorMsg('');
+      setEmailErrorMsg(REQUIRED_FIELD_MESSAGE);
     }
-  }, [email])
+  }, [email]);
+
+  useEffect(() => {
+    if (password !== '' || confirmPassword !== '') {
+      if (password.length < MINIMUM_PASSWORD_LENGTH) {
+        setPasswordErrorMsg(`Password must be at least ${MINIMUM_PASSWORD_LENGTH} characters long.`)
+      } else if (password !== confirmPassword) {
+        setPasswordErrorMsg('Passwords must match.')
+      } else {
+        setPasswordErrorMsg('');
+      }
+      if (password !== confirmPassword) {
+        setConfirmPasswordErrorMsg('Passwords must match.')
+      } else {
+        setConfirmPasswordErrorMsg('');
+      }
+    } else {
+      setPasswordErrorMsg(REQUIRED_FIELD_MESSAGE);
+      setConfirmPasswordErrorMsg(REQUIRED_FIELD_MESSAGE);
+    }
+  }, [password, confirmPassword]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -198,11 +217,12 @@ export default function Register() {
             type='text'
             ref={firstNameRef}
             onChange={(e) => setFirstName(e.target.value)}
-            valid={firstName !== ''}
-            invalid={firstName === ''}
+            valid={firstNameErrorMsg === '' && firstName !== ''}
+            invalid={firstNameErrorMsg !== '' || firstName === ''}
             value={firstName}
             required
           />
+          <FormFeedback>{firstNameErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='middleNameInput'>Middle Name</Label>
@@ -220,11 +240,12 @@ export default function Register() {
             id='lastNameInput'
             type='text'
             onChange={(e) => setLastName(e.target.value)}
-            valid={lastName !== ''}
-            invalid={lastName === ''}
+            valid={lastNameErrorMsg === '' && lastName !== ''}
+            invalid={lastNameErrorMsg !== '' || lastName === ''}
             value={lastName}
             required
           />
+          <FormFeedback>{lastNameErrorMsg}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for='suffixInput'>Suffix</Label>
