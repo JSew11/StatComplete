@@ -48,7 +48,7 @@ export default function Header() {
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/profile/'>Profile</NavLink></DropdownItem>
-                <DropdownItem className='p-0' onClick={logoutUser}><NavLink className='user-dropdown-link' href='#'>Logout</NavLink></DropdownItem>
+                <DropdownItem className='p-0' onClick={logoutUser}><NavLink className='user-dropdown-link' href='/'>Logout</NavLink></DropdownItem>
               </DropdownMenu>
             </Dropdown>
           }
