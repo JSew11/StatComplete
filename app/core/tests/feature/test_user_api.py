@@ -37,7 +37,7 @@ class TestRefreshTokenApi(APITestCase):
         self.test_user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(self.test_user)
         token = RefreshToken.for_user(self.test_user)
-        self.client.cookies = SimpleCookie({'refresh': str(token)})
+        self.client.cookies = SimpleCookie({'refresh_token': str(token)})
         return super().setUp()
     
     def test_refresh_token(self):
@@ -57,7 +57,7 @@ class TestLogoutApi(APITestCase):
         self.test_user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(self.test_user)
         token = RefreshToken.for_user(self.test_user)
-        self.client.cookies = SimpleCookie({'refresh': str(token)})
+        self.client.cookies = SimpleCookie({'refresh_token': str(token)})
         return super().setUp()
     
     def test_logout(self):

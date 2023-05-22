@@ -11,7 +11,6 @@ class CoachViewSet (ModelViewSet):
     """Views for the coach model.
     """
     serializer_class = CoachSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request: Request, *args, **kwargs) -> Response:
         """View the list of all coaches.

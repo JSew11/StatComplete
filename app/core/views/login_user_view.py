@@ -2,6 +2,7 @@ from django.conf import settings
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import permissions
 
 from ..serializers.login_user_serializer import LoginUserSerializer
 
@@ -9,6 +10,7 @@ class LoginUserView (TokenObtainPairView):
     """Custom login endpoint to use email instead of username.
     """
     serializer_class = LoginUserSerializer
+    permission_classes = [permissions.AllowAny]
 
     def finalize_response(self, request: Request, response: Response, *args, **kwargs):
         if response.data.get('refresh'):

@@ -1,11 +1,12 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.request import Request
-from rest_framework import status
+from rest_framework import status, permissions
 
 from ..models.user import User
 
 @api_view(['POST'])
+@permission_classes([permissions.AllowAny])
 def check_email_available(request: Request, format=None) -> Response:
     """Check if an email is available (if no existin user has it).
     """

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
-from rest_framework import status
+from rest_framework import status, permissions
 
 from ..models.user import User
 from ..serializers.register_user_serializer import RegisterUserSerializer
@@ -12,6 +12,7 @@ from ..serializers.register_user_serializer import RegisterUserSerializer
 class UserRegistrationViewSet(ListCreateAPIView):
     """Views for creating a new user model.
     """
+    permission_classes = [permissions.AllowAny]
     queryset = User.objects.all()
 
     def finalize_response(self, request: Request, response: Response, *args, **kwargs):
