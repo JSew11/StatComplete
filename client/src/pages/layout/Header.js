@@ -9,7 +9,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { useDispatch, useSelector} from 'react-redux';
 
@@ -19,6 +19,8 @@ import Navbar from 'src/pages/layout/Navbar';
 import 'src/pages/layout/Header.css';
 
 export default function Header() {
+  const navigate = useNavigate();
+
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
 
   const { isLoggedIn } = useSelector(state => state.auth);
@@ -30,6 +32,7 @@ export default function Header() {
 
   const logoutUser = () => {
     dispatch(logout());
+    navigate('/');
   }
 
   return (
@@ -48,7 +51,7 @@ export default function Header() {
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/profile/'>Profile</NavLink></DropdownItem>
-                <DropdownItem className='p-0' onClick={logoutUser}><NavLink className='user-dropdown-link' href='/'>Logout</NavLink></DropdownItem>
+                <DropdownItem className='p-0' onClick={logoutUser}><NavLink className='user-dropdown-link' href='#'>Logout</NavLink></DropdownItem>
               </DropdownMenu>
             </Dropdown>
           }

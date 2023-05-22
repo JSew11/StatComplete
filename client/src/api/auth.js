@@ -1,6 +1,6 @@
 import { Cookies } from 'react-cookie';
 
-import { privateAxios, publicAxios } from './axios';
+import { publicAxios } from './axios';
 
 const REGISTER_URL = 'register/';
 const LOGIN_URL = 'login/';
@@ -51,7 +51,7 @@ const login = async (email, password) => {
 };
 
 const logout = async () => {
-  publicAxios.post(LOGOUT_URL)
+  return await publicAxios.post(LOGOUT_URL)
   .then(
     (response) => {
       sessionStorage.removeItem('token');
@@ -64,7 +64,7 @@ const logout = async () => {
 };
 
 const refreshToken = async () => {
-  publicAxios.post(REFRESH_TOKEN_URL)
+  return await publicAxios.post(REFRESH_TOKEN_URL)
   .then(
     (response) => {
       sessionStorage.setItem('token');
