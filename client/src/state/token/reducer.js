@@ -8,7 +8,7 @@ import {
   REFRESH_TOKEN_FAIL,
 } from 'src/state/actionTypes';
 
-const token = localStorage.getItem('token');
+const token = sessionStorage.getItem('token');
 
 const initialState = token ? {isLoggedIn: true, access: token} : { isLoggedIn: false, access: null};
 

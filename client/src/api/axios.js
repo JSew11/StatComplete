@@ -8,13 +8,16 @@ const API_BASE_URL = process.env.REACT_APP_API_URL;
 const publicAxios = axios.create({
   baseURL: API_BASE_URL,
   headers: {
+    'Accept': 'application/json',
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 const privateAxios = axios.create({
   baseURL: API_BASE_URL,
   headers: {
+    'Accept': 'application/json',
     'Content-Type': 'application/json',
   },
   withCredentials: true,

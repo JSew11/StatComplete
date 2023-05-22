@@ -20,7 +20,7 @@ const register = async (userRegistrationData) => {
       }
 
       if (response.data.access) {
-        localStorage.setItem('token', response.data.access);
+        sessionStorage.setItem('token', response.data.access);
       }
 
       return response;
@@ -42,7 +42,7 @@ const login = async (email, password) => {
       }
 
       if (response.data.access) {
-        localStorage.setItem('token', response.data.access);
+        sessionStorage.setItem('token', response.data.access);
       }
 
       return response;
@@ -51,11 +51,29 @@ const login = async (email, password) => {
 };
 
 const logout = async () => {
-  privateAxios.post(LOGOUT_URL);
+  publicAxios.post(LOGOUT_URL)
+  .then(
+    (response) => {
+      sessionStorage.removeItem('token');
+      return response;
+    },
+    (error) => {
+      return error;
+    }
+  );
 };
 
 const refreshToken = async () => {
-  privateAxios.post(REFRESH_TOKEN_URL);
+  publicAxios.post(REFRESH_TOKEN_URL)
+  .then(
+    (response) => {
+      sessionStorage.setItem('token');
+      return response;
+    },
+    (error) => {
+      return error;
+    }
+  );
 }
 
 const AuthApi = {
