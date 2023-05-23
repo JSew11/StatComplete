@@ -10,7 +10,8 @@ from .views.user_viewset import UserListView, UserViewSet
 app_name = 'core'
 
 user_viewset = UserViewSet.as_view({
-    'get': 'retrieve'
+    'get': 'retrieve',
+    'patch': 'partial_update',
 })
 
 urlpatterns = [

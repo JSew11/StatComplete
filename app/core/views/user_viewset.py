@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -25,16 +26,61 @@ class UserViewSet (ModelViewSet):
         """Get the details of the user with the given user_id.
         """
         request_user: User = request.user
-        user_to_return = User.objects.get(id=user_id)
-        if request_user.has_perm('core.view_user') or request_user.id == user_to_return.id:
-            serializer = UserSerializer(user_to_return)
+        try:
+            user_to_return = User.objects.get(id=user_id)
+            if request_user.has_perm('core.view_user') or request_user.id == user_to_return.id:
+                serializer = UserSerializer(user_to_return)
+                return Response(
+                    data=serializer.data,
+                    status=status.HTTP_200_OK
+                )
             return Response(
-                data=serializer.data,
-                status=status.HTTP_200_OK
+                data={
+                    'message': 'You do not have access to this object.',
+                },
+                status=status.HTTP_403_FORBIDDEN
             )
-        return Response(
-            data={
-                'message': 'You do not have access to this object.',
-            },
-            status=status.HTTP_403_FORBIDDEN
-        )
+        except User.DoesNotExist:
+            return Response(
+                data={'status': f'User with id \'{user_id}\' not found'},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+    
+    def partial_update(self, request: Request, user_id: str, *args, **kwargs) -> Response:
+        """Edit the details of the user with the give user_id.
+        """
+        request_user: User = request.user
+        try:
+            user_to_return = User.objects.get(id=user_id)
+            if request_user.has_perm('core.view_user') or request_user.id == user_to_return.id:
+                if not request.data:
+                    return Response(
+                        data={
+                            'status':'no fields were given to update',
+                        },
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                user_to_return.updated = datetime.now()
+                serializer = UserSerializer(user_to_return, data=request.data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(
+                        data=serializer.data,
+                        status=status.HTTP_200_OK
+                    )
+                else:
+                    return Response(
+                        data=serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+            return Response(
+                data={
+                    'message': 'You do not have access to this object.',
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+        except User.DoesNotExist:
+            return Response(
+                data={'status': f'User with id \'{user_id}\' not found'},
+                status=status.HTTP_404_NOT_FOUND,
+            )
