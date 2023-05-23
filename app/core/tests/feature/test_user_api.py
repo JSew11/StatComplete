@@ -112,13 +112,49 @@ class TestUserListView(APITestCase):
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
         # test as non-admin user
-        test_regular_user = User.objects.get(email='test.user@email.com')
-        self.client.force_authenticate(test_regular_user)
+        regular_user = User.objects.get(email='test.user@email.com')
+        self.client.force_authenticate(regular_user)
         response: Response = self.client.get(path='/api/users/')
         self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
 
         # test as admin user
-        test_admin_user = User.objects.get(email='developer.admin@statcomplete.com')
-        self.client.force_authenticate(test_admin_user)
+        admin_user = User.objects.get(email='developer.admin@statcomplete.com')
+        self.client.force_authenticate(admin_user)
         response: Response = self.client.get(path='/api/users/')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
+
+class TestUserViewSet(APITestCase):
+    """Test the user viewset endpoint.
+    """
+    fixtures = ['user']
+
+    def setUp(self) -> None:
+        self.client: APIClient = APIClient()
+        return super().setUp()
+
+    def test_retrieve_user_endpoint(self):
+        """Test the GET endpoint for retrieving a user by its associated uuid.
+        """
+        regular_user: User = User.objects.get(email='test.user@email.com')
+        admin_user: User = User.objects.get(email='developer.admin@statcomplete.com')
+
+        self.client.force_authenticate(regular_user)
+        # as the test user test accessing the test user with its uuid (should receive 200)
+        response: Response = self.client.get(path=f'/api/users/{regular_user.id}/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(regular_user.email, response.data['email'])
+
+        # as the test user test accessing the admin user with its uuid (should receive 403)
+        response: Response = self.client.get(path=f'/api/users/{admin_user.id}/')
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+        self.client.force_authenticate(admin_user)
+        # as the admin user test accessing the test user with its uuid (should receive 200)
+        response: Response = self.client.get(path=f'/api/users/{admin_user.id}/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(admin_user.email, response.data['email'])
+
+        # as the admin user test accessing the admin user with its uuid (should receive 200)
+        response: Response = self.client.get(path=f'/api/users/{regular_user.id}/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(regular_user.email, response.data['email'])
