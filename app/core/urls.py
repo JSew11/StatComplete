@@ -5,6 +5,7 @@ from .views.refresh_token_view import RefreshTokenView
 from .views.user_registration_viewset import UserRegistrationViewSet
 from .views.logout_user_view import LogoutUserView
 from .views.user_field_validation_views import check_email_available
+from .views.user_viewset import UserListView
 
 app_name = 'core'
 
@@ -13,5 +14,6 @@ urlpatterns = [
     path('login/refresh/', RefreshTokenView.as_view(), name='token_refresh'),
     path('register/', UserRegistrationViewSet.as_view(), name='register'),
     path('logout/', LogoutUserView.as_view(), name='logout'),
-    path('check_email/', check_email_available, name='check_email')
+    path('check_email/', check_email_available, name='check_email'),
+    path('users/', UserListView.as_view(), name='users_list'),
 ]

@@ -94,3 +94,17 @@ class TestUserFieldValidationApi(APITestCase):
         response: Response = self.client.post(path='/api/check_email/', data=email_data, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertFalse(response.data['email_available'])
+
+class TestUserListView(APITestCase):
+    """Test the user list endpoint.
+    """
+    fixtures = ['user']
+
+    def setUp(self) -> None:
+        self.client = APIClient()
+        return super().setUp()
+    
+    def test_users_list_endpoint(self):
+        """Test the GET endpoint for getting a list of users in the system.
+        """
+        # TODO: write this
