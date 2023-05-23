@@ -23,10 +23,10 @@ code {
   --primary-color-active: #1e314f;
   --primary-color-disabled: #29426c;
   --primary-color-hover: #24395d;
-  --secondary-color: #96aed7;
+  --secondary-color: #7a98cc;
   --secondary-color-active: #88a3d1;
   --secondary-color-disabled: #a4b9dc;
-  --secondary-color-hover: #7a98cc;
+  --secondary-color-hover: #96aed7;
 }
 
 /* primary button color override */
