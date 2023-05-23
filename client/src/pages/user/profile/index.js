@@ -1,4 +1,8 @@
-import { Container } from 'reactstrap';
+import {
+  Container,
+} from 'reactstrap';
+
+import './index.css';
 
 export default function UserProfile() {
   return (
