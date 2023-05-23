@@ -19,10 +19,13 @@ code {
 }
 
 :root {
+  --background-color: #eaebec;
+
   --primary-color: #192841;
   --primary-color-active: #1e314f;
   --primary-color-disabled: #29426c;
   --primary-color-hover: #24395d;
+
   --secondary-color: #7a98cc;
   --secondary-color-active: #88a3d1;
   --secondary-color-disabled: #a4b9dc;
@@ -65,4 +68,8 @@ code {
 .btn-secondary:hover {
   border-color: transparent;
   background-color: var(--secondary-color-hover);
+}
+
+.uniform-background-color {
+  background-color: var(--background-color);
 }
