@@ -15,8 +15,8 @@ import { useDispatch, useSelector} from 'react-redux';
 
 import { logout } from 'src/state/token/actions';
 
-import Navbar from 'src/pages/layout/Navbar';
-import 'src/pages/layout/Header.css';
+import Navbar from 'src/components/layout/Navbar';
+import './index.css';
 
 export default function Header() {
   const navigate = useNavigate();

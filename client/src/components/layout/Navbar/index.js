@@ -10,7 +10,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 
-import 'src/pages/layout/Navbar.css';
+import './index.css';
 
 export default class Navbar extends Component {
   constructor(props) {
