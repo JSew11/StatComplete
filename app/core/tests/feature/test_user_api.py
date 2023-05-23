@@ -53,7 +53,7 @@ class TestLogoutApi(APITestCase):
     fixtures = ['user']
 
     def setUp(self) -> None:
-        self.client = APIClient()
+        self.client: APIClient = APIClient()
         self.test_user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(self.test_user)
         token = RefreshToken.for_user(self.test_user)
@@ -101,10 +101,24 @@ class TestUserListView(APITestCase):
     fixtures = ['user']
 
     def setUp(self) -> None:
-        self.client = APIClient()
+        self.client: APIClient = APIClient()
         return super().setUp()
     
     def test_users_list_endpoint(self):
         """Test the GET endpoint for getting a list of users in the system.
         """
-        # TODO: write this
+        # test as unauthenticated user
+        response: Response = self.client.get(path='/api/users/')
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+        # test as non-admin user
+        test_regular_user = User.objects.get(email='test.user@email.com')
+        self.client.force_authenticate(test_regular_user)
+        response: Response = self.client.get(path='/api/users/')
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+        # test as admin user
+        test_admin_user = User.objects.get(email='developer.admin@statcomplete.com')
+        self.client.force_authenticate(test_admin_user)
+        response: Response = self.client.get(path='/api/users/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
