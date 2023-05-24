@@ -52,7 +52,7 @@ class UserViewSet (ModelViewSet):
         request_user: User = request.user
         try:
             user_to_return = User.objects.get(id=user_id)
-            if request_user.has_perm('core.view_user') or request_user.id == user_to_return.id:
+            if request_user.has_perm('core.change_user') or request_user.id == user_to_return.id:
                 if not request.data:
                     return Response(
                         data={

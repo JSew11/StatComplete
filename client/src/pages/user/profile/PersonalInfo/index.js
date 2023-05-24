@@ -32,6 +32,7 @@ export default function PersonalInfo() {
   const [ suffix, setSuffix ] = useState('');
 
   const { access } = useSelector(state => state.auth);
+  const user_id = jwtDecode(access)['user_id'];
 
   const restorePersonalInfo = () => {
     setFirstName(prevFirstName);
@@ -42,7 +43,6 @@ export default function PersonalInfo() {
   };
 
   useEffect(() => {
-    const user_id = jwtDecode(access)['user_id'];
     UserApi.retrieve_user(user_id)
     .then(
       (response) => {
@@ -91,7 +91,7 @@ export default function PersonalInfo() {
       if (suffix !== prevSuffix) {
         updated_fields['suffix'] = suffix;
       }
-      // TODO: send the edit user request
+      UserApi.partial_update_user(user_id, updated_fields);
     }
     setPrevFirstName(firstName);
     setPrevMiddleName(middleName);
@@ -127,7 +127,7 @@ export default function PersonalInfo() {
                 id='middleNameInput'
                 type='text'
                 value={middleName}
-                valid={middleName !== ''}
+                valid={editingPersonalInfo && middleName !== ''}
                 onChange={(e) => setMiddleName(e.target.value)}
                 disabled={!editingPersonalInfo}
               />
@@ -151,7 +151,7 @@ export default function PersonalInfo() {
                 id='suffixInput'
                 type='text'
                 value={suffix}
-                valid={suffix !== ''}
+                valid={editingPersonalInfo && suffix !== ''}
                 onChange={(e) => setSuffix(e.target.value)}
                 disabled={!editingPersonalInfo}
               />
