@@ -10,11 +10,13 @@ import {
   Button,
   FormFeedback,
 } from 'reactstrap';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
 import './index.css';
-import { useEffect, useState } from 'react';
-
 import { publicAxios } from 'src/api/axios';
+import UserApi from 'src/api/user';
 
 const CHECK_EMAIL_URL = 'check_email/';
 const REQUIRED_FIELD_MESSAGE = 'This field is required.';
@@ -35,6 +37,8 @@ export default function PersonalInfo() {
   const [ email, setEmail ] = useState('');
   const [ emailErrorMsg, setEmailErrorMsg ] = useState('');
 
+  const { access } = useSelector(state => state.auth);
+
   const restorePersonalInfo = () => {
     setFirstName(prevFirstName);
     setMiddleName(prevMiddleName);
@@ -43,6 +47,23 @@ export default function PersonalInfo() {
     setEmail(prevEmail);
     setEditingPersonalInfo(!editingPersonalInfo);
   };
+
+  useEffect(() => {
+    const user_id = jwtDecode(access)['user_id'];
+    UserApi.retrieve_user(user_id)
+    .then(
+      (response) => {
+        setFirstName(response.data.first_name);
+        if (response.data.middle_name) {
+          setMiddleName(response.data.middle_name);
+        }
+        setLastName(response.data.last_name);
+        if (response.data.suffix) {
+          setMiddleName(response.data.suffix);
+        }
+      }
+    );
+  }, []);
 
   useEffect(() => {
     if (firstName !== '') {
@@ -80,7 +101,7 @@ export default function PersonalInfo() {
     }
 
     const delayCheckEmail = setTimeout(() => {
-      if (email !== '') {
+      if (email !== '' || email !== prevEmail) {
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (re.test(email)) {
           checkEmail();
@@ -102,7 +123,6 @@ export default function PersonalInfo() {
     e.preventDefault();
 
     if (editingPersonalInfo) {
-      // TODO: send the edit user request
       const updated_fields = {};
       if (firstName !== prevFirstName) {
         updated_fields['first_name'] = firstName;
@@ -119,7 +139,7 @@ export default function PersonalInfo() {
       if (email !== prevEmail) {
         updated_fields['email'] = email;
       }
-      console.log(updated_fields);
+      // TODO: send the edit user request
     }
     setPrevFirstName(firstName);
     setPrevMiddleName(middleName);
