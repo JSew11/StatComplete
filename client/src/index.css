@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {
@@ -68,8 +69,4 @@ code {
 .btn-secondary:hover {
   border-color: transparent;
   background-color: var(--secondary-color-hover);
-}
-
-.uniform-background-color {
-  background-color: var(--background-color);
 }

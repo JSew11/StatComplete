@@ -23,24 +23,19 @@ export default function UserProfile() {
   }
 
   return (
-    <Container fluid className='uniform-background-color'>
+    <Container fluid>
       <Row className='p-2 align-items-center'>
-        <Col className='text-start'>
-          <Button color='primary' onClick={() => {navigate(-1);}}>Back</Button>
-        </Col>
-        <Col className='text-end'>
-          <Button color='primary' onClick={logoutUser}>Log Out</Button>
-        </Col>
+        <Col className='text-start'><Button color='primary' onClick={() => {navigate(-1);}}>Back</Button></Col>
+        <Col className='text-end'><Button color='primary' onClick={logoutUser}>Log Out</Button></Col>
       </Row>
-      <Row className='p-2'>
-        <Col className='text-center'>
-          <CgProfile className='profile-logo'/>
-        </Col>
+      <Row className='align-items-center'>
+        <Col className='text-center'><CgProfile className='profile-logo'/></Col>
+      </Row>
+      <Row className='m-3 align-items-center'>
+        {/* <Col className='text-center'><Button>Edit Profile Logo</Button></Col> */}
       </Row>
       <Row>
-        <Col>
-          <PersonalInfo />
-        </Col>
+        <Col><PersonalInfo /></Col>
       </Row>
     </Container>
   );
