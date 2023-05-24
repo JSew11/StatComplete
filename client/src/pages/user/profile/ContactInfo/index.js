@@ -17,10 +17,10 @@ import { publicAxios } from 'src/api/axios';
 const CHECK_EMAIL_URL = 'check_email/';
 const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 
-export default function ContactInfo() {
-  const [ editingContactInfo, setEditingContactInfo ] = useState('');
+export default function ContactInfo({ user }) {
+  const [ editingContactInfo, setEditingContactInfo ] = useState(false);
   const [ prevEmail, setPrevEmail ] = useState('');
-  const [ email, setEmail ] = useState('');
+  const [ email, setEmail ] = useState(user.email ?? '');
   const [ emailErrorMsg, setEmailErrorMsg ] = useState('');
 
   useEffect(() => {

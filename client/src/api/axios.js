@@ -48,7 +48,6 @@ privateAxios.interceptors.response.use(
   },
   async (error) => {
     const config = error?.config;
-    console.log(config);
 
     if (error?.response?.status === 401 && !config?._retry) {
       config._retry = true;

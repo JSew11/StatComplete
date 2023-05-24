@@ -8,5 +8,5 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        exclude = ['created', 'updated', 'deleted', 'email', 'password']
-        read_only_fields = ['id']
+        exclude = ['created', 'updated', 'deleted', 'password']
+        read_only_fields = ['id', 'email']

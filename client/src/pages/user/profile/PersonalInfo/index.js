@@ -16,19 +16,18 @@ import UserApi from 'src/api/user';
 
 const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 
-export default function PersonalInfo() {
+export default function PersonalInfo({ user }) {
   const [ editingPersonalInfo, setEditingPersonalInfo ] = useState(false);
-  const [ userId, setUserId ] = useState('');
   const [ prevFirstName, setPrevFirstName ] = useState('');
-  const [ firstName, setFirstName ] = useState('');
+  const [ firstName, setFirstName ] = useState(user.first_name ?? '');
   const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState('');
   const [ prevMiddleName, setPrevMiddleName ] = useState('');
-  const [ middleName, setMiddleName ] = useState('');
+  const [ middleName, setMiddleName ] = useState(user.middle_name ?? '');
   const [ prevLastName, setPrevLastName ] = useState('');
-  const [ lastName, setLastName ] = useState('');
+  const [ lastName, setLastName ] = useState(user.last_name ?? '');
   const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState('');
   const [ prevSuffix, setPrevSuffix ] = useState('');
-  const [ suffix, setSuffix ] = useState('');
+  const [ suffix, setSuffix ] = useState(user.suffix ?? '');
 
   const restorePersonalInfo = () => {
     setFirstName(prevFirstName);
@@ -37,23 +36,6 @@ export default function PersonalInfo() {
     setSuffix(prevSuffix);
     setEditingPersonalInfo(!editingPersonalInfo);
   };
-
-  useEffect(() => {
-    UserApi.current_user()
-    .then(
-      (response) => {
-        setUserId(response.id);
-        setFirstName(response.data.first_name);
-        if (response.data.middle_name) {
-          setMiddleName(response.data.middle_name);
-        }
-        setLastName(response.data.last_name);
-        if (response.data.suffix) {
-          setSuffix(response.data.suffix);
-        }
-      }
-    );
-  }, []);
 
   useEffect(() => {
     if (firstName !== '') {
@@ -88,7 +70,7 @@ export default function PersonalInfo() {
       if (suffix !== prevSuffix) {
         updated_fields['suffix'] = suffix;
       }
-      UserApi.partial_update_user(userId, updated_fields);
+      UserApi.partial_update_user(user.id, updated_fields);
     }
     setPrevFirstName(firstName);
     setPrevMiddleName(middleName);
