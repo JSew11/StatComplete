@@ -5,11 +5,11 @@ from rest_framework.request import Request
 from rest_framework import status, permissions
 
 from ..models.organization import Organization
-from ..models.competition import Competition
-from ..models.team import Team
+from baseball.models.competition import Competition
+from baseball.models.team import Team
 from ..serializers.organization_serializer import OrganizationSerializer
-from ..serializers.competition_serializer import CompetitionSerializer
-from ..serializers.team_serializer import TeamSerializer
+from baseball.serializers.competition_serializer import CompetitionSerializer
+from baseball.serializers.team_serializer import TeamSerializer
 
 class OrganizationViewSet (ModelViewSet):
     """Views for the organization model.

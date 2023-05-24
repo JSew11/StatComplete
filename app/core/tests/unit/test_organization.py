@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from baseball.models.organization import Organization
+from core.models.organization import Organization
 
 class TestOrganizationModel (TestCase):
     """Tests for the organization model.

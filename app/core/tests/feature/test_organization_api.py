@@ -2,7 +2,7 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 
 from core.models.user import User
-from baseball.models.organization import Organization
+from core.models.organization import Organization
 from baseball.models.competition import Competition
 from baseball.models.choices.competition_type import CompetitionType
 from baseball.models.team import Team
@@ -24,7 +24,7 @@ class TestOrganizationDetailsApi (APITestCase):
     def test_organization_by_id(self):
         """Test the GET endpoint for getting a organization by its associated uuid.
         """
-        response = self.client.get(f'/api/baseball/organizations/{self.test_organization.id}/')
+        response = self.client.get(f'/api/organizations/{self.test_organization.id}/')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.test_organization.name, response.data.get('name'))
 
@@ -34,7 +34,7 @@ class TestOrganizationDetailsApi (APITestCase):
         updated_organization_field = {
             'location':'Anywhere, USA',
         }
-        response = self.client.patch(path=f'/api/baseball/organizations/{self.test_organization.id}/', data=updated_organization_field, format='json')
+        response = self.client.patch(path=f'/api/organizations/{self.test_organization.id}/', data=updated_organization_field, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_organization_field.get('location'), response.data.get('location'))
     
@@ -42,10 +42,10 @@ class TestOrganizationDetailsApi (APITestCase):
     def test_delete_organization(self):
         """Test the DELETE endpoint for deleting a organization by its associated uuid.
         """
-        delete_response = self.client.delete(path=f'/api/baseball/organizations/{self.test_organization.id}/')
+        delete_response = self.client.delete(path=f'/api/organizations/{self.test_organization.id}/')
         self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
 
-        get_response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/')
+        get_response = self.client.get(path=f'/api/organizations/{self.test_organization.id}/')
         self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
 
 class TestOrganizationListApi (APITestCase):
@@ -69,7 +69,7 @@ class TestOrganizationListApi (APITestCase):
         organization_data = {
             'name' : 'Test Organization Create',
         }
-        response = self.client.post('/api/baseball/organizations/', data=organization_data, format='json')
+        response = self.client.post('/api/organizations/', data=organization_data, format='json')
         
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(organization_data.get('name'), response.data.get('name'))
@@ -78,7 +78,7 @@ class TestOrganizationListApi (APITestCase):
     def test_organizations_list(self):
         """Test the GET endpoint for getting the list of organizations.
         """
-        response = self.client.get('/api/baseball/organizations/')
+        response = self.client.get('/api/organizations/')
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
@@ -101,7 +101,7 @@ class TestOrganizationCompetitionDetailsApi (APITestCase):
     def test_competition_by_id(self):
         """Test the GET endpoint for getting a competition by its associated uuid.
         """
-        response = self.client.get(f'/api/baseball/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/')
+        response = self.client.get(f'/api/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.test_competition.name, response.data.get('name'))
         self.assertEqual(self.test_competition.type, response.data.get('type'))
@@ -112,7 +112,7 @@ class TestOrganizationCompetitionDetailsApi (APITestCase):
         updated_competition_data = {
             'start_date':'2023-03-31',
         }
-        response = self.client.patch(path=f'/api/baseball/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/', data=updated_competition_data, format='json')
+        response = self.client.patch(path=f'/api/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/', data=updated_competition_data, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_competition_data.get('start_date'), response.data.get('start_date'))
     
@@ -120,10 +120,10 @@ class TestOrganizationCompetitionDetailsApi (APITestCase):
     def test_delete_competition(self):
         """Test the DELETE endpoint for deleting a competition by its associated uuid.
         """
-        delete_response = self.client.delete(path=f'/api/baseball/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/')
+        delete_response = self.client.delete(path=f'/api/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/')
         self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
 
-        get_response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/')
+        get_response = self.client.get(path=f'/api/organizations/{self.test_organization.id}/competitions/{self.test_competition.id}/')
         self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
 
 class TestOrganizationCompetitionListApi (APITestCase):
@@ -147,7 +147,7 @@ class TestOrganizationCompetitionListApi (APITestCase):
             'name' : 'Test Season',
             'type' : CompetitionType.SEASON
         }
-        response = self.client.post(f'/api/baseball/organizations/{self.test_organization.id}/competitions/', data=competition_data, format='json')
+        response = self.client.post(f'/api/organizations/{self.test_organization.id}/competitions/', data=competition_data, format='json')
         
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(competition_data.get('name'), response.data.get('name'))
@@ -156,7 +156,7 @@ class TestOrganizationCompetitionListApi (APITestCase):
     def test_competitions_list(self):
         """Test the GET endpoint for getting the list of competitions.
         """
-        response = self.client.get(f'/api/baseball/organizations/{self.test_organization.id}/competitions/')
+        response = self.client.get(f'/api/organizations/{self.test_organization.id}/competitions/')
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
@@ -179,7 +179,7 @@ class TestOrganizationTeamDetailsApi (APITestCase):
     def test_team_by_id(self):
         """Test the GET endpoint for getting a team by its associated uuid.
         """
-        response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
+        response = self.client.get(path=f'/api/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(self.test_team.location, response.data.get('location'))
         self.assertEqual(self.test_team.name, response.data.get('name'))
@@ -190,17 +190,17 @@ class TestOrganizationTeamDetailsApi (APITestCase):
         updated_team_field = {
             'location':'Updated',
         }
-        response = self.client.patch(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/{self.test_team.id}/', data=updated_team_field, format='json')
+        response = self.client.patch(path=f'/api/organizations/{self.test_organization.id}/teams/{self.test_team.id}/', data=updated_team_field, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(updated_team_field.get('location'), response.data.get('location'))
     
     def test_delete_team(self):
         """Test the DELETE endpoint for deleting a team using its associated uuid.
         """
-        delete_response = self.client.delete(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
+        delete_response = self.client.delete(path=f'/api/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
         self.assertEqual(status.HTTP_204_NO_CONTENT, delete_response.status_code)
 
-        get_response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
+        get_response = self.client.get(path=f'/api/organizations/{self.test_organization.id}/teams/{self.test_team.id}/')
         self.assertEqual(status.HTTP_404_NOT_FOUND, get_response.status_code)
 
 class TestOrganizationTeamListApi (APITestCase):
@@ -226,7 +226,7 @@ class TestOrganizationTeamListApi (APITestCase):
             'location' : 'TEST',
             'name' : 'TEAM',
         }
-        response = self.client.post(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/', data=team_data, format='json')
+        response = self.client.post(path=f'/api/organizations/{self.test_organization.id}/teams/', data=team_data, format='json')
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
         self.assertEqual(team_data.get('location'), response.data.get('location'))
@@ -235,7 +235,7 @@ class TestOrganizationTeamListApi (APITestCase):
     def test_teams_list(self):
         """Test the GET endpoint for getting the list of teams.
         """
-        response = self.client.get(path=f'/api/baseball/organizations/{self.test_organization.id}/teams/')
+        response = self.client.get(path=f'/api/organizations/{self.test_organization.id}/teams/')
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(2, len(response.data))
