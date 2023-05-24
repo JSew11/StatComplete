@@ -22,13 +22,19 @@ class UserViewSet (ModelViewSet):
     """
     serializer_class = UserSerializer
 
+    def current_user(self, request: Request, *args, **kwargs) -> Response:
+        serializer = UserSerializer(request.user)
+        return Response(
+            data=serializer.data,
+            status=status.HTTP_200_OK,
+        )
+
     def retrieve(self, request: Request, user_id: str, *args, **kwargs) -> Response:
         """Get the details of the user with the given user_id.
         """
-        request_user: User = request.user
         try:
-            user_to_return = User.objects.get(id=user_id)
-            if request_user.has_perm('core.view_user') or request_user.id == user_to_return.id:
+            user_to_return: User = User.objects.get(id=user_id)
+            if request.user.has_perm('core.view_user'):
                 serializer = UserSerializer(user_to_return)
                 return Response(
                     data=serializer.data,
@@ -51,7 +57,7 @@ class UserViewSet (ModelViewSet):
         """
         request_user: User = request.user
         try:
-            user_to_return = User.objects.get(id=user_id)
+            user_to_return: User = User.objects.get(id=user_id)
             if request_user.has_perm('core.change_user') or request_user.id == user_to_return.id:
                 if not request.data:
                     return Response(

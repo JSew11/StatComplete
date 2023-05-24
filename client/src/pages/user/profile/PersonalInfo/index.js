@@ -11,8 +11,6 @@ import {
   FormFeedback,
 } from 'reactstrap';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import jwtDecode from 'jwt-decode';
 
 import UserApi from 'src/api/user';
 
@@ -20,6 +18,7 @@ const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 
 export default function PersonalInfo() {
   const [ editingPersonalInfo, setEditingPersonalInfo ] = useState(false);
+  const [ userId, setUserId ] = useState('');
   const [ prevFirstName, setPrevFirstName ] = useState('');
   const [ firstName, setFirstName ] = useState('');
   const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState('');
@@ -31,10 +30,6 @@ export default function PersonalInfo() {
   const [ prevSuffix, setPrevSuffix ] = useState('');
   const [ suffix, setSuffix ] = useState('');
 
-  const { access } = useSelector(state => state.auth);
-  const decodedToken = jwtDecode(access);
-  const user_id = decodedToken['user_id'];
-
   const restorePersonalInfo = () => {
     setFirstName(prevFirstName);
     setMiddleName(prevMiddleName);
@@ -44,9 +39,10 @@ export default function PersonalInfo() {
   };
 
   useEffect(() => {
-    UserApi.retrieve_user(user_id)
+    UserApi.current_user()
     .then(
       (response) => {
+        setUserId(response.id);
         setFirstName(response.data.first_name);
         if (response.data.middle_name) {
           setMiddleName(response.data.middle_name);
@@ -92,7 +88,7 @@ export default function PersonalInfo() {
       if (suffix !== prevSuffix) {
         updated_fields['suffix'] = suffix;
       }
-      UserApi.partial_update_user(user_id, updated_fields);
+      UserApi.partial_update_user(userId, updated_fields);
     }
     setPrevFirstName(firstName);
     setPrevMiddleName(middleName);
