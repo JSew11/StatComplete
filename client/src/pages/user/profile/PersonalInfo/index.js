@@ -32,7 +32,8 @@ export default function PersonalInfo() {
   const [ suffix, setSuffix ] = useState('');
 
   const { access } = useSelector(state => state.auth);
-  const user_id = jwtDecode(access)['user_id'];
+  const decodedToken = jwtDecode(access);
+  const user_id = decodedToken['user_id'];
 
   const restorePersonalInfo = () => {
     setFirstName(prevFirstName);
