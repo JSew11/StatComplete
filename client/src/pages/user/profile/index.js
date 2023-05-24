@@ -11,6 +11,7 @@ import { CgProfile } from 'react-icons/cg';
 import './index.css';
 import { logout } from 'src/state/token/actions';
 import PersonalInfo from './PersonalInfo';
+import ContactInfo from './ContactInfo';
 
 export default function UserProfile() {
   const navigate = useNavigate();
@@ -36,6 +37,9 @@ export default function UserProfile() {
       </Row>
       <Row>
         <Col><PersonalInfo /></Col>
+      </Row>
+      <Row>
+        <Col><ContactInfo /></Col>
       </Row>
     </Container>
   );

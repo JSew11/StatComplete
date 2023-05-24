@@ -14,11 +14,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 
-import './index.css';
-import { publicAxios } from 'src/api/axios';
 import UserApi from 'src/api/user';
 
-const CHECK_EMAIL_URL = 'check_email/';
 const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 
 export default function PersonalInfo() {
@@ -33,9 +30,6 @@ export default function PersonalInfo() {
   const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState('');
   const [ prevSuffix, setPrevSuffix ] = useState('');
   const [ suffix, setSuffix ] = useState('');
-  const [ prevEmail, setPrevEmail ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ emailErrorMsg, setEmailErrorMsg ] = useState('');
 
   const { access } = useSelector(state => state.auth);
 
@@ -44,7 +38,6 @@ export default function PersonalInfo() {
     setMiddleName(prevMiddleName);
     setLastName(prevLastName);
     setSuffix(prevSuffix);
-    setEmail(prevEmail);
     setEditingPersonalInfo(!editingPersonalInfo);
   };
 
@@ -81,44 +74,6 @@ export default function PersonalInfo() {
     }
   }, [lastName])
 
-  useEffect(() => {
-    const checkEmail = async () => {
-      try {
-        const response = await publicAxios.post(
-          CHECK_EMAIL_URL,
-          JSON.stringify({
-            email: email,
-          })
-        );
-        if (response?.data?.email_available) {
-          setEmailErrorMsg('');
-        } else {
-          setEmailErrorMsg('This email is not available.');
-        }
-      } catch (err) {
-        setEmailErrorMsg('Could not determine if email is available. Please try again later.')
-      }
-    }
-
-    const delayCheckEmail = setTimeout(() => {
-      if (email !== '' || email !== prevEmail) {
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (re.test(email)) {
-          checkEmail();
-        } else {
-          setEmailErrorMsg('Invalid email format.');
-        }
-      } else {
-        setEmailErrorMsg(REQUIRED_FIELD_MESSAGE);
-      }
-    }, 1000);
-
-    return () => {
-      setEmailErrorMsg('Validating email.')
-      clearTimeout(delayCheckEmail);
-    };
-  }, [email]);
-
   const savePersonalInfo = async (e) => {
     e.preventDefault();
 
@@ -136,16 +91,12 @@ export default function PersonalInfo() {
       if (suffix !== prevSuffix) {
         updated_fields['suffix'] = suffix;
       }
-      if (email !== prevEmail) {
-        updated_fields['email'] = email;
-      }
       // TODO: send the edit user request
     }
     setPrevFirstName(firstName);
     setPrevMiddleName(middleName);
     setPrevLastName(lastName);
     setPrevSuffix(suffix);
-    setPrevEmail(email);
     setEditingPersonalInfo(!editingPersonalInfo);
   };
 
@@ -206,26 +157,11 @@ export default function PersonalInfo() {
               />
             </Col>
           </FormGroup>
-          <FormGroup row>
-            <Col className='col-5'>
-              <Label for='emailInput'>Email</Label>
-              <Input
-                id='emailInput'
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                valid={editingPersonalInfo && emailErrorMsg === ''}
-                invalid={editingPersonalInfo && emailErrorMsg !== ''}
-                disabled={!editingPersonalInfo}
-              />
-              <FormFeedback>{emailErrorMsg}</FormFeedback>
-            </Col>
-          </FormGroup>
           <Button 
             className='m-1'
             disabled={
               editingPersonalInfo &&
-              emailErrorMsg !== '' && firstNameErrorMsg !== '' &&
+              firstNameErrorMsg !== '' &&
               lastNameErrorMsg !== ''
             }
           >
