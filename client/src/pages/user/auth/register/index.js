@@ -168,8 +168,8 @@ export default function Register() {
             placeholder='e.g. user@statcomplete.com'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            valid={emailErrorMsg === '' && email !== ''}
-            invalid={emailErrorMsg !== '' || email === ''}
+            valid={emailErrorMsg === ''}
+            invalid={emailErrorMsg !== ''}
             required
           />
           <FormFeedback>{emailErrorMsg}</FormFeedback>
@@ -181,8 +181,8 @@ export default function Register() {
             type='text'
             ref={firstNameRef}
             onChange={(e) => setFirstName(e.target.value)}
-            valid={firstNameErrorMsg === '' && firstName !== ''}
-            invalid={firstNameErrorMsg !== '' || firstName === ''}
+            valid={firstNameErrorMsg === ''}
+            invalid={firstNameErrorMsg !== ''}
             value={firstName}
             required
           />
@@ -204,8 +204,8 @@ export default function Register() {
             id='lastNameInput'
             type='text'
             onChange={(e) => setLastName(e.target.value)}
-            valid={lastNameErrorMsg === '' && lastName !== ''}
-            invalid={lastNameErrorMsg !== '' || lastName === ''}
+            valid={lastNameErrorMsg === ''}
+            invalid={lastNameErrorMsg !== ''}
             value={lastName}
             required
           />
@@ -228,8 +228,8 @@ export default function Register() {
             type='password'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            valid={passwordErrorMsg === '' && password !== ''}
-            invalid={passwordErrorMsg !== '' || password === ''}
+            valid={passwordErrorMsg === ''}
+            invalid={passwordErrorMsg !== ''}
           />
           <FormFeedback>{passwordErrorMsg}</FormFeedback>
         </FormGroup>
@@ -240,8 +240,8 @@ export default function Register() {
             type='password'
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
-            valid={confirmPasswordErrorMsg === '' && confirmPassword !== ''}
-            invalid={confirmPasswordErrorMsg !== '' || confirmPassword === ''}
+            valid={confirmPasswordErrorMsg === ''}
+            invalid={confirmPasswordErrorMsg !== ''}
           />
           <FormFeedback>{confirmPasswordErrorMsg}</FormFeedback>
         </FormGroup>
