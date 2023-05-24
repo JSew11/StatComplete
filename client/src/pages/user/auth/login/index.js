@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './index.css';
 import { login } from 'src/state/token/actions';
 import { clearMessage } from 'src/state/message/actions';
+import Error from 'src/components/Error';
 
 
 export default function Login() {
@@ -51,10 +52,7 @@ export default function Login() {
       <div>
         <h2 className='p-1 m-1 text-center'>Sign In to StatComplete</h2>
       </div>
-      <div ref={errorRef} className={message ? 'error-msg' : 'offscreen'}
-        aria-live='assertive'>
-          {message}
-      </div>
+      <Error errorRef={errorRef} message={message} />
       <Form onSubmit={handleSubmit}>
         <FormGroup floating>
           <Input 

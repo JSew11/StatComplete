@@ -17,6 +17,7 @@ import './index.css';
 import { publicAxios } from 'src/api/axios';
 import { register } from 'src/state/token/actions';
 import { clearMessage } from 'src/state/message/actions';
+import Error from 'src/components/Error';
 
 const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;
@@ -158,12 +159,7 @@ export default function Register() {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <div ref={errorRef} className={message ? 'error-msg' : 'offscreen'}
-            aria-live='assertive'>
-              {message}
-          </div>
-        </Col>
+        <Col><Error errorRef={errorRef} message={message}/></Col>
       </Row>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
