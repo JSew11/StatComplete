@@ -49,7 +49,7 @@ const refreshToken = async () => {
   .then(
     (response) => {
       if (response.data.access) {
-        sessionStorage.setItem('token');
+        sessionStorage.setItem('token', response.data.access);
       }
 
       return response;

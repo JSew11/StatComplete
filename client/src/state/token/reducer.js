@@ -4,8 +4,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  REFRESH_TOKEN_SUCCESS,
-  REFRESH_TOKEN_FAIL,
+  REFRESH_TOKEN,
 } from 'src/state/actionTypes';
 
 const token = sessionStorage.getItem('token');
@@ -45,17 +44,11 @@ export default function auth(state=initialState, action) {
         isLoggedIn: false,
         access: null,
       };
-    case REFRESH_TOKEN_SUCCESS: 
+    case REFRESH_TOKEN: 
       return {
         ...state,
         isLoggedIn: true,
         access: payload.access,
-      }
-    case REFRESH_TOKEN_FAIL:
-      return {
-        ...state,
-        isLoggedIn: false,
-        access: null,
       }
     default:
       return state;

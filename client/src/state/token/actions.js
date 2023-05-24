@@ -4,9 +4,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  REFRESH_TOKEN_SUCCESS,
-  REFRESH_TOKEN_FAIL,
   SET_MESSAGE,
+  REFRESH_TOKEN,
 } from 'src/state/actionTypes';
 import AuthApi from 'src/api/auth';
 
@@ -105,41 +104,9 @@ export const logout = () => (dispatch) => {
   );
 };
 
-export const refreshToken = () => (dispatch) => {
-  return AuthApi.refreshToken().then(
-    (data) => {
-      dispatch({
-        type: REFRESH_TOKEN_SUCCESS,
-        payload: {
-          access: data.access,
-        }
-      });
-
-      return Promise.resolve();
-    },
-    (error) => {
-      let message = 'Token refresh failed.';
-      if (error.response && error.response.status === 401) {
-        message = 'Refresh token expired, please login again.';
-      } else {
-        message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-
-      dispatch({
-        type: REFRESH_TOKEN_FAIL
-      });
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: message,
-      });
-
-      return Promise.reject();
-    }
-  );
+export const refreshToken = (access) => (dispatch) => {
+  dispatch({
+    type: REFRESH_TOKEN,
+    payload: access,
+  });
 }
