@@ -29,17 +29,17 @@ export default function Register() {
   const errorRef = useRef();
 
   const [ firstName, setFirstName ] = useState('');
-  const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState('');
+  const [ firstNameErrorMsg, setFirstNameErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE);
   const [ middleName, setMiddleName ] = useState('');
   const [ lastName, setLastName ] = useState('');
-  const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState('');
+  const [ lastNameErrorMsg, setLastNameErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE);
   const [ suffix, setSuffix ] = useState('');
   const [ email, setEmail ] = useState('');
-  const [ emailErrorMsg, setEmailErrorMsg ] = useState('')
+  const [ emailErrorMsg, setEmailErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE)
   const [ password, setPassword ] = useState('');
-  const [ passwordErrorMsg, setPasswordErrorMsg ] = useState('')
+  const [ passwordErrorMsg, setPasswordErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE)
   const [ confirmPassword, setConfirmPassword ] = useState('');
-  const [ confirmPasswordErrorMsg, setConfirmPasswordErrorMsg ] = useState('')
+  const [ confirmPasswordErrorMsg, setConfirmPasswordErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE)
   
   const { message } = useSelector(state => state.message);
   const dispatch = useDispatch();
@@ -71,17 +71,23 @@ export default function Register() {
       }
     }
 
-    if (email !== '') {
-      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (re.test(email)) {
-        setEmailErrorMsg('');
-        checkEmail();
+    const delayCheckEmail = setTimeout(() => {
+      if (email !== '') {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test(email)) {
+          checkEmail();
+        } else {
+          setEmailErrorMsg('Invalid email format.');
+        }
       } else {
-        setEmailErrorMsg('Invalid email format.');
+        setEmailErrorMsg(REQUIRED_FIELD_MESSAGE);
       }
-    } else {
-      setEmailErrorMsg(REQUIRED_FIELD_MESSAGE);
-    }
+    }, 1000);
+
+    return () => {
+      setEmailErrorMsg('Validating email.')
+      clearTimeout(delayCheckEmail);
+    };
   }, [email]);
 
   useEffect(() => {
