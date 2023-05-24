@@ -11,7 +11,6 @@ class PlayerViewSet (ModelViewSet):
     """Views for the player model.
     """
     serializer_class = PlayerSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request: Request, *args, **kwargs) -> Response:
         """View the list of all players.

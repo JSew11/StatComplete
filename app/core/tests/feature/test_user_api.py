@@ -21,7 +21,6 @@ class TestUserRegistrationApi(APITestCase):
         user_data = {
             'first_name': 'Test',
             'last_name': 'User',
-            'username': 'TestUser',
             'email': 'test.user@email.com',
             'password': 'terriblePassword123'
         }
@@ -35,10 +34,10 @@ class TestRefreshTokenApi(APITestCase):
 
     def setUp(self) -> None:
         self.client = APIClient()
-        self.test_user = User.objects.get(username='DeveloperAdmin')
+        self.test_user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(self.test_user)
         token = RefreshToken.for_user(self.test_user)
-        self.client.cookies = SimpleCookie({'refresh': str(token)})
+        self.client.cookies = SimpleCookie({'refresh_token': str(token)})
         return super().setUp()
     
     def test_refresh_token(self):
@@ -54,11 +53,11 @@ class TestLogoutApi(APITestCase):
     fixtures = ['user']
 
     def setUp(self) -> None:
-        self.client = APIClient()
-        self.test_user = User.objects.get(username='DeveloperAdmin')
+        self.client: APIClient = APIClient()
+        self.test_user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(self.test_user)
         token = RefreshToken.for_user(self.test_user)
-        self.client.cookies = SimpleCookie({'refresh': str(token)})
+        self.client.cookies = SimpleCookie({'refresh_token': str(token)})
         return super().setUp()
     
     def test_logout(self):
@@ -75,26 +74,6 @@ class TestUserFieldValidationApi(APITestCase):
     def setUp(self) -> None:
         self.client = APIClient()
         return super().setUp()
-    
-    def test_check_username_available(self):
-        """Test the POST endpoint for checking if a username is available.
-        """
-        response: Response = self.client.post(path='/api/check_username/', data={}, format='json')
-        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-
-        username_data = {
-            'username': 'AvailableUsername'
-        }
-        response: Response = self.client.post(path='/api/check_username/', data=username_data, format='json')
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertTrue(response.data['username_available'])
-
-        username_data = {
-            'username': 'DeveloperAdmin'
-        }
-        response: Response = self.client.post(path='/api/check_username/', data=username_data, format='json')
-        self.assertEqual(status.HTTP_200_OK, response.status_code)
-        self.assertFalse(response.data['username_available'])
     
     def test_check_email_available(self):
         """Test the POST endpoint for checking if a email is available.
@@ -115,3 +94,90 @@ class TestUserFieldValidationApi(APITestCase):
         response: Response = self.client.post(path='/api/check_email/', data=email_data, format='json')
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertFalse(response.data['email_available'])
+
+class TestUserListView(APITestCase):
+    """Test the user list endpoint.
+    """
+    fixtures = ['user']
+
+    def setUp(self) -> None:
+        self.client: APIClient = APIClient()
+        return super().setUp()
+    
+    def test_users_list_endpoint(self):
+        """Test the GET endpoint for getting a list of users in the system.
+        """
+        # test as unauthenticated user
+        response: Response = self.client.get(path='/api/users/')
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+        # test as non-admin user
+        regular_user = User.objects.get(email='test.user@email.com')
+        self.client.force_authenticate(regular_user)
+        response: Response = self.client.get(path='/api/users/')
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+        # test as admin user
+        admin_user = User.objects.get(email='developer.admin@statcomplete.com')
+        self.client.force_authenticate(admin_user)
+        response: Response = self.client.get(path='/api/users/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+
+class TestUserViewSet(APITestCase):
+    """Test the user viewset endpoint.
+    """
+    fixtures = ['user']
+
+    def setUp(self) -> None:
+        self.client: APIClient = APIClient()
+        return super().setUp()
+
+    def test_retrieve_user_endpoint(self):
+        """Test the GET endpoint for retrieving a user by its associated uuid.
+        """
+        regular_user: User = User.objects.get(email='test.user@email.com')
+        admin_user: User = User.objects.get(email='developer.admin@statcomplete.com')
+
+        self.client.force_authenticate(regular_user)
+        # as the test user test accessing the test user with its uuid (should receive 200)
+        response: Response = self.client.get(path=f'/api/users/{regular_user.id}/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(regular_user.first_name, response.data['first_name'])
+
+        # as the test user test accessing the admin user with its uuid (should receive 403)
+        response: Response = self.client.get(path=f'/api/users/{admin_user.id}/')
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+        self.client.force_authenticate(admin_user)
+        # as the admin user test accessing the admin user with its uuid (should receive 200)
+        response: Response = self.client.get(path=f'/api/users/{regular_user.id}/')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(regular_user.first_name, response.data['first_name'])
+
+    def test_partial_update_user_endpoint(self):
+        """Test the PATCH endpoint for partially updating a user by its associated uuid.
+        """
+        regular_user: User = User.objects.get(email='test.user@email.com')
+        regular_user_updated_fields = {
+            'suffix': 'Jr.'
+        }
+        admin_user: User = User.objects.get(email='developer.admin@statcomplete.com')
+        admin_user_updated_fields = {
+            'suffix': 'Sr.'
+        }
+
+        self.client.force_authenticate(regular_user)
+        # as the test user test updating the test user with its uuid (should receive 200)
+        response: Response = self.client.patch(path=f'/api/users/{regular_user.id}/', data=regular_user_updated_fields, format='json')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(regular_user_updated_fields['suffix'], response.data['suffix'])
+
+        # as the test user test updating the admin user with its uuid (should receive 403)
+        response: Response = self.client.patch(path=f'/api/users/{admin_user.id}/', data=admin_user_updated_fields, format='json')
+        self.assertEqual(status.HTTP_403_FORBIDDEN, response.status_code)
+
+        self.client.force_authenticate(admin_user)
+        # as the admin user test accessing the admin user with its uuid (should receive 200)
+        response: Response = self.client.get(path=f'/api/users/{regular_user.id}/', data=regular_user_updated_fields, format='json')
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        self.assertEqual(regular_user_updated_fields['suffix'], response.data['suffix'])

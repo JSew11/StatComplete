@@ -9,16 +9,17 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { logout } from '../../state/token/actions';
-
-import Navbar from './Navbar';
-import './Header.css';
+import { logout } from 'src/state/token/actions';
+import Navbar from 'src/components/layout/Navbar';
+import './index.css';
 
 export default function Header() {
+  const navigate = useNavigate();
+
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
 
   const { isLoggedIn } = useSelector(state => state.auth);
@@ -30,12 +31,13 @@ export default function Header() {
 
   const logoutUser = () => {
     dispatch(logout());
+    navigate('/');
   }
 
   return (
     <Container fluid>
       <Row className='p-2 align-items-center'>
-        <Col className='text-left'>
+        <Col className='text-start'>
           <h1>StatComplete</h1>
         </Col>
         <Col className='text-end'>
@@ -47,8 +49,8 @@ export default function Header() {
                 <CgProfile className='profile-icon' />
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/'>Profile</NavLink></DropdownItem>
-                <DropdownItem className='p-0'><NavLink className='user-dropdown-link' onClick={logoutUser} href='/'>Logout</NavLink></DropdownItem>
+                <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/profile/'>Profile</NavLink></DropdownItem>
+                <DropdownItem className='p-0' onClick={logoutUser}><NavLink className='user-dropdown-link' href='#'>Log Out</NavLink></DropdownItem>
               </DropdownMenu>
             </Dropdown>
           }

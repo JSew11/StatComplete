@@ -15,7 +15,6 @@ class OrganizationViewSet (ModelViewSet):
     """Views for the organization model.
     """
     serializer_class = OrganizationSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request: Request, *args, **kwargs) -> Response:
         """View a list of all organizations.

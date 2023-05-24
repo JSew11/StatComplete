@@ -15,7 +15,26 @@
         "created": "2023-05-13T23:57:15.494Z",
         "updated": "2023-05-13T23:57:15.494Z",
         "email": "developer.admin@statcomplete.com",
-        "username": "DeveloperAdmin",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "core.user",
+    "pk": "725368fa-ef2c-4c54-8e56-785617413cd3",
+    "fields": {
+        "password": "pbkdf2_sha256$600000$Sfo4LVTD8VtOa8LniwEuOR$f1gGcvDrOtPzTCj18osqCti0QSbClODR87ZTxTmCoto=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "Test",
+        "last_name": "User",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-13T23:57:15.201Z",
+        "deleted": null,
+        "created": "2023-05-13T23:57:15.494Z",
+        "updated": "2023-05-13T23:57:15.494Z",
+        "email": "test.user@email.com",
         "groups": [],
         "user_permissions": []
     }

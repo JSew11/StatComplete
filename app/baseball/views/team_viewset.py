@@ -10,7 +10,6 @@ class TeamViewSet (ModelViewSet):
     """Views for the team model.
     """
     serializer_class = TeamSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request: Request, *args, **kwargs) -> Response:
         """View the list of all teams.

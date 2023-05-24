@@ -14,7 +14,7 @@ class TestCoachDetailsApi (APITestCase):
         """
         self.test_coach: Coach = Coach.objects.get(first_name='Test', last_name='Coach')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
 
@@ -56,7 +56,7 @@ class TestCoachListApi (APITestCase):
         Coach.objects.get(first_name='Test', last_name='Coach')
         Coach.objects.get(first_name='Another', last_name='Coach')
         self.client = APIClient()
-        user = User.objects.get(username='DeveloperAdmin')
+        user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
         return super().setUp()
 

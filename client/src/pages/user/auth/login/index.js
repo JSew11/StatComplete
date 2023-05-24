@@ -13,34 +13,35 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
-import { login } from '../../state/token/actions';
-import { clearMessage } from '../../state/message/actions';
+import { login } from 'src/state/token/actions';
+import { clearMessage } from 'src/state/message/actions';
+import Error from 'src/components/Error';
 
 
 export default function Login() {
   const navigate = useNavigate();
 
   const errorRef = useRef();
-  const usernameRef = useRef();
+  const emailRef = useRef();
 
-  const [ username, setUsername ] = useState('');
+  const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
   const { message } = useSelector(state => state.message)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    usernameRef.current.focus();
+    emailRef.current.focus();
   }, []);
 
   useEffect(() => {
     clearMessage();
-  }, [username, password])
+  }, [email, password])
 
   const handleSubmit = async (e) => {
      e.preventDefault();
     
-    dispatch(login(username, password))
+    dispatch(login(email, password))
       .then(() => {
         navigate('/');
       })
@@ -51,22 +52,19 @@ export default function Login() {
       <div>
         <h2 className='p-1 m-1 text-center'>Sign In to StatComplete</h2>
       </div>
-      <div ref={errorRef} className={message ? 'error-msg' : 'offscreen'}
-        aria-live='assertive'>
-          {message}
-      </div>
+      <Error errorRef={errorRef} message={message} />
       <Form onSubmit={handleSubmit}>
         <FormGroup floating>
           <Input 
-            id='usernameInput' 
-            type='text'
-            ref={usernameRef}
-            placeholder='Username'
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
+            id='emailInput' 
+            type='email'
+            ref={emailRef}
+            placeholder='Email'
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
             required
           />
-          <Label for='usernameInput'>Username</Label>
+          <Label for='emailInput'>Email</Label>
         </FormGroup>
         <FormGroup floating>
           <Input 
@@ -83,7 +81,7 @@ export default function Login() {
           className='btn btn-primary'
           color='primary'
           type='submit'
-          disabled={username === '' || password === ''}
+          disabled={email === '' || password === ''}
         >
           Sign In
         </Button>

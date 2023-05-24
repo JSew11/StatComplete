@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {
@@ -19,14 +20,17 @@ code {
 }
 
 :root {
+  --background-color: #eaebec;
+
   --primary-color: #192841;
   --primary-color-active: #1e314f;
   --primary-color-disabled: #29426c;
   --primary-color-hover: #24395d;
-  --secondary-color: #96aed7;
+
+  --secondary-color: #7a98cc;
   --secondary-color-active: #88a3d1;
   --secondary-color-disabled: #a4b9dc;
-  --secondary-color-hover: #7a98cc;
+  --secondary-color-hover: #96aed7;
 }
 
 /* primary button color override */

@@ -21,7 +21,6 @@ class CompetitionViewSet (ModelViewSet):
     """Views for the competition model.
     """
     serializer_class = CompetitionSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request: Request, *args, **kwargs) -> Response:
         """View a list of all competitions.
