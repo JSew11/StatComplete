@@ -52,7 +52,7 @@ export default function PersonalInfo() {
         }
         setLastName(response.data.last_name);
         if (response.data.suffix) {
-          setMiddleName(response.data.suffix);
+          setSuffix(response.data.suffix);
         }
       }
     );
