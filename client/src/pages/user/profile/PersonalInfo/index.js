@@ -79,17 +79,23 @@ export default function PersonalInfo() {
       }
     }
 
-    if (email !== '') {
-      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (re.test(email)) {
-        setEmailErrorMsg('');
-        checkEmail();
+    const delayCheckEmail = setTimeout(() => {
+      if (email !== '') {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test(email)) {
+          checkEmail();
+        } else {
+          setEmailErrorMsg('Invalid email format.');
+        }
       } else {
-        setEmailErrorMsg('Invalid email format.');
+        setEmailErrorMsg(REQUIRED_FIELD_MESSAGE);
       }
-    } else {
-      setEmailErrorMsg(REQUIRED_FIELD_MESSAGE);
-    }
+    }, 1000);
+
+    return () => {
+      setEmailErrorMsg('Validating email.')
+      clearTimeout(delayCheckEmail);
+    };
   }, [email]);
 
   const savePersonalInfo = async (e) => {
@@ -97,6 +103,23 @@ export default function PersonalInfo() {
 
     if (editingPersonalInfo) {
       // TODO: send the edit user request
+      const updated_fields = {};
+      if (firstName !== prevFirstName) {
+        updated_fields['first_name'] = firstName;
+      }
+      if (middleName !== prevMiddleName) {
+        updated_fields['middle_name'] = middleName;
+      }
+      if (lastName !== prevLastName) {
+        updated_fields['last_name'] = lastName;
+      }
+      if (suffix !== prevSuffix) {
+        updated_fields['suffix'] = suffix;
+      }
+      if (email !== prevEmail) {
+        updated_fields['email'] = email;
+      }
+      console.log(updated_fields);
     }
     setPrevFirstName(firstName);
     setPrevMiddleName(middleName);
@@ -133,6 +156,7 @@ export default function PersonalInfo() {
                 id='middleNameInput'
                 type='text'
                 value={middleName}
+                valid={middleName !== ''}
                 onChange={(e) => setMiddleName(e.target.value)}
                 disabled={!editingPersonalInfo}
               />
@@ -156,6 +180,7 @@ export default function PersonalInfo() {
                 id='suffixInput'
                 type='text'
                 value={suffix}
+                valid={suffix !== ''}
                 onChange={(e) => setSuffix(e.target.value)}
                 disabled={!editingPersonalInfo}
               />
