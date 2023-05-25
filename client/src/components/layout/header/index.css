@@ -21,21 +21,18 @@
     font-weight: lighter;
 }
 
-.user-dropdown-link:link,
-.user-dropdown-link:visited {
-    text-align: end;
-    margin-right: 10%;
-    color: black;
-}
-
 .user-dropdown-link:link:focus, 
+.user-dropdown-link:link:hover,
 .user-dropdown-link:link:active {
-    text-align: end;
-    margin-right: 10%;
-    color: var(--primary-color-active);
+    margin-left: 10%;
     background-color: #dadada;
 }
 
 .site-logo {
     cursor: pointer;
+}
+
+.user-dropdown-item:hover {
+    color: black;
+    background-color: transparent;
 }

@@ -49,8 +49,8 @@ export default function Header() {
                 <CgProfile className='profile-icon' />
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem className='p-0'><NavLink className='user-dropdown-link' href='/profile/'>Profile</NavLink></DropdownItem>
-                <DropdownItem className='p-0' onClick={logoutUser}><NavLink className='user-dropdown-link' href='#'>Log Out</NavLink></DropdownItem>
+                <DropdownItem className='py-0 text-end' ><NavLink href='/profile/' className='user-dropdown-item'>Profile</NavLink></DropdownItem>
+                <DropdownItem className='py-0 text-end' onClick={logoutUser}>Log Out</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           }
