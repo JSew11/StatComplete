@@ -11,16 +11,9 @@ import {
 } from 'reactstrap';
 
 import './index.css';
-import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);
-
-  const linkStyle = {
-    height: '100%',
-    color: 'white',
-    textDecoration: 'none',
-  };
 
   return (
     <Container fluid className='navbar p-0'>
