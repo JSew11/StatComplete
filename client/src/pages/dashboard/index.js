@@ -24,7 +24,7 @@ const Dashboard = () => {
   return (
     <Container fluid>
       <Row className='p-2'>
-        <Col className='text-center'><h1>{tempVar}</h1></Col>
+        <Col className='text-center'><h2>{tempVar}</h2></Col>
       </Row>
     </Container>
   );

@@ -14,7 +14,7 @@ import { CgProfile } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { logout } from 'src/state/token/actions';
-import Navbar from 'src/components/layout/Navbar';
+import Navbar from 'src/components/layout/navbar';
 import './index.css';
 
 export default function Header() {
@@ -37,7 +37,7 @@ export default function Header() {
   return (
     <Container fluid>
       <Row className='p-2 align-items-center'>
-        <Col className='text-start'>
+        <Col onClick={() => {navigate('/');}} className='site-logo text-start'>
           <h1>StatComplete</h1>
         </Col>
         <Col className='text-end'>

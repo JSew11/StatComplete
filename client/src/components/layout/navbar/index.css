@@ -3,15 +3,17 @@
 }
 
 .link:link, 
-.link:link:visited{
+.link:link:visited
+.link:link:hover {
     color: white;
+    text-decoration: none;
 }
 
-.link:link:hover {
+.nav-link:hover {
     background-color: var(--primary-color-hover);
 }
 
-.link:link:focus {
+.nav-link:focus {
     background-color: var(--primary-color-active);
 }
 
