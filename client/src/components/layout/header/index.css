@@ -32,6 +32,9 @@
     cursor: pointer;
 }
 
+.user-dropdown-item,
+.user-dropdown:focus,
+.user-dropdown:active,
 .user-dropdown-item:hover {
     color: black;
     background-color: transparent;
