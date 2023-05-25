@@ -70,3 +70,7 @@ code {
   border-color: transparent;
   background-color: var(--secondary-color-hover);
 }
+
+.card {
+  border-radius: 0%;
+}
