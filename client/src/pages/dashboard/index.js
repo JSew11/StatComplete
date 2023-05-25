@@ -9,7 +9,7 @@ import {
 const Dashboard = () => {
   const [ tempVar, setTempVar ] = useState('');
 
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const { isLoggedIn, access } = useSelector(state => state.auth);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -19,7 +19,7 @@ const Dashboard = () => {
       // TODO: call API to get generic dashboard data
       setTempVar('Not Logged In');
     }
-  }, []);
+  }, [isLoggedIn, access]);
 
   return (
     <Container fluid>

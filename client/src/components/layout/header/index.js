@@ -41,18 +41,18 @@ export default function Header() {
           <h1>StatComplete</h1>
         </Col>
         <Col className='text-end'>
-          { isLoggedIn === false ?
-            <Link className='btn btn-primary' to='/login'>Sign In</Link> 
-            : 
+          { isLoggedIn ?
             <Dropdown isOpen={isProfileDropdownOpen} toggle={toggleProfileDropdown}>
               <DropdownToggle className='p-0 m-0 profile-button'>
                 <CgProfile className='profile-icon' />
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem className='py-0 text-end' ><NavLink href='/profile/' className='user-dropdown-item'>Profile</NavLink></DropdownItem>
+                <DropdownItem className='py-0 text-end'><NavLink href='/profile/' className='user-dropdown-item'>Profile</NavLink></DropdownItem>
                 <DropdownItem className='py-0 text-end' onClick={logoutUser}>Log Out</DropdownItem>
               </DropdownMenu>
             </Dropdown>
+            :
+            <Link className='btn btn-primary' to='/login'>Sign In</Link> 
           }
         </Col>
       </Row>

@@ -14,10 +14,7 @@ export const register = (userRegistrationData) => (dispatch) => {
     (data) => {
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: {
-          refresh: data.refresh,
-          access: data.access,
-        }
+        payload: data.access,
       });
 
       dispatch({
@@ -54,10 +51,7 @@ export const login = (username, password) => (dispatch) => {
     (data) => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: {
-          refresh: data.refresh,
-          access: data.access,
-        }
+        payload: data.access,
       });
 
       return Promise.resolve();
