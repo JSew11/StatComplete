@@ -2,18 +2,19 @@
     background-color: var(--primary-color);
 }
 
-.link:link, 
-.link:link:visited
-.link:link:hover {
+.link, 
+.link:visited {
     color: white;
     text-decoration: none;
 }
 
-.nav-link:hover {
+.link:hover {
+    color: white;
     background-color: var(--primary-color-hover);
 }
 
-.nav-link:focus {
+.link:focus {
+    color: white;
     background-color: var(--primary-color-active);
 }
 

@@ -17,6 +17,7 @@ export default function Navbar() {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);
 
   const linkStyle = {
+    height: '100%',
     color: 'white',
     textDecoration: 'none',
   };
@@ -38,8 +39,8 @@ export default function Navbar() {
           </DropdownMenu>
         </Dropdown>
         {/* TODO: show these links based on user permissions */}
-        <NavItem className='nav-link'>
-          <Link to='organization/' style={linkStyle}>Organization</Link>
+        <NavItem>
+          <NavLink className='link' href='/organization/'>Organization</NavLink>
         </NavItem>
       </Nav>
     </Container>
