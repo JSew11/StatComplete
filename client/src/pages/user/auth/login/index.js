@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './index.css';
 import { login } from 'src/state/token/actions';
 import { clearMessage } from 'src/state/message/actions';
-import Error from 'src/components/Error';
+import Error from 'src/components/error';
 
 
 export default function Login() {

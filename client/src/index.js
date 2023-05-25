@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { CookiesProvider } from 'react-cookie';
 
 import 'src/index.css';
-import App from 'src/App';
+import App from 'src/app';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 

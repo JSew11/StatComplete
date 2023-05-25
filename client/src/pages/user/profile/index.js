@@ -11,10 +11,10 @@ import { CgProfile } from 'react-icons/cg';
 
 import './index.css';
 import { logout } from 'src/state/token/actions';
-import PersonalInfo from './PersonalInfo';
-import ContactInfo from './ContactInfo';
-import Loading from 'src/components/Loading';
-import Error from 'src/components/Error';
+import PersonalInfo from './personalInfo';
+import ContactInfo from './contactInfo';
+import Loading from 'src/components/loading';
+import Error from 'src/components/error';
 import UserApi from 'src/api/user';
 
 export default function UserProfile() {
