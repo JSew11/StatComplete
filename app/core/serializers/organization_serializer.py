@@ -7,6 +7,7 @@ class OrganizationSerializer (serializers.ModelSerializer):
     """
     competitions = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     teams = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    users = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Organization
