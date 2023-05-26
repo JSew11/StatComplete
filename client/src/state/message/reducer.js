@@ -5,15 +5,17 @@ import {
 
 const initialState = { message: '' };
 
-export default function message(state=initialState, action) {
-  const { type, payload } = action;
-
+export default function message(state=initialState, {type, payload}) {
   switch (type) {
     case SET_MESSAGE:
-      return { message: payload };
+      return {
+        message: payload.message
+      };
 
     case CLEAR_MESSAGE:
-      return { message: '' };
+      return {
+        message: ''
+      };
 
     default:
       return state;

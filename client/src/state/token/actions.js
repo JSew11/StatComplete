@@ -11,15 +11,12 @@ import AuthApi from 'src/api/auth';
 
 export const register = (userRegistrationData) => (dispatch) => {
   return AuthApi.register(userRegistrationData).then(
-    (data) => {
+    (response) => {
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: data.access,
-      });
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: data.message,
+        payload: {
+          access: response.data.access
+        },
       });
 
       return Promise.resolve();
@@ -38,7 +35,9 @@ export const register = (userRegistrationData) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: message,
+        payload: {
+          message: message
+        },
       });
 
       return Promise.reject();
@@ -48,10 +47,12 @@ export const register = (userRegistrationData) => (dispatch) => {
 
 export const login = (username, password) => (dispatch) => {
   return AuthApi.login(username, password).then(
-    (data) => {
+    (response) => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: data.access,
+        payload: {
+          access: response.data.access
+        },
       });
 
       return Promise.resolve();
@@ -75,7 +76,9 @@ export const login = (username, password) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: message,
+        payload: {
+          message: message
+        },
       });
 
       return Promise.reject();
@@ -101,6 +104,8 @@ export const logout = () => (dispatch) => {
 export const refreshToken = (access) => (dispatch) => {
   dispatch({
     type: REFRESH_TOKEN,
-    payload: access,
+    payload: {
+      access: access,
+    },
   });
 }

@@ -23,20 +23,21 @@ const UserDropdown = ({ isLoggedIn }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    UserApi.current_user()
-    .then(
-      (response) => {
-        if (response.data.organization) {
-          const url = `/organizations/${response.data.organization}/`;
-          setOrganizationHomeUrl(url);
+    if (isLoggedIn) {
+      UserApi.current_user()
+      .then(
+        (response) => {
+          if (response.data.organization) {
+            setOrganizationHomeUrl(`/organizations/${response.data.organization}/`);
+          }
+          return response;
+        },
+        (error) => {
+          setOrganizationHomeUrl('');
+          return error;
         }
-        return response;
-      },
-      (error) => {
-        setOrganizationHomeUrl('');
-        return error;
-      }
-    );
+      );
+    }
   }, []);
 
   const toggleProfileDropdown = () => {
