@@ -20,8 +20,7 @@ const Routes = () => (
       <Route path='organizations/' Component={OrganizationSearch} />
     </Route>
     <Route Component={OrganizationLayout}>
-      {/* <Route path='organizations/:organizationId/' Component={OrganizationHome} /> */}
-      <Route path='organizations/home/' Component={OrganizationHome} />
+      <Route path='organizations/:organizationId/' Component={OrganizationHome} />
     </Route>
     {/* TODO: make a 404 page here */}
   </Switch>

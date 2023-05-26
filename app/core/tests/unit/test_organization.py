@@ -8,7 +8,7 @@ class TestOrganizationModel (TestCase):
     fixtures = ['organization']
 
     def setUp(self) -> None:
-        self.test_organization = Organization.objects.get(name='Test Organization')
+        self.test_organization = Organization.objects.get(name='StatComplete')
         return super().setUp()
     
     def test_organization_string(self):

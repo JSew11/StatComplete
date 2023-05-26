@@ -15,7 +15,7 @@ class TestOrganizationDetailsApi (APITestCase):
     def setUp(self) -> None:
         """ Set up necessary objects for testing.
         """
-        self.test_organization: Organization = Organization.objects.get(name='Test Organization')
+        self.test_organization: Organization = Organization.objects.get(name='StatComplete')
         self.client = APIClient()
         user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
@@ -56,7 +56,7 @@ class TestOrganizationListApi (APITestCase):
     def setUp(self) -> None:
         """Set up necessary objects for testing.
         """
-        Organization.objects.get(name='Test Organization')
+        Organization.objects.get(name='StatComplete')
         Organization.objects.get(name = 'Test Organization 2')
         self.client = APIClient()
         user = User.objects.get(email='developer.admin@statcomplete.com')
@@ -91,7 +91,7 @@ class TestOrganizationCompetitionDetailsApi (APITestCase):
     def setUp(self) -> None:
         """ Set up necessary objects for testing.
         """
-        self.test_organization: Organization = Organization.objects.get(name='Test Organization')
+        self.test_organization: Organization = Organization.objects.get(name='StatComplete')
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
         self.client = APIClient()
         user = User.objects.get(email='developer.admin@statcomplete.com')
@@ -134,7 +134,7 @@ class TestOrganizationCompetitionListApi (APITestCase):
     def setUp(self) -> None:
         """Set up necessary objects for testing.
         """
-        self.test_organization: Organization = Organization.objects.get(name='Test Organization')
+        self.test_organization: Organization = Organization.objects.get(name='StatComplete')
         self.client = APIClient()
         user = User.objects.get(email='developer.admin@statcomplete.com')
         self.client.force_authenticate(user)
@@ -169,7 +169,7 @@ class TestOrganizationTeamDetailsApi (APITestCase):
     def setUp(self) -> None:
         """Set up necessary objects for testing.
         """
-        self.test_organization = Organization.objects.get(name='Test Organization')
+        self.test_organization = Organization.objects.get(name='StatComplete')
         self.test_team = Team.objects.get(location = 'Test', name = 'Team')
         self.client = APIClient()
         user = User.objects.get(email='developer.admin@statcomplete.com')
@@ -211,7 +211,7 @@ class TestOrganizationTeamListApi (APITestCase):
     def setUp(self):
         """Set up necessary objects for testing.
         """
-        self.test_organization = Organization.objects.get(name='Test Organization')
+        self.test_organization = Organization.objects.get(name='StatComplete')
         Team.objects.get(location='Test', name='Team')
         Team.objects.get(location='Another', name='Team')
         self.client = APIClient()

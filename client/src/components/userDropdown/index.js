@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   NavLink,
   Dropdown,
@@ -12,22 +12,41 @@ import { useDispatch } from 'react-redux';
 
 import './index.css';
 import { logout } from 'src/state/token/actions';
+import UserApi from 'src/api/user';
 
 const UserDropdown = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
   const [ isProfileDropdownOpen, setIsProfileDropdownOpen ] = useState(false);
+  const [ organizationHomeUrl, setOrganizationHomeUrl ] = useState('');
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    UserApi.current_user()
+    .then(
+      (response) => {
+        if (response.data.organization) {
+          const url = `/organizations/${response.data.organization}/`;
+          setOrganizationHomeUrl(url);
+        }
+        return response;
+      },
+      (error) => {
+        setOrganizationHomeUrl('');
+        return error;
+      }
+    );
+  }, []);
+
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
-  }
+  };
 
   const logoutUser = () => {
     dispatch(logout());
     navigate('/');
-  }
+  };
 
   return (
     <>
@@ -38,8 +57,7 @@ const UserDropdown = ({ isLoggedIn }) => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem className='py-0 text-end'><NavLink href='/profile/' className='user-dropdown-item'>My Profile</NavLink></DropdownItem>
-            {/* Load this if the user has an associated organization */}
-            <DropdownItem className='py-0 text-end'><NavLink href='/organizations/home/' className='user-dropdown-item'>Organization Home</NavLink></DropdownItem>
+            { organizationHomeUrl !== '' && <DropdownItem className='py-0 text-end'><NavLink href={organizationHomeUrl} className='user-dropdown-item'>Organization Home</NavLink></DropdownItem>}
             <DropdownItem className='py-0 text-end' onClick={logoutUser}>Log Out</DropdownItem>
           </DropdownMenu>
         </Dropdown>
