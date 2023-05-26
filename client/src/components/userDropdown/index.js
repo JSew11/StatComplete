@@ -24,7 +24,7 @@ const UserDropdown = ({ isLoggedIn }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      UserApi.current_user()
+      UserApi.currentUser()
       .then(
         (response) => {
           if (response.data.organization) {

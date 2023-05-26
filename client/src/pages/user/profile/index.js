@@ -29,7 +29,7 @@ export default function UserProfile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    UserApi.current_user()
+    UserApi.currentUser()
     .then(
       (response) => {
         setUser(response?.data);

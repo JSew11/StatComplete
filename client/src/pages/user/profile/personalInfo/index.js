@@ -70,7 +70,7 @@ export default function PersonalInfo({ user }) {
       if (suffix !== prevSuffix) {
         updated_fields['suffix'] = suffix;
       }
-      UserApi.partial_update_user(user.id, updated_fields);
+      UserApi.partialUpdateUser(user.id, updated_fields);
     }
     setPrevFirstName(firstName);
     setPrevMiddleName(middleName);

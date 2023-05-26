@@ -19,8 +19,8 @@ const Routes = () => (
       <Route path='/' Component={Dashboard} />
       <Route path='organizations/' Component={OrganizationSearch} />
     </Route>
-    <Route Component={OrganizationLayout}>
-      <Route path='organizations/:organizationId/' Component={OrganizationHome} />
+    <Route path='organizations/:organizationId/' Component={OrganizationLayout}>
+      <Route path='' Component={OrganizationHome} />
     </Route>
     {/* TODO: make a 404 page here */}
   </Switch>
