@@ -6,8 +6,6 @@
         "password": "pbkdf2_sha256$600000$AkpWhFM9O8ckfP1eOAcft2$8dcNckHXNXsE6spY3/dpwivY2kFCS2ZOrpJ97VODGes=",
         "last_login": null,
         "is_superuser": true,
-        "first_name": "Developer",
-        "last_name": "Admin",
         "is_staff": true,
         "is_active": true,
         "date_joined": "2023-05-13T23:57:15.201Z",
@@ -15,6 +13,11 @@
         "created": "2023-05-13T23:57:15.494Z",
         "updated": "2023-05-13T23:57:15.494Z",
         "email": "developer.admin@statcomplete.com",
+        "first_name": "Developer",
+        "middle_name": null,
+        "last_name": "Admin",
+        "suffix": null,
+        "organization": "6188c414-d2ed-4e8f-8521-70135f7b9503",
         "groups": [],
         "user_permissions": []
     }
@@ -26,8 +29,6 @@
         "password": "pbkdf2_sha256$600000$Sfo4LVTD8VtOa8LniwEuOR$f1gGcvDrOtPzTCj18osqCti0QSbClODR87ZTxTmCoto=",
         "last_login": null,
         "is_superuser": false,
-        "first_name": "Test",
-        "last_name": "User",
         "is_staff": false,
         "is_active": true,
         "date_joined": "2023-05-13T23:57:15.201Z",
@@ -35,6 +36,11 @@
         "created": "2023-05-13T23:57:15.494Z",
         "updated": "2023-05-13T23:57:15.494Z",
         "email": "test.user@email.com",
+        "first_name": "Test",
+        "middle_name": null,
+        "last_name": "User",
+        "suffix": null,
+        "organization": null,
         "groups": [],
         "user_permissions": []
     }
