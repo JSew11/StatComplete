@@ -5,9 +5,10 @@ Stat tracking and live score keeping web app for baseball games. Built using Dja
 
 ### Installations
 * Docker & Docker Compose [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-* [VSCode](https://code.visualstudio.com/download)
+* Python Editor (I like [VSCode](https://code.visualstudio.com/download))
 * [Git](https://git-scm.com/downloads)
-* Database Management tool (I like [DBeaver](https://dbeaver.io/))
+* Database Management Tool (I like [DBeaver](https://dbeaver.io/))
+* API Testing Tool (I like [Postman](https://www.postman.com/downloads/))
 
 ### Project Setup
 1. Clone the repo (https://github.com/JSew11/StatComplete) using the command:  
