@@ -4,14 +4,14 @@ import {
   Col,
 } from 'reactstrap';
 
-const Organization = () => {
+const OrganizationHome = () => {
   return (
     <Container fluid>
       <Row className='m-2'>
-        <Col className='text-center'><h2>Organization</h2></Col>
+        <Col className='text-center'><h2>Organization Home</h2></Col>
       </Row>
     </Container>
   );
 }
 
-export default Organization;
+export default OrganizationHome;

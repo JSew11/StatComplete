@@ -38,7 +38,8 @@ const UserDropdown = ({ isLoggedIn }) => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem className='py-0 text-end'><NavLink href='/profile/' className='user-dropdown-item'>My Profile</NavLink></DropdownItem>
-            <DropdownItem className='py-0 text-end'><NavLink href='#' className='user-dropdown-item'>Organization Home</NavLink></DropdownItem>
+            {/* Load this if the user has an associated organization */}
+            <DropdownItem className='py-0 text-end'><NavLink href='/organizations/home/' className='user-dropdown-item'>Organization Home</NavLink></DropdownItem>
             <DropdownItem className='py-0 text-end' onClick={logoutUser}>Log Out</DropdownItem>
           </DropdownMenu>
         </Dropdown>

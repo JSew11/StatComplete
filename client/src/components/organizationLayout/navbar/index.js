@@ -12,7 +12,7 @@ import {
 
 import './index.css';
 
-export default function Navbar() {
+export default function OrganizationNavbar() {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);
 
   return (
@@ -32,7 +32,10 @@ export default function Navbar() {
           </DropdownMenu>
         </Dropdown>
         <NavItem>
-          <NavLink className='link' href='/organizations/'>Organizations</NavLink>
+          <NavLink className='link' href='#'>Competitions</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className='link' href='#'>Teams</NavLink>
         </NavItem>
       </Nav>
     </Container>

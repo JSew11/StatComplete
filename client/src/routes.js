@@ -6,7 +6,9 @@ import Dashboard from 'src/pages/dashboard';
 import Login from 'src/pages/user/auth/login';
 import Register from 'src/pages/user/auth/register';
 import UserProfile from 'src/pages/user/profile';
-import Organization from 'src/pages/organization';
+import OrganizationSearch from 'src/pages/organization/search';
+import OrganizationLayout from './components/organizationLayout';
+import OrganizationHome from './pages/organization/home';
 
 const Routes = () => (
   <Switch>
@@ -15,7 +17,11 @@ const Routes = () => (
     <Route exact path='profile/' Component={UserProfile} />
     <Route Component={Layout}>
       <Route path='/' Component={Dashboard} />
-      <Route path='organization/' Component={Organization} />
+      <Route path='organizations/' Component={OrganizationSearch} />
+    </Route>
+    <Route Component={OrganizationLayout}>
+      {/* <Route path='organizations/:organizationId/' Component={OrganizationHome} /> */}
+      <Route path='organizations/home/' Component={OrganizationHome} />
     </Route>
     {/* TODO: make a 404 page here */}
   </Switch>
