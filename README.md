@@ -6,7 +6,7 @@ Stat tracking and live score keeping web app for baseball games. Built using Dja
 ### Installations
 * Docker & Docker Compose [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 * Python Editor (I like [VSCode](https://code.visualstudio.com/download))
-* [Git](https://git-scm.com/downloads)
+* [Git](https://git-scm.com/downloads)/Git UI (I like [GitKraken](https://www.gitkraken.com/))
 * Database Management Tool (I like [DBeaver](https://dbeaver.io/))
 * API Testing Tool (I like [Postman](https://www.postman.com/downloads/))
 
