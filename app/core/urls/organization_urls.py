@@ -1,7 +1,7 @@
 from django.urls import path
 
 from ..views.organization_viewset import OrganizationViewSet
-from ..views.organization_baseball_viewset import OrganizationBaseballCompetitionViewset
+from ..views.organization_baseball_viewset import OrganizationBaseballCompetitionViewset, OrganizationBaseballTeamViewset
 
 organization_list = OrganizationViewSet.as_view({
     'get': 'list',
@@ -25,15 +25,15 @@ organization_competition_details = OrganizationBaseballCompetitionViewset.as_vie
     'delete': 'destroy'
 })
 
-organization_team_list = OrganizationViewSet.as_view({
-    'get': 'list_teams',
-    'post': 'create_team'
+organization_team_list = OrganizationBaseballTeamViewset.as_view({
+    'get': 'list',
+    'post': 'create'
 })
 
-organization_team_details = OrganizationViewSet.as_view({
-    'get': 'retrieve_team',
-    'patch': 'partial_update_team',
-    'delete': 'destroy_team'
+organization_team_details = OrganizationBaseballTeamViewset.as_view({
+    'get': 'retrieve',
+    'patch': 'partial_update',
+    'delete': 'destroy'
 })
 
 urlpatterns = [
