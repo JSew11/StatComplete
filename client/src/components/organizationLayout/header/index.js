@@ -22,7 +22,7 @@ export default function OrganizationHeader() {
   const { isLoggedIn } = useSelector(state => state.auth);
 
   useEffect(() => {
-    OrganizationApi.retrieveOrganization(organizationId)
+    OrganizationApi.retrieve(organizationId)
     .then(
       (response) => {
         if (response.data) {

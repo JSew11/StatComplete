@@ -4,17 +4,21 @@ import {
   Container,
   Row,
   Col,
+  Card,
+  CardHeader,
+  CardBody,
 } from 'reactstrap';
 
 import OrganizationApi from 'src/api/organization';
+import BaseballCompetitionsTable from 'src/components/baseball/competitionsTable';
 
 const OrganizationHome = () => {
-  const {organizationId} = useParams();
+  const { organizationId } = useParams();
 
   const [ organizationData, setOrganizationData ] = useState({});
 
   useEffect(() => {
-    OrganizationApi.retrieveOrganization(organizationId)
+    OrganizationApi.retrieve(organizationId)
     .then(
       (response) => {
         if (response.data) {
@@ -29,7 +33,12 @@ const OrganizationHome = () => {
   return (
     <Container fluid>
       <Row className='m-2'>
-        <Col className='text-center'><h2>Organization Home</h2></Col>
+        <Col>
+          <Card>
+            <CardHeader>Baseball Competitions</CardHeader>
+            <CardBody><BaseballCompetitionsTable organizationId={organizationId}/></CardBody>
+          </Card>
+        </Col>
       </Row>
     </Container>
   );
