@@ -30,7 +30,7 @@ class TestUserRegistrationApi(APITestCase):
 class TestRefreshTokenApi(APITestCase):
     """Test the refresh_token endpoint.
     """
-    fixtures = ['user']
+    fixtures = ['organization', 'user']
 
     def setUp(self) -> None:
         self.client = APIClient()
@@ -50,7 +50,7 @@ class TestRefreshTokenApi(APITestCase):
 class TestLogoutApi(APITestCase):
     """Test the logout endpoint.
     """
-    fixtures = ['user']
+    fixtures = ['organization', 'user']
 
     def setUp(self) -> None:
         self.client: APIClient = APIClient()
@@ -69,7 +69,7 @@ class TestLogoutApi(APITestCase):
 class TestUserFieldValidationApi(APITestCase):
     """Test endpoints defined in the user field validation view.
     """
-    fixtures = ['user']
+    fixtures = ['organization', 'user']
 
     def setUp(self) -> None:
         self.client = APIClient()
@@ -98,7 +98,7 @@ class TestUserFieldValidationApi(APITestCase):
 class TestUserListView(APITestCase):
     """Test the user list endpoint.
     """
-    fixtures = ['user']
+    fixtures = ['organization', 'user']
 
     def setUp(self) -> None:
         self.client: APIClient = APIClient()
@@ -126,7 +126,7 @@ class TestUserListView(APITestCase):
 class TestUserViewSet(APITestCase):
     """Test the user viewset endpoint.
     """
-    fixtures = ['user']
+    fixtures = ['organization', 'user']
 
     def setUp(self) -> None:
         self.client: APIClient = APIClient()
