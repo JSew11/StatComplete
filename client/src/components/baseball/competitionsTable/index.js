@@ -6,6 +6,8 @@ import {
   TableRow,
   TableCell,
 } from '@mui/material';
+import { tableCellClasses } from '@mui/material/TableCell';
+import { styled } from '@mui/material/styles';
 
 import OrganizationApi from 'src/api/organization';
 import { SEASON, TOURNAMENT, UNKNOWN } from 'src/utils/constants/competitionTypes';
@@ -70,6 +72,26 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
     }
   }, []);
 
+  const StyledTableCell = styled(TableCell) (({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
+
   return (
     <div>
       { loading ?
@@ -77,23 +99,23 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
         :
           <Table stickyHeader size='small'>
             <TableHead>
-              <TableRow>
-                <TableCell>Competition Name</TableCell>
-                <TableCell align='right'>Type</TableCell>
-                <TableCell align='right'>Start Date</TableCell>
-                <TableCell align='right'>End Date</TableCell>
-                <TableCell align='right'>Status</TableCell>
-              </TableRow>
+              <StyledTableRow>
+                <StyledTableCell>Competition Name</StyledTableCell>
+                <StyledTableCell align='right'>Type</StyledTableCell>
+                <StyledTableCell align='right'>Start Date</StyledTableCell>
+                <StyledTableCell align='right'>End Date</StyledTableCell>
+                <StyledTableCell align='right'>Status</StyledTableCell>
+              </StyledTableRow>
             </TableHead>
             <TableBody>
               { rowData.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell component='th' scope='row'>{row.name}</TableCell>
-                  <TableCell align='right'>{row.type}</TableCell>
-                  <TableCell align='right'>{row.startDate}</TableCell>
-                  <TableCell align='right'>{row.endDate}</TableCell>
-                  <TableCell align='right'>{row.status}</TableCell>
-                </TableRow>
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell component='th' scope='row'>{row.name}</StyledTableCell>
+                  <StyledTableCell align='right'>{row.type}</StyledTableCell>
+                  <StyledTableCell align='right'>{row.startDate}</StyledTableCell>
+                  <StyledTableCell align='right'>{row.endDate}</StyledTableCell>
+                  <StyledTableCell align='right'>{row.status}</StyledTableCell>
+                </StyledTableRow>
               ))}
             </TableBody>
           </Table>

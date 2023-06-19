@@ -6,9 +6,11 @@ import axios from 'axios';
 import store from './state/store';
 import { Provider } from 'react-redux';
 import { CookiesProvider } from 'react-cookie';
+import { ThemeProvider } from '@mui/material';
 
 import 'src/index.css';
 import App from 'src/app';
+import { appTheme } from 'src/theme';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -17,7 +19,9 @@ root.render(
   <React.StrictMode>
     <CookiesProvider>
       <Provider store={store}>
-        <App/>
+        <ThemeProvider theme={appTheme}>
+          <App/>
+        </ThemeProvider>
       </Provider>
     </CookiesProvider>
   </React.StrictMode>
