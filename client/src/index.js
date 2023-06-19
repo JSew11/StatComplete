@@ -6,7 +6,7 @@ import axios from 'axios';
 import store from './state/store';
 import { Provider } from 'react-redux';
 import { CookiesProvider } from 'react-cookie';
-import { ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import 'src/index.css';
 import App from 'src/app';
@@ -20,6 +20,7 @@ root.render(
     <CookiesProvider>
       <Provider store={store}>
         <ThemeProvider theme={appTheme}>
+          <CssBaseline />
           <App/>
         </ThemeProvider>
       </Provider>

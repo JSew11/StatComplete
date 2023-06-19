@@ -17,6 +17,6 @@ export const appTheme = createTheme({
       main: '#885f08',
       dark: '#5f4205',
       contrastText: '#fff',
-    }
+    },
   }
 });

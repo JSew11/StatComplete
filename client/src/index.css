@@ -5,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-color);
 }
 
 code {
@@ -20,8 +19,6 @@ code {
 }
 
 :root {
-  --background-color: #eaebec;
-
   --primary-color: #192841;
   --primary-color-active: #1e314f;
   --primary-color-disabled: #29426c;
