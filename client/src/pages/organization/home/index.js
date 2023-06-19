@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Container,
@@ -9,36 +8,25 @@ import {
   CardBody,
 } from 'reactstrap';
 
-import OrganizationApi from 'src/api/organization';
 import BaseballCompetitionsTable from 'src/components/baseball/competitionsTable';
+import OrganizationDetailsForm from '../../../components/organization/detailsForm';
 
 const OrganizationHome = () => {
   const { organizationId } = useParams();
 
-  const [ organizationData, setOrganizationData ] = useState({});
-
-  useEffect(() => {
-    OrganizationApi.retrieve(organizationId)
-    .then(
-      (response) => {
-        if (response.data) {
-          setOrganizationData(response.data);
-        }
-
-        return response;
-      }
-    );
-  }, [organizationId]);
-
   return (
     <Container fluid>
       <Row className='m-2'>
-        <Col>
-          <Card>
-            <CardHeader>Baseball Competitions</CardHeader>
-            <CardBody><BaseballCompetitionsTable organizationId={organizationId}/></CardBody>
-          </Card>
-        </Col>
+        <Card>
+          <CardHeader>Organization Details</CardHeader>
+          <CardBody><OrganizationDetailsForm organizationId={organizationId}/></CardBody>
+        </Card>
+      </Row>
+      <Row className='m-2'>
+        <Card>
+          <CardHeader>Baseball Competitions</CardHeader>
+          <CardBody><BaseballCompetitionsTable organizationId={organizationId}/></CardBody>
+        </Card>
       </Row>
     </Container>
   );
