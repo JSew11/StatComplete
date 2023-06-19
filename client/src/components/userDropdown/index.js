@@ -7,8 +7,9 @@ import {
   DropdownItem
 } from 'reactstrap';
 import { CgProfile } from 'react-icons/cg';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
 
 import './index.css';
 import { logout } from 'src/state/token/actions';
@@ -63,7 +64,10 @@ const UserDropdown = ({ isLoggedIn }) => {
           </DropdownMenu>
         </Dropdown>
         :
-        <Link className='btn btn-primary' to='/login'>Sign In</Link> 
+        <Button color='primary' variant='contained' disableElevation href='/login'
+             className='sign-in-btn'>
+          Sign In
+        </Button> 
       }
     </>
   );

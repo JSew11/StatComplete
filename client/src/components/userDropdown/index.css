@@ -28,3 +28,7 @@
     color: black;
     background-color: transparent;
 }
+
+.sign-in-btn:hover {
+    color: white;
+}

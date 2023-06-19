@@ -28,3 +28,7 @@
 .dropdown-link:link:active {
     background-color: #dadada;
 }
+
+.navbar-link:hover {
+    color: white;
+}
