@@ -9,8 +9,10 @@ import {
 
 import OrganizationApi from 'src/api/organization';
 import { SEASON, TOURNAMENT } from 'src/utils/constants/competitionTypes';
+import Loading from 'src/components/loading';
 
 const BaseballCompetitionsTable = ({ organizationId }) => {
+  const [ loading, setLoading ] = useState(true);
   const [ rowData, setRowData ] = useState([]);
 
   const getCompetitionTypeString = (typeInt) => {
@@ -60,6 +62,7 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
             });
           });
           setRowData(rows);
+          setLoading(false);
           return response;
         }
       );
@@ -67,28 +70,34 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
   }, []);
 
   return (
-    <Table stickyHeader size='small'>
-      <TableHead>
-        <TableRow>
-          <TableCell>Competition Name</TableCell>
-          <TableCell align='right'>Type</TableCell>
-          <TableCell align='right'>Start Date</TableCell>
-          <TableCell align='right'>End Date</TableCell>
-          <TableCell align='right'>Status</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        { rowData.map((row) => (
-          <TableRow key={row.id}>
-            <TableCell component='th' scope='row'>{row.name}</TableCell>
-            <TableCell align='right'>{row.type}</TableCell>
-            <TableCell align='right'>{row.startDate}</TableCell>
-            <TableCell align='right'>{row.endDate}</TableCell>
-            <TableCell align='right'>{row.status}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div>
+      { loading ?
+          <Loading />
+        :
+          <Table stickyHeader size='small'>
+            <TableHead>
+              <TableRow>
+                <TableCell>Competition Name</TableCell>
+                <TableCell align='right'>Type</TableCell>
+                <TableCell align='right'>Start Date</TableCell>
+                <TableCell align='right'>End Date</TableCell>
+                <TableCell align='right'>Status</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              { rowData.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell component='th' scope='row'>{row.name}</TableCell>
+                  <TableCell align='right'>{row.type}</TableCell>
+                  <TableCell align='right'>{row.startDate}</TableCell>
+                  <TableCell align='right'>{row.endDate}</TableCell>
+                  <TableCell align='right'>{row.status}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+      }
+    </div>
   );
 }
 
