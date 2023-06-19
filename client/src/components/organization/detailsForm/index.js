@@ -19,13 +19,13 @@ const OrganizationDetailsForm = ({ organizationId }) => {
   }, []);
 
   return (
-    <div>
+    <>
       { loading ? 
           <Loading />
         :
           <h3>TODO: Organization Details Form</h3>
       }
-    </div>
+    </>
   );
 }
 

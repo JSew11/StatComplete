@@ -94,7 +94,7 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
   }));
 
   return (
-    <div>
+    <>
       { loading ?
           <Loading />
         :
@@ -121,7 +121,7 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
             </TableBody>
           </Table>
       }
-    </div>
+    </>
   );
 }
 
