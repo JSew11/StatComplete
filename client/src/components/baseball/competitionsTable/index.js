@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 
 import OrganizationApi from 'src/api/organization';
+import { SEASON, TOURNAMENT } from 'src/utils/constants/competitionTypes';
 
 const BaseballCompetitionsTable = ({ organizationId }) => {
   const [ rowData, setRowData ] = useState([]);
@@ -15,9 +16,9 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
   const getCompetitionTypeString = (typeInt) => {
     switch (typeInt) {
       case 1:
-        return 'Season';
+        return SEASON;
       case 2:
-        return 'Tournament';
+        return TOURNAMENT;
       default:
         return 'Unknown';
     }

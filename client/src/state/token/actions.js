@@ -6,7 +6,7 @@ import {
   LOGOUT,
   SET_MESSAGE,
   REFRESH_TOKEN,
-} from 'src/state/actionTypes';
+} from 'src/utils/constants/actionTypes';
 import AuthApi from 'src/api/auth';
 
 export const register = (userRegistrationData) => (dispatch) => {
