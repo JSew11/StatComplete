@@ -8,7 +8,8 @@ import {
 } from '@mui/material';
 
 import OrganizationApi from 'src/api/organization';
-import { SEASON, TOURNAMENT } from 'src/utils/constants/competitionTypes';
+import { SEASON, TOURNAMENT, UNKNOWN } from 'src/utils/constants/competitionTypes';
+import { COMPLETE, SCHEDULING, IN_PROGRESS, SCHEDULED } from 'src/utils/constants/competitionStatusTypes';
 import Loading from 'src/components/loading';
 
 const BaseballCompetitionsTable = ({ organizationId }) => {
@@ -22,22 +23,22 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
       case 2:
         return TOURNAMENT;
       default:
-        return 'Unknown';
+        return UNKNOWN;
     }
   };
 
   const getCompetitionStatus = (startDate, endDate) => {
     const currentDate = new Date();
     if (!startDate || !endDate) {
-      return 'Scheduling';
+      return SCHEDULING;
     }
     if (currentDate > endDate) {
-      return 'Complete';
+      return COMPLETE;
     }
     if (currentDate > startDate) {
-      return 'In Progress';
+      return IN_PROGRESS;
     }
-    return 'Scheduled';
+    return SCHEDULED;
   };
 
   useEffect(() => {
