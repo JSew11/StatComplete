@@ -57,8 +57,8 @@ const UserDropdown = ({ isLoggedIn }) => {
             <CgProfile className='profile-icon' />
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem className='py-0 text-end'><NavLink href='/profile/' className='user-dropdown-item'>My Profile</NavLink></DropdownItem>
-            { organizationHomeUrl !== '' && <DropdownItem className='py-0 text-end'><NavLink href={organizationHomeUrl} className='user-dropdown-item'>Organization Home</NavLink></DropdownItem>}
+            <DropdownItem className='py-0 text-end'><NavLink href='/profile/' className='user-dropdown-item'>Profile</NavLink></DropdownItem>
+            { organizationHomeUrl !== '' && <DropdownItem className='py-0 text-end'><NavLink href={organizationHomeUrl} className='user-dropdown-item'>Organization</NavLink></DropdownItem>}
             <DropdownItem className='py-0 text-end' onClick={logoutUser}>Log Out</DropdownItem>
           </DropdownMenu>
         </Dropdown>
