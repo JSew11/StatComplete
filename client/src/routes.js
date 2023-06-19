@@ -7,7 +7,7 @@ import Login from 'src/pages/user/auth/login';
 import Register from 'src/pages/user/auth/register';
 import UserProfile from 'src/pages/user/profile';
 import OrganizationSearch from 'src/pages/organization/search';
-import OrganizationLayout from './components/organizationLayout';
+import OrganizationLayout from './components/organization/layout';
 import OrganizationHome from './pages/organization/home';
 
 const Routes = () => (
