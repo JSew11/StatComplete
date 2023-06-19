@@ -27,8 +27,17 @@ const OrganizationHome = () => {
       <Row className='p-2'>
         <Col>
           <Card>
-            <CardHeader>Baseball Competitions</CardHeader>
-            <CardBody><BaseballCompetitionsTable organizationId={organizationId}/></CardBody>
+            <CardHeader>Baseball</CardHeader>
+            <CardBody>
+              <div className='text-center'>
+                <p>Competitions</p>
+                <BaseballCompetitionsTable organizationId={organizationId}/>
+              </div>
+              <div className='my-3 text-center'>
+                <p>Teams</p>
+                <h5>TODO: Teams Table</h5> 
+              </div>
+            </CardBody>
           </Card>
         </Col>
       </Row>
