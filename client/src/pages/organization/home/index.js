@@ -16,17 +16,21 @@ const OrganizationHome = () => {
 
   return (
     <Container fluid>
-      <Row className='m-2'>
-        <Card>
-          <CardHeader>Organization Details</CardHeader>
-          <CardBody><OrganizationDetailsForm organizationId={organizationId}/></CardBody>
-        </Card>
+      <Row className='p-2'>
+        <Col>
+          <Card>
+            <CardHeader>Organization Details</CardHeader>
+            <CardBody><OrganizationDetailsForm organizationId={organizationId}/></CardBody>
+          </Card>
+        </Col>
       </Row>
-      <Row className='m-2'>
-        <Card>
-          <CardHeader>Baseball Competitions</CardHeader>
-          <CardBody><BaseballCompetitionsTable organizationId={organizationId}/></CardBody>
-        </Card>
+      <Row className='p-2'>
+        <Col>
+          <Card>
+            <CardHeader>Baseball Competitions</CardHeader>
+            <CardBody><BaseballCompetitionsTable organizationId={organizationId}/></CardBody>
+          </Card>
+        </Col>
       </Row>
     </Container>
   );
