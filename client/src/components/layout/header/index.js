@@ -19,7 +19,7 @@ export default function Header() {
     <Container fluid>
       <Row className='p-2 align-items-center'>
         <Col onClick={() => {navigate('/');}} className='site-logo text-start'><h1>StatComplete</h1></Col>
-        <Col className='text-end'><UserDropdown isLoggedIn={isLoggedIn} /></Col>
+        <Col className='m-0 p-0 text-end'><UserDropdown isLoggedIn={isLoggedIn} /></Col>
       </Row>
       <Row>
         <Navbar />
