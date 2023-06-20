@@ -358,7 +358,7 @@ export default function Register() {
               variant='contained'
               disableElevation
               href='/login'
-              className='my-1 register-link-btn'
+              className='my-1 sign-in-link-btn'
             >
               Sign In Here
             </Button>
