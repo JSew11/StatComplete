@@ -125,7 +125,7 @@ export default function Login() {
               variant='contained'
               disableElevation
               href='/register'
-              className='register-link-btn'
+              className='my-1 register-link-btn'
             >
               Register Here
             </Button>
