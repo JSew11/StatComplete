@@ -17,7 +17,7 @@ const OrganizationHome = () => {
       <Grid className='py-2'>
         <Grid item>
           <Card elevation={0}>
-            <CardHeader title='Organization Details' />
+            <CardHeader title='Organization Details'/>
             <CardContent><OrganizationDetailsForm organizationId={organizationId}/></CardContent>
           </Card>
         </Grid>
