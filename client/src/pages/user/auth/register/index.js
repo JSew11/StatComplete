@@ -3,7 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
@@ -30,6 +38,7 @@ export default function Register() {
   const [ suffix, setSuffix ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ emailErrorMsg, setEmailErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE)
+  const [ showPasswords, setShowPasswords ] = useState(false);
   const [ password, setPassword ] = useState('');
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE)
   const [ confirmPassword, setConfirmPassword ] = useState('');
@@ -144,6 +153,12 @@ export default function Register() {
       });
   }
 
+  const handleClickShowPassword = () => setShowPasswords((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container>
@@ -177,6 +192,7 @@ export default function Register() {
                   fullWidth
                   error={emailErrorMsg !== ''}
                   helperText={emailErrorMsg}
+                  placeholder='user@statcomplete.com'
                 />
               </Grid>
             </Grid>
@@ -236,32 +252,66 @@ export default function Register() {
             </Grid>
             <Grid container className='p-2 justify-content-center'>
               <Grid item xs={12}>
-                <TextField
+                <FormControl
                   required
-                  type='password'
-                  label='Password'
                   variant='outlined'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   fullWidth
-                  error={passwordErrorMsg !== ''}
-                  helperText={passwordErrorMsg}
-                />
+                  error={ passwordErrorMsg !== '' }
+                >
+                  <InputLabel htmlFor='password-input'>Password</InputLabel>
+                  <OutlinedInput
+                    id='password-input'
+                    type={ showPasswords ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    endAdornment={
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge='end'
+                        >
+                          { showPasswords ? <VisibilityOff /> : <Visibility /> }
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label='Password'
+                  />
+                  <FormHelperText>{confirmPasswordErrorMsg}</FormHelperText>
+                </FormControl>
               </Grid>
             </Grid>
             <Grid container className='p-2 justify-content-center'>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  type='password'
-                  label='Confirm Password'
-                  variant='outlined'
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                <FormControl
+                  required 
+                  variant='outlined' 
                   fullWidth
                   error={confirmPasswordErrorMsg !== ''}
-                  helperText={confirmPasswordErrorMsg}
-                />
+              >
+                  <InputLabel htmlFor='password-input'>Confirm Password</InputLabel>
+                  <OutlinedInput
+                    id='password-input'
+                    type={ showPasswords ? 'text' : 'password'}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    endAdornment={
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge='end'
+                        >
+                          { showPasswords ? <VisibilityOff /> : <Visibility /> }
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label='Confirm Password'
+                  />
+                  <FormHelperText>{confirmPasswordErrorMsg}</FormHelperText>
+                </FormControl>
               </Grid>
             </Grid>
             <Grid container className='p-2'>

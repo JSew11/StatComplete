@@ -4,7 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import './index.css';
 import { login } from 'src/state/token/actions';
@@ -20,6 +27,7 @@ export default function Login() {
 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  const [ showPassword, setShowPassword ] = useState(false);
 
   const { message } = useSelector(state => state.message)
   const dispatch = useDispatch();
@@ -40,6 +48,12 @@ export default function Login() {
         navigate('/');
       })
   }
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -76,15 +90,28 @@ export default function Login() {
             </Grid>
             <Grid container className='p-2 justify-content-center'>
               <Grid item xs={12}>
-                <TextField 
-                  required
-                  type='password'
-                  label='Password'
-                  variant='outlined'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  fullWidth
-                />
+                <FormControl required variant='outlined' fullWidth>
+                  <InputLabel htmlFor='password-input'>Password</InputLabel>
+                  <OutlinedInput
+                    id='password-input'
+                    type={ showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    endAdornment={
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge='end'
+                        >
+                          { showPassword ? <VisibilityOff /> : <Visibility /> }
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label='Password'
+                  />
+                </FormControl>
               </Grid>
             </Grid>
             <Grid container className='p-2'>
