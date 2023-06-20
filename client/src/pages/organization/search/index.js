@@ -1,16 +1,13 @@
-import {
-  Container,
-  Row,
-  Col,
-} from 'reactstrap';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 const OrganizationSearch = () => {
   return (
-    <Container fluid>
-      <Row className='m-2'>
-        <Col className='text-center'><h2>Organization Search</h2></Col>
-      </Row>
-    </Container>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container className='p-2'>
+        <Grid item xs={12}><h2 className='text-center'>Organization Search</h2></Grid>
+      </Grid>
+    </Box>
   );
 }
 

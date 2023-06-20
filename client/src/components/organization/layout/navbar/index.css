@@ -1,30 +1,3 @@
-.navbar {
-    background-color: var(--primary-color);
-}
-
-.link, 
-.link:visited {
+.navbar-link:hover {
     color: white;
-    text-decoration: none;
-}
-
-.link:hover {
-    color: white;
-    background-color: var(--primary-color-hover);
-}
-
-.link:focus {
-    color: white;
-    background-color: var(--primary-color-active);
-}
-
-.dropdown-link:link,
-.dropdown-link:visited {
-    color: black;
-}
-
-.dropdown-link:link:hover, 
-.dropdown-link:link:focus, 
-.dropdown-link:link:active {
-    background-color: #dadada;
 }

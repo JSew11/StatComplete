@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Container,
-  Row,
-  Col
-} from 'reactstrap';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 const Dashboard = () => {
   const [ tempVar, setTempVar ] = useState('');
@@ -22,11 +19,11 @@ const Dashboard = () => {
   }, [isLoggedIn]);
 
   return (
-    <Container fluid>
-      <Row className='p-2'>
-        <Col className='text-center'><h2>{tempVar}</h2></Col>
-      </Row>
-    </Container>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container className='p-2'>
+        <Grid item xs={12}><h2 className='text-center'>{tempVar}</h2></Grid>
+      </Grid>
+    </Box>
   );
 }
 
