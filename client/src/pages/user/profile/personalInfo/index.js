@@ -1,16 +1,11 @@
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Col,
-  Button,
-  FormFeedback,
-} from 'reactstrap';
 import { useEffect, useState } from 'react';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 import UserApi from 'src/api/user';
 
@@ -80,80 +75,103 @@ export default function PersonalInfo({ user }) {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        Personal Info
-      </CardHeader>
-      <CardBody>
-        <Form onSubmit={savePersonalInfo}>
-          <FormGroup row>
-            <Col className='col-3'>
-              <Label for='firstNameInput'>First Name</Label>
-              <Input 
-                id='firstNameInput'
+    <Card elevation={0}>
+      <CardHeader title='Personal Info' />
+      <CardContent>
+        <Box component='form' sx={{ flexGrow: 1 }} className='m-2'>
+          <Grid container>
+            <Grid item xs={3} className='m-2'>
+              <TextField 
+                { ...editingPersonalInfo && 'required' }
                 type='text'
+                label='First Name'
+                variant='outlined'
+                size='small'
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                valid={editingPersonalInfo && firstNameErrorMsg === ''}
-                invalid={editingPersonalInfo && firstNameErrorMsg !== ''}
-                disabled={!editingPersonalInfo}
+                fullWidth
+                InputProps={{ readOnly: !editingPersonalInfo }}
+                InputLabelProps={{ shrink: true }}
+                error={firstNameErrorMsg}
+                helperText={firstNameErrorMsg}
               />
-              <FormFeedback>{firstNameErrorMsg}</FormFeedback>
-            </Col>
-            <Col className='col-3'>
-              <Label for='middleNameInput'>Middle Name</Label>
-              <Input 
-                id='middleNameInput'
+            </Grid>
+            <Grid item xs={3} className='m-2'>
+              <TextField 
+                { ...editingPersonalInfo && 'required' }
                 type='text'
+                label='Middle Name'
+                variant='outlined'
+                size='small'
                 value={middleName}
-                valid={editingPersonalInfo && middleName !== ''}
                 onChange={(e) => setMiddleName(e.target.value)}
-                disabled={!editingPersonalInfo}
+                fullWidth
+                InputProps={{ readOnly: !editingPersonalInfo }}
+                InputLabelProps={{ shrink: true }}
               />
-            </Col>
-            <Col className='col-3'>
-              <Label for='lastNameInput'>Last Name</Label>
-              <Input 
-                id='lastNameInput'
+            </Grid>
+            <Grid item xs={3} className='m-2'>
+              <TextField 
+                { ...editingPersonalInfo && 'required' }
                 type='text'
+                label='Last Name'
+                variant='outlined'
+                size='small'
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                valid={editingPersonalInfo && lastNameErrorMsg === ''}
-                invalid={editingPersonalInfo && lastNameErrorMsg !== ''}
-                disabled={!editingPersonalInfo}
+                fullWidth
+                InputProps={{ readOnly: !editingPersonalInfo }}
+                InputLabelProps={{ shrink: true }}
+                error={lastNameErrorMsg}
+                helperText={lastNameErrorMsg}
               />
-              <FormFeedback>{lastNameErrorMsg}</FormFeedback>
-            </Col>
-            <Col className='col-2'>
-              <Label for='suffixInput'>Suffix</Label>
-              <Input 
-                id='suffixInput'
+            </Grid>
+            <Grid item xs={1} className='m-2'>
+              <TextField 
+                { ...editingPersonalInfo && 'required' }
                 type='text'
+                label='Suffix'
+                variant='outlined'
+                size='small'
                 value={suffix}
-                valid={editingPersonalInfo && suffix !== ''}
                 onChange={(e) => setSuffix(e.target.value)}
-                disabled={!editingPersonalInfo}
+                fullWidth
+                InputProps={{ readOnly: !editingPersonalInfo }}
+                InputLabelProps={{ shrink: true }}
               />
-            </Col>
-          </FormGroup>
-          <Button 
-            className='m-1'
-            disabled={
-              editingPersonalInfo &&
-              firstNameErrorMsg !== '' &&
-              lastNameErrorMsg !== ''
-            }
-          >
-              {editingPersonalInfo ? 'Save' : 'Edit'}
-          </Button>
-          { 
-            editingPersonalInfo &&
-            <div className='btn btn-danger m-1' onClick={restorePersonalInfo}>
-              Cancel
-            </div>
-          }
-        </Form>
-      </CardBody>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item className='m-2'>
+              <Button 
+                variant='contained'
+                disableElevation
+                onClick={savePersonalInfo}
+                disabled={
+                  editingPersonalInfo &&
+                  (firstName === '' || lastName === '')
+                }
+              >
+                { editingPersonalInfo ? 'Save' : 'Edit' }
+              </Button>
+            </Grid>
+              { 
+                editingPersonalInfo 
+                &&
+                <Grid item className='m-2'>
+                  <Button
+                    variant='contained'
+                    color='error'
+                    disableElevation
+                    onClick={restorePersonalInfo}
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
+              }
+          </Grid>
+        </Box>
+      </CardContent>
     </Card>
   );
 }

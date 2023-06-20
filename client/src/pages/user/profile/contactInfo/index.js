@@ -65,7 +65,7 @@ export default function ContactInfo({ user }) {
       <CardContent>
         <Box component='form' sx={{ flexGrow: 1 }} className='m-2'>
           <Grid container>
-            <Grid item xs={5}>
+            <Grid item xs={5} className='m-2'>
               <TextField
                 { ...editingContactInfo && 'required' }
                 type='text'
