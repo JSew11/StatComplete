@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react';
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Col,
-  FormFeedback,
-} from 'reactstrap';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 
 import { publicAxios } from 'src/api/axios';
 
@@ -18,7 +13,7 @@ const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 
 export default function ContactInfo({ user }) {
   const [ editingContactInfo, setEditingContactInfo ] = useState(false);
-  const [ prevEmail, setPrevEmail ] = useState('');
+  const [ prevEmail, setPrevEmail ] = useState(user.email ?? '');
   const [ email, setEmail ] = useState(user.email ?? '');
   const [ emailErrorMsg, setEmailErrorMsg ] = useState('');
 
@@ -42,15 +37,19 @@ export default function ContactInfo({ user }) {
     }
 
     const delayCheckEmail = setTimeout(() => {
-      if (email !== '' || email !== prevEmail) {
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (re.test(email)) {
-          checkEmail();
+      if (email !== prevEmail) {
+        if (email !== '') {
+          let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if (re.test(email)) {
+            checkEmail();
+          } else {
+            setEmailErrorMsg('Invalid email format.');
+          }
         } else {
-          setEmailErrorMsg('Invalid email format.');
+          setEmailErrorMsg(REQUIRED_FIELD_MESSAGE);
         }
       } else {
-        setEmailErrorMsg(REQUIRED_FIELD_MESSAGE);
+        setEmailErrorMsg('');
       }
     }, 1000);
 
@@ -61,27 +60,29 @@ export default function ContactInfo({ user }) {
   }, [email]);
 
   return (
-    <Card>
-      <CardHeader>Contact Info</CardHeader>
-      <CardBody>
-        <Form>
-          <FormGroup row>
-            <Col className='col-5'>
-              <Label for='emailInput'>Email</Label>
-              <Input
-                id='emailInput'
-                type='email'
+    <Card elevation={0}>
+      <CardHeader title='Contact Info' />
+      <CardContent>
+        <Box component='form' sx={{ flexGrow: 1 }} className='m-2'>
+          <Grid container>
+            <Grid item xs={5}>
+              <TextField
+                { ...editingContactInfo && 'required' }
+                type='text'
+                label='Email'
+                variant='outlined'
+                size='small'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                valid={editingContactInfo && emailErrorMsg === ''}
-                invalid={editingContactInfo && emailErrorMsg !== ''}
-                disabled={!editingContactInfo}
+                fullWidth
+                InputProps={{ readOnly: !editingContactInfo }}
+                InputLabelProps={{ shrink: true }}
+                helperText={emailErrorMsg}
               />
-              <FormFeedback>{emailErrorMsg}</FormFeedback>
-            </Col>
-          </FormGroup>
-        </Form>
-      </CardBody>
+            </Grid>
+          </Grid>
+        </Box>
+      </CardContent>
     </Card>
-  )
+  );
 }
