@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-} from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 import OrganizationApi from 'src/api/organization';
 import { SEASON, TOURNAMENT, UNKNOWN } from 'src/utils/constants/competitionTypes';
@@ -98,10 +95,10 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
       { loading ?
           <Loading />
         :
-          <Table stickyHeader size='small'>
+          <Table stickyHeader size='small' className='mb-2'>
             <TableHead>
               <StyledTableRow>
-                <StyledTableCell>Competition Name</StyledTableCell>
+                <StyledTableCell>Competition</StyledTableCell>
                 <StyledTableCell align='right'>Type</StyledTableCell>
                 <StyledTableCell align='right'>Start Date</StyledTableCell>
                 <StyledTableCell align='right'>End Date</StyledTableCell>
