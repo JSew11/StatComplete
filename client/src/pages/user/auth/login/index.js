@@ -1,16 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-} from 'reactstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 import './index.css';
 import { login } from 'src/state/token/actions';
@@ -48,56 +42,96 @@ export default function Login() {
   }
 
   return (
-    <Container className='p-2'>
-      <div>
-        <h2 className='p-1 m-1 text-center'>Sign In to StatComplete</h2>
-      </div>
-      <Error errorRef={errorRef} message={message} />
-      <Form onSubmit={handleSubmit}>
-        <FormGroup floating>
-          <Input 
-            id='emailInput' 
-            type='email'
-            ref={emailRef}
-            placeholder='Email'
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            required
-          />
-          <Label for='emailInput'>Email</Label>
-        </FormGroup>
-        <FormGroup floating>
-          <Input 
-            id='passwordInput'
-            type='password'
-            placeholder='Password'
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            required
-          />
-          <Label for='passwordInput'>Password</Label>
-        </FormGroup>
-        <Button
-          className='btn btn-primary'
-          color='primary'
-          type='submit'
-          disabled={email === '' || password === ''}
-        >
-          Sign In
-        </Button>
-        <div className='btn btn-danger float-end' onClick={() => {navigate('/')}}>
-          Cancel
-        </div>
-      </Form>
-      <Row>
-        <Col className='text-center'>
-          <p>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container>
+        <Grid item xs={12}>
+          <h2 className='p-1 m-1 text-center'>Sign In to StatComplete</h2>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <Error errorRef={errorRef} message={message} />
+        </Grid>
+      </Grid>
+      <Grid container className='justify-content-center'> 
+        <Grid item xs={6}>
+          <Box
+            component='form'
+            className='m-2'
+            sx={{ flexGrow: 1 }}
+          >
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  type='text'
+                  label='Email'
+                  variant='filled'
+                  ref={emailRef}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <TextField 
+                  required
+                  type='password'
+                  label='Password'
+                  variant='filled'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+            <Grid container className='p-2'>
+              <Grid item xs={6}>
+                <Button 
+                  type='submit' 
+                  color='primary' 
+                  variant='contained'
+                  disableElevation
+                  disabled={email === '' || password === ''}
+                  onClick={handleSubmit}
+                >
+                  Sign In
+                </Button>
+              </Grid>
+              <Grid item xs={6} className='text-end'>
+                <Button
+                  color='error'
+                  variant='contained'
+                  disableElevation
+                  href='/'
+                  className='cancel-btn'
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container className='justify-content-center'>
+        <Grid item xs={6}>
+          <p className='text-center'>
             Don't have an Account?
             <br/>
-            <Link className='btn btn-secondary register-link' to='/register'>Register Here</Link>
+            <Button 
+              color='primary'
+              variant='contained'
+              disableElevation
+              href='/register'
+              className='register-link-btn'
+            >
+              Register Here
+            </Button>
           </p>
-        </Col>
-      </Row>
-    </Container>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
