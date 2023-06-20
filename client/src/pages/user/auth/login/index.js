@@ -57,8 +57,8 @@ export default function Login() {
         <Grid item xs={6}>
           <Box
             component='form'
-            className='m-2'
             sx={{ flexGrow: 1 }}
+            className='m-2'
           >
             <Grid container className='p-2 justify-content-center'>
               <Grid item xs={12}>
@@ -66,7 +66,7 @@ export default function Login() {
                   required
                   type='text'
                   label='Email'
-                  variant='filled'
+                  variant='outlined'
                   ref={emailRef}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -80,7 +80,7 @@ export default function Login() {
                   required
                   type='password'
                   label='Password'
-                  variant='filled'
+                  variant='outlined'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   fullWidth
