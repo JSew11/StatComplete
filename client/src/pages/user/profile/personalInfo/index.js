@@ -81,8 +81,8 @@ export default function PersonalInfo({ user }) {
         <Box component='form' sx={{ flexGrow: 1 }} className='m-2'>
           <Grid container>
             <Grid item xs={3} className='m-2'>
-              <TextField 
-                { ...editingPersonalInfo && 'required' }
+              <TextField
+                required={editingPersonalInfo}
                 type='text'
                 label='First Name'
                 variant='outlined'
@@ -92,13 +92,12 @@ export default function PersonalInfo({ user }) {
                 fullWidth
                 InputProps={{ readOnly: !editingPersonalInfo }}
                 InputLabelProps={{ shrink: true }}
-                error={firstNameErrorMsg}
+                error={firstNameErrorMsg !== ''}
                 helperText={firstNameErrorMsg}
               />
             </Grid>
             <Grid item xs={3} className='m-2'>
-              <TextField 
-                { ...editingPersonalInfo && 'required' }
+              <TextField
                 type='text'
                 label='Middle Name'
                 variant='outlined'
@@ -111,8 +110,8 @@ export default function PersonalInfo({ user }) {
               />
             </Grid>
             <Grid item xs={3} className='m-2'>
-              <TextField 
-                { ...editingPersonalInfo && 'required' }
+              <TextField
+                required={editingPersonalInfo}
                 type='text'
                 label='Last Name'
                 variant='outlined'
@@ -122,13 +121,12 @@ export default function PersonalInfo({ user }) {
                 fullWidth
                 InputProps={{ readOnly: !editingPersonalInfo }}
                 InputLabelProps={{ shrink: true }}
-                error={lastNameErrorMsg}
+                error={lastNameErrorMsg !== ''}
                 helperText={lastNameErrorMsg}
               />
             </Grid>
             <Grid item xs={1} className='m-2'>
               <TextField 
-                { ...editingPersonalInfo && 'required' }
                 type='text'
                 label='Suffix'
                 variant='outlined'

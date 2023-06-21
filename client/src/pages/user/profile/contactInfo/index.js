@@ -67,7 +67,7 @@ export default function ContactInfo({ user }) {
           <Grid container>
             <Grid item xs={5} className='m-2'>
               <TextField
-                { ...editingContactInfo && 'required' }
+                required={editingContactInfo}
                 type='text'
                 label='Email'
                 variant='outlined'

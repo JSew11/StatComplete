@@ -6,44 +6,18 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 
-import OrganizationDetailsForm from '../detailsForm';
+import OrganizationDetails from '../details';
 import BaseballCompetitionsTable from 'src/components/baseball/competitionsTable';
 import BaseballTeamsTable from 'src/components/baseball/teamsTable';
-import OrganizationApi from 'src/api/organization';
-import Loading from 'src/components/loading';
 
 const OrganizationHome = () => {
   const { organizationId } = useParams();
   
-  const [ loading, setLoading ] = useState(true);
-  const [ organization , setOrganization ] = useState({});
-
-  useEffect(() => {
-    if (organizationId && organizationId !== '') {
-      OrganizationApi.retrieve(organizationId)
-      .then((response) => {
-        setOrganization(response.data);
-        setLoading(false);
-        return response;
-      });
-    }
-  }, []);
-
   return (
     <Container>
       <Grid className='py-2'>
         <Grid item>
-          <Card elevation={0}>
-            <CardHeader title='Organization Details'/>
-            <CardContent>
-              { loading 
-                ?
-                <Loading />
-                :
-                <OrganizationDetailsForm organization={organization}/>
-              }
-            </CardContent>
-          </Card>
+          <OrganizationDetails organizationId={organizationId} readOnly={false} />
         </Grid>
       </Grid>
       <Grid className='py-2'>
