@@ -9,6 +9,7 @@ import UserProfile from 'src/pages/user/profile';
 import OrganizationSearch from 'src/pages/organization/search';
 import OrganizationLayout from './components/organization/layout';
 import OrganizationHome from './pages/organization/home';
+import Error404 from './pages/error404';
 
 const Routes = () => (
   <Switch>
@@ -22,7 +23,7 @@ const Routes = () => (
     <Route path='organizations/:organizationId/' Component={OrganizationLayout}>
       <Route path='' Component={OrganizationHome} />
     </Route>
-    {/* TODO: make a 404 page here */}
+    <Route path='*' Component={Error404} />
   </Switch>
 );
 
