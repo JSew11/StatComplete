@@ -5,14 +5,13 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 
 import OrganizationApi from 'src/api/organization';
 import Loading from 'src/components/loading';
 
 const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 
-const OrganizationDetails = ({ organizationId, readOnly=true }) => {
+const OrganizationDetails = ({ organizationId }) => {
   const [ loading, setLoading ] = useState(true);
   const [ editingOrganizationDetails, setEditingOrganizationDetails ] = useState(false);
   const [ name, setName ] = useState('');
@@ -38,26 +37,6 @@ const OrganizationDetails = ({ organizationId, readOnly=true }) => {
       setNameErrorMsg(REQUIRED_FIELD_MESSAGE);
     }
   }, [name]);
-
-  const restoreOrganizationDetails = () => {
-    setName(prevName);
-    setEditingOrganizationDetails(!editingOrganizationDetails);
-  };
-
-  const saveOrganizationDetails = async (e) => {
-    e.preventDefault();
-
-    if (editingOrganizationDetails) {
-      const updatedFields = {};
-      if (name !== prevName) {
-        updatedFields['name'] = name;
-      }
-      // TODO: call the api to partially update the organization details
-    }
-
-    setPrevName(name);
-    setEditingOrganizationDetails(!editingOrganizationDetails);
-  };
 
   return (
     <Card elevation={0}>
@@ -91,37 +70,6 @@ const OrganizationDetails = ({ organizationId, readOnly=true }) => {
                 />
               </Grid>
             </Grid>
-            { !readOnly && 
-              <Grid container>
-                <Grid item className='m-2'>
-                  <Button 
-                    variant='contained'
-                    disableElevation
-                    onClick={saveOrganizationDetails}
-                    disabled={
-                      editingOrganizationDetails &&
-                      (name === '')
-                    }
-                  >
-                    { editingOrganizationDetails ? 'Save' : 'Edit' }
-                  </Button>
-                </Grid>
-                { 
-                  editingOrganizationDetails 
-                  &&
-                  <Grid item className='m-2'>
-                    <Button
-                      variant='contained'
-                      color='error'
-                      disableElevation
-                      onClick={restoreOrganizationDetails}
-                    >
-                      Cancel
-                    </Button>
-                  </Grid>
-                }
-              </Grid>
-            }
           </Box>
         }
       </CardContent>

@@ -16,7 +16,7 @@ const OrganizationHome = () => {
     <Container>
       <Grid className='py-2'>
         <Grid item>
-          <OrganizationDetails organizationId={organizationId} readOnly={false} />
+          <OrganizationDetails organizationId={organizationId} />
         </Grid>
       </Grid>
       <Grid className='py-2'>
@@ -24,8 +24,12 @@ const OrganizationHome = () => {
           <Card elevation={0}>
             <CardHeader title='Baseball'/>
             <CardContent>
-              <BaseballCompetitionsTable organizationId={organizationId}/>
-              <BaseballTeamsTable organizationId={organizationId}/>
+              <Grid className='py-1'>
+                <BaseballCompetitionsTable organizationId={organizationId}/>
+              </Grid>
+              <Grid className='py-1'>
+                <BaseballTeamsTable organizationId={organizationId}/>
+              </Grid>
             </CardContent>
           </Card>
         </Grid>
