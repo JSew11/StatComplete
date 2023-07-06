@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import Navbar from 'src/components/layout/navbar';
-import UserDropdown from 'src/components/userDropdown';
+import Navbar from 'src/common/layout/navbar';
+import UserDropdown from 'src/common/userDropdown';
 import './index.css';
 
 export default function Header() {

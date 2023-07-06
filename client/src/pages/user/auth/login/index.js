@@ -16,7 +16,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './index.css';
 import { login } from 'src/state/token/actions';
 import { clearMessage } from 'src/state/message/actions';
-import Error from 'src/components/error';
+import Error from 'src/common/error';
 
 
 export default function Login() {
