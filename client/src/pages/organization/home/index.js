@@ -6,8 +6,8 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 
 import OrganizationDetails from '../details';
-import BaseballCompetitionsTable from 'src/components/baseball/competitionsTable';
-import BaseballTeamsTable from 'src/components/baseball/teamsTable';
+import BaseballCompetitionsTable from 'src/pages/organization/home/baseball/competitionsTable';
+import BaseballTeamsTable from 'src/pages/organization/home/baseball/teamsTable';
 
 const OrganizationHome = () => {
   const { organizationId } = useParams();
