@@ -11,9 +11,15 @@ const list_baseball_competitions = async (organizationId) => {
   return await privateAxios.get(url);
 }
 
+const list_baseball_teams = async (organizationId) => {
+  const url = ORGANIZATION_URL + organizationId + '/baseball/teams/';
+  return await privateAxios.get(url);
+}
+
 const OrganizationApi = {
   retrieve,
   list_baseball_competitions,
+  list_baseball_teams,
 };
 
 export default OrganizationApi;
