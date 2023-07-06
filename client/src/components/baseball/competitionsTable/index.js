@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 import OrganizationApi from 'src/api/organization';
 import { SEASON, TOURNAMENT, UNKNOWN } from 'src/utils/constants/competitionTypes';
 import { COMPLETE, SCHEDULING, IN_PROGRESS, SCHEDULED } from 'src/utils/constants/competitionStatusTypes';
 import Loading from 'src/components/loading';
+import StyledTableRow from 'src/components/styledTable/row';
+import StyledTableCell from 'src/components/styledTable/cell';
 
 const BaseballCompetitionsTable = ({ organizationId }) => {
   const [ loading, setLoading ] = useState(true);
-  const [ rowData, setRowData ] = useState([]);
+  const [ competitionRowData, setCompetitionRowData ] = useState([]);
 
   const getCompetitionTypeString = (typeInt) => {
     switch (typeInt) {
@@ -61,7 +60,7 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
               status: status,
             });
           });
-          setRowData(rows);
+          setCompetitionRowData(rows);
           setLoading(false);
           return response;
         }
@@ -69,30 +68,10 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
     }
   }, []);
 
-  const StyledTableCell = styled(TableCell) (({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      fontWeight: 'bold',
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(even)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
-
   return (
     <>
-      { loading ?
+      { 
+        loading ?
           <Loading />
         :
           <Table stickyHeader size='small' className='mb-2'>
@@ -106,7 +85,7 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              { rowData.map((row) => (
+              { competitionRowData.map((row) => (
                 <StyledTableRow key={row.id}>
                   <StyledTableCell component='th' scope='row'>{row.name}</StyledTableCell>
                   <StyledTableCell align='right'>{row.type}</StyledTableCell>
