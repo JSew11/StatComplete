@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .models.organization import Organization
 from .models.team import Team
 from .models.competition import Competition
 from .models.competition_team import CompetitionTeam
@@ -23,7 +22,6 @@ from .models.player_game_stats import PlayerGameStats
 admin.site.register(Coach)
 admin.site.register(Player)
 admin.site.register(Competition)
-admin.site.register(Organization)
 admin.site.register(Team)
 admin.site.register(CompetitionTeam)
 admin.site.register(Game)

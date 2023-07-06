@@ -4,6 +4,8 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
+from .organization import Organization
+
 class UserManager(BaseUserManager):
     """Manager for user models.
     """
@@ -65,3 +67,6 @@ class User(AbstractUser, SafeDeleteModel):
     middle_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50)
     suffix = models.CharField(max_length=10, blank=True, null=True)
+
+    # related models
+    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, related_name='users', null=True)

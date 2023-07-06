@@ -6,23 +6,17 @@ import {
   LOGOUT,
   SET_MESSAGE,
   REFRESH_TOKEN,
-} from 'src/state/actionTypes';
+} from 'src/utils/constants/actionTypes';
 import AuthApi from 'src/api/auth';
 
 export const register = (userRegistrationData) => (dispatch) => {
   return AuthApi.register(userRegistrationData).then(
-    (data) => {
+    (response) => {
       dispatch({
         type: REGISTER_SUCCESS,
         payload: {
-          refresh: data.refresh,
-          access: data.access,
-        }
-      });
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: data.message,
+          access: response.data.access
+        },
       });
 
       return Promise.resolve();
@@ -41,7 +35,9 @@ export const register = (userRegistrationData) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: message,
+        payload: {
+          message: message
+        },
       });
 
       return Promise.reject();
@@ -51,13 +47,12 @@ export const register = (userRegistrationData) => (dispatch) => {
 
 export const login = (username, password) => (dispatch) => {
   return AuthApi.login(username, password).then(
-    (data) => {
+    (response) => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {
-          refresh: data.refresh,
-          access: data.access,
-        }
+          access: response.data.access
+        },
       });
 
       return Promise.resolve();
@@ -81,7 +76,9 @@ export const login = (username, password) => (dispatch) => {
 
       dispatch({
         type: SET_MESSAGE,
-        payload: message,
+        payload: {
+          message: message
+        },
       });
 
       return Promise.reject();
@@ -107,6 +104,8 @@ export const logout = () => (dispatch) => {
 export const refreshToken = (access) => (dispatch) => {
   dispatch({
     type: REFRESH_TOKEN,
-    payload: access,
+    payload: {
+      access: access,
+    },
   });
 }

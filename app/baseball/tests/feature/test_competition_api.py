@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from core.models.user import User
-from baseball.models.organization import Organization
+from core.models.organization import Organization
 from baseball.models.competition import Competition
 from baseball.models.team import Team
 from baseball.models.competition_team import CompetitionTeam
@@ -19,7 +19,7 @@ class TestCompetitionDetailsApi (APITestCase):
     def setUp(self) -> None:
         """ Set up necessary objects for testing.
         """
-        self.test_organization: Organization = Organization.objects.get(name='Test Organization')
+        self.test_organization: Organization = Organization.objects.get(name='StatComplete')
         self.test_competition: Competition = Competition.objects.get(name='Test Season')
         self.client = APIClient()
         user = User.objects.get(email='developer.admin@statcomplete.com')

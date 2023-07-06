@@ -7,7 +7,7 @@ from baseball.models.coach import Coach
 class TestCoachDetailsApi (APITestCase):
     """Tests for detail endpoints defined in coach viewset.
     """
-    fixtures = ['user', 'coach']
+    fixtures = ['organization', 'user', 'coach']
 
     def setUp(self) -> None:
         """Set up necessary objects for testing and log in the appropriate test user(s).
@@ -48,7 +48,7 @@ class TestCoachDetailsApi (APITestCase):
 class TestCoachListApi (APITestCase):
     """Tests for list endpoints defined in coach viewset.
     """
-    fixtures = ['user', 'coach']
+    fixtures = ['organization', 'user', 'coach']
 
     def setUp(self):
         """Set up necessary objects for testing.

@@ -1,20 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  Button,
-  Container,
-  Row,
-  Col,
-} from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { CgProfile } from 'react-icons/cg';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import './index.css';
 import { logout } from 'src/state/token/actions';
-import PersonalInfo from './PersonalInfo';
-import ContactInfo from './ContactInfo';
-import Loading from 'src/components/Loading';
-import Error from 'src/components/Error';
+import PersonalInfo from './personalInfo';
+import ContactInfo from './contactInfo';
+import Loading from 'src/components/loading';
+import Error from 'src/components/error';
 import UserApi from 'src/api/user';
 
 export default function UserProfile() {
@@ -29,7 +27,7 @@ export default function UserProfile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    UserApi.current_user()
+    UserApi.currentUser()
     .then(
       (response) => {
         setUser(response?.data);
@@ -48,40 +46,59 @@ export default function UserProfile() {
   }
 
   return (
-    <Container fluid>
-      <Row className='p-2 align-items-center'>
-        <Col className='text-start'><Button color='primary' onClick={() => {navigate(-1);}}>Back</Button></Col>
-        <Col className='text-end'><Button color='primary' onClick={logoutUser}>Log Out</Button></Col>
-      </Row>
+    <Box sx={{ flexGrow: 1 }} className='m-2'>
+      <Grid container>
+        <Grid item xs={6}>
+          <Button
+            variant='contained'
+            disableElevation
+            onClick={() => navigate(-1)}
+          >
+            Back
+          </Button>
+        </Grid>
+        <Grid item xs={6} className='text-end'>
+          <Button
+            variant='contained'
+            disableElevation
+            onClick={logoutUser}
+          >
+            Log Out
+          </Button>
+        </Grid>
+      </Grid>
       { loading ? 
           <Loading />
         :
           <>
-            <Row className='p-2 align-items-center'>
-              <Col className='text-center'><Error errorRef={errorRef} message={errorMessage}/></Col>
-            </Row>
-            { !errorMessage && 
+            <Grid container>
+              <Grid item xs={12}>
+                <Error errorRef={errorRef} message={errorMessage} />
+              </Grid>
+            </Grid>
+            { !errorMessage &&
               <>
-                <Row className='p-2 align-items-center'>
-                  <Col className='text-center'><CgProfile className='profile-logo'/></Col>
-                </Row>
-                <Row className='p-2 align-items-center'>
-                  {/* <Col className='text-center'><Button>Edit Profile Logo</Button></Col> */}
-                </Row>
-                <Row className='p-2'>
-                  <Col><PersonalInfo user={user}/></Col>
-                </Row>
-                <Row className='p-2'>
-                  <Col><ContactInfo user={user}/></Col>
-                </Row>
-                {/* <Row className='p-2 align-items-center'>
-                  <Col className='text-end'><Button>Change Password</Button></Col>
-                  <Col className='text-start'><Button color='danger'>Delete Profile</Button></Col>
-                </Row> */}
+                <Grid container>
+                  <Grid item xs={12} className='m-2 text-center'>
+                    <IconButton color='primary' className='p-0 m-0 user-logo'>
+                      <AccountCircle sx={{ fontSize: '1250%' }}/>
+                    </IconButton>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12} className='m-2'>
+                    <PersonalInfo user={user} />
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12} className='m-2'>
+                    <ContactInfo user={user} />
+                  </Grid>
+                </Grid>
               </>
             }
           </>
       }
-    </Container>
+    </Box>
   );
 }

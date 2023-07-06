@@ -3,7 +3,7 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from safedelete import SOFT_DELETE_CASCADE
 
-from .organization import Organization
+from core.models.organization import Organization
 from .choices.competition_type import CompetitionType
 
 class Competition (SafeDeleteModel):

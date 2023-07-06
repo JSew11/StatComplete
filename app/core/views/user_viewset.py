@@ -34,7 +34,7 @@ class UserViewSet (ModelViewSet):
         """
         try:
             user_to_return: User = User.objects.get(id=user_id)
-            if request.user.has_perm('core.view_user'):
+            if request.user.has_perm('core.view_user') or request.user.id == user_to_return.id:
                 serializer = UserSerializer(user_to_return)
                 return Response(
                     data=serializer.data,

@@ -1,6 +1,6 @@
 [
 {
-    "model": "baseball.organization",
+    "model": "core.organization",
     "pk": "37797d27-9409-403c-a893-e5bb0f24b68d",
     "fields": {
         "deleted": null,
@@ -11,13 +11,13 @@
     }
 },
 {
-    "model": "baseball.organization",
+    "model": "core.organization",
     "pk": "6188c414-d2ed-4e8f-8521-70135f7b9503",
     "fields": {
         "deleted": null,
         "created": "2023-03-04T20:20:10.042Z",
         "updated": "2023-03-04T20:20:10.042Z",
-        "name": "Test Organization",
+        "name": "StatComplete",
         "location": null
     }
 }

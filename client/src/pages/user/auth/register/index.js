@@ -1,23 +1,24 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import {
-  Button,
-  Container,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-  Col,
-  FormFeedback
-} from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
 import { publicAxios } from 'src/api/axios';
 import { register } from 'src/state/token/actions';
 import { clearMessage } from 'src/state/message/actions';
-import Error from 'src/components/Error';
+import Error from 'src/components/error';
 
 const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;
@@ -26,7 +27,7 @@ const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 export default function Register() {
   const navigate = useNavigate();
 
-  const firstNameRef = useRef();
+  const emailRef = useRef();
   const errorRef = useRef();
 
   const [ firstName, setFirstName ] = useState('');
@@ -37,6 +38,7 @@ export default function Register() {
   const [ suffix, setSuffix ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ emailErrorMsg, setEmailErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE)
+  const [ showPasswords, setShowPasswords ] = useState(false);
   const [ password, setPassword ] = useState('');
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState(REQUIRED_FIELD_MESSAGE)
   const [ confirmPassword, setConfirmPassword ] = useState('');
@@ -46,7 +48,7 @@ export default function Register() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    firstNameRef.current.focus();
+    emailRef.current.focus();
   }, []);
 
   useEffect(() => {
@@ -151,128 +153,218 @@ export default function Register() {
       });
   }
 
+  const handleClickShowPassword = () => setShowPasswords((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <Container className='p-2'>
-      <Row>
-        <Col>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container>
+        <Grid item xs={12}>
           <h2 className='p-1 m-1 text-center'>New StatComplete Account</h2>
-        </Col>
-      </Row>
-      <Row>
-        <Col><Error errorRef={errorRef} message={message}/></Col>
-      </Row>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label for='emailInput'>Email</Label>
-          <Input
-            id='emailInput'
-            type='email'
-            placeholder='e.g. user@statcomplete.com'
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            valid={emailErrorMsg === ''}
-            invalid={emailErrorMsg !== ''}
-            required
-          />
-          <FormFeedback>{emailErrorMsg}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label for='firstNameInput'>First Name</Label>
-          <Input
-            id='firstNameInput'
-            type='text'
-            ref={firstNameRef}
-            onChange={(e) => setFirstName(e.target.value)}
-            valid={firstNameErrorMsg === ''}
-            invalid={firstNameErrorMsg !== ''}
-            value={firstName}
-            required
-          />
-          <FormFeedback>{firstNameErrorMsg}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label for='middleNameInput'>Middle Name</Label>
-          <Input
-            id='middleNameInput'
-            type='text'
-            onChange={(e) => setMiddleName(e.target.value)}
-            valid={middleName !== ''}
-            value={middleName}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for='lastNameInput'>Last Name</Label>
-          <Input
-            id='lastNameInput'
-            type='text'
-            onChange={(e) => setLastName(e.target.value)}
-            valid={lastNameErrorMsg === ''}
-            invalid={lastNameErrorMsg !== ''}
-            value={lastName}
-            required
-          />
-          <FormFeedback>{lastNameErrorMsg}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label for='suffixInput'>Suffix</Label>
-          <Input
-            id='suffixInput'
-            type='text'
-            onChange={(e) => setSuffix(e.target.value)}
-            valid={suffix !== ''}
-            value={suffix}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for='passwordInput'>Password</Label>
-          <Input
-            id='passwordInput'
-            type='password'
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            valid={passwordErrorMsg === ''}
-            invalid={passwordErrorMsg !== ''}
-          />
-          <FormFeedback>{passwordErrorMsg}</FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label for='confirmPassword'>Confirm Password</Label>
-          <Input
-            id='confirmPassword'
-            type='password'
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            value={confirmPassword}
-            valid={confirmPasswordErrorMsg === ''}
-            invalid={confirmPasswordErrorMsg !== ''}
-          />
-          <FormFeedback>{confirmPasswordErrorMsg}</FormFeedback>
-        </FormGroup>
-        <Button
-          className='btn btn-primary'
-          color='primary'
-          type='submit'
-          disabled={
-            firstName === '' || lastName === '' ||
-            password === '' || passwordErrorMsg !== '' ||
-            email === '' || emailErrorMsg !== '' ||
-            confirmPassword === '' || confirmPasswordErrorMsg !== ''
-          }
-        >
-          Register
-        </Button>
-        <div className='btn btn-danger float-end' onClick={() => navigate('/')}>
-          Cancel
-        </div>
-      </Form>
-      <Row>
-        <Col className='text-center'>
-          <p>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <Error errorRef={errorRef} message={message}/>
+        </Grid>
+      </Grid>
+      <Grid container className='justify-content-center'>
+        <Grid item xs={8}>
+          <Box
+            component='form'
+            autoComplete='off'
+            sx={{ flexGrow: 1 }}
+            className='m-2'
+          >
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  type='text'
+                  label='Email'
+                  variant='outlined'
+                  ref={emailRef}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  fullWidth
+                  error={emailErrorMsg !== ''}
+                  helperText={emailErrorMsg}
+                  placeholder='user@statcomplete.com'
+                />
+              </Grid>
+            </Grid>
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  type='text'
+                  label='First Name'
+                  variant='outlined'
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  fullWidth
+                  error={firstNameErrorMsg !== ''}
+                  helperText={firstNameErrorMsg}
+                />
+              </Grid>
+            </Grid>
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <TextField
+                  type='text'
+                  label='Middle Name'
+                  variant='outlined'
+                  value={middleName}
+                  onChange={(e) => setMiddleName(e.target.value)}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  type='text'
+                  label='Last Name'
+                  variant='outlined'
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  fullWidth
+                  error={lastNameErrorMsg !== ''}
+                  helperText={lastNameErrorMsg}
+                />
+              </Grid>
+            </Grid>
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <TextField
+                  type='text'
+                  label='Suffix'
+                  variant='outlined'
+                  value={suffix}
+                  onChange={(e) => setSuffix(e.target.value)}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <FormControl
+                  required
+                  variant='outlined'
+                  fullWidth
+                  error={ passwordErrorMsg !== '' }
+                >
+                  <InputLabel htmlFor='password-input'>Password</InputLabel>
+                  <OutlinedInput
+                    id='password-input'
+                    type={ showPasswords ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    endAdornment={
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge='end'
+                        >
+                          { showPasswords ? <VisibilityOff /> : <Visibility /> }
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label='Password'
+                  />
+                  <FormHelperText>{confirmPasswordErrorMsg}</FormHelperText>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container className='p-2 justify-content-center'>
+              <Grid item xs={12}>
+                <FormControl
+                  required 
+                  variant='outlined' 
+                  fullWidth
+                  error={confirmPasswordErrorMsg !== ''}
+              >
+                  <InputLabel htmlFor='password-input'>Confirm Password</InputLabel>
+                  <OutlinedInput
+                    id='password-input'
+                    type={ showPasswords ? 'text' : 'password'}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    endAdornment={
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge='end'
+                        >
+                          { showPasswords ? <VisibilityOff /> : <Visibility /> }
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label='Confirm Password'
+                  />
+                  <FormHelperText>{confirmPasswordErrorMsg}</FormHelperText>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container className='p-2'>
+              <Grid item xs={6}>
+                <Button 
+                  type='submit' 
+                  color='primary' 
+                  variant='contained'
+                  disableElevation
+                  disabled={
+                    emailErrorMsg !== '' ||
+                    firstNameErrorMsg !== '' ||
+                    lastNameErrorMsg !== '' ||
+                    passwordErrorMsg !== '' ||
+                    confirmPasswordErrorMsg !== ''
+                  }
+                  onClick={handleSubmit}
+                >
+                  Register
+                </Button>
+              </Grid>
+              <Grid item xs={6} className='text-end'>
+                <Button
+                  color='error'
+                  variant='contained'
+                  disableElevation
+                  href='/'
+                  className='cancel-btn'
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container className='justify-content-center'>
+        <Grid item xs={6}>
+          <p className='text-center'>
             Already have an Account?
             <br/>
-            <Link className='btn btn-secondary register-link' to='/login'>Sign In Here</Link>
+            <Button 
+              color='primary'
+              variant='contained'
+              disableElevation
+              href='/login'
+              className='my-1 sign-in-link-btn'
+            >
+              Sign In Here
+            </Button>
           </p>
-        </Col>
-      </Row>
-    </Container>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

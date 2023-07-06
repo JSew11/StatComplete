@@ -7,7 +7,7 @@ from baseball.models.player import Player
 class TestPlayerDetailsApi (APITestCase):
     """Tests for endpoints defined in PlayerDetails view.
     """
-    fixtures = ['user', 'player']
+    fixtures = ['organization', 'user', 'player']
 
     def setUp(self) -> None:
         """Set up necessary objects for testing.
@@ -48,7 +48,7 @@ class TestPlayerDetailsApi (APITestCase):
 class TestPlayerListApi (APITestCase):
     """Tests for endpoints defined in PlayerList view.
     """
-    fixtures = ['user', 'player']
+    fixtures = ['organization', 'user', 'player']
 
     def setUp(self):
         """Set up necessary objects for testing.

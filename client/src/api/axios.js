@@ -32,7 +32,7 @@ privateAxios.interceptors.request.use(
     if (accessToken && accessToken !== '') {
       config.headers = {
         ...config.headers,
-        authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       };
     }
 
@@ -49,12 +49,16 @@ privateAxios.interceptors.response.use(
   async (error) => {
     const config = error?.config;
 
-    if (error?.response?.status === 401 && !config?._retry) {
+    if (error?.response.status === 401 && !config?._retry) {
       config._retry = true;
 
       try {
         const response = await AuthApi.refreshToken();
         dispatch(refreshToken(response.data.access));
+        config.headers = {
+          ...config.headers,
+          Authorization: `Bearer ${response.data.access}`,
+        };
         return privateAxios(config);
       } catch (refreshError) {
         return Promise.reject(refreshError);
