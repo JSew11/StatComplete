@@ -53,6 +53,13 @@ export const appTheme = createTheme({
           borderBottom: 'solid 1px ' + CARD_BORDER_COLOR,
         }
       }
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          border: 'solid 1px ' + CARD_BORDER_COLOR
+        }
+      }
     }
   }
 });
