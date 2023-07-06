@@ -18,7 +18,7 @@ import './index.css';
 import { publicAxios } from 'src/api/axios';
 import { register } from 'src/state/token/actions';
 import { clearMessage } from 'src/state/message/actions';
-import Error from 'src/components/error';
+import Error from 'src/common/error';
 
 const CHECK_EMAIL_URL = 'check_email/'
 const MINIMUM_PASSWORD_LENGTH = 7;

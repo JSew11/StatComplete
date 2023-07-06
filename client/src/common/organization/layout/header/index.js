@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import UserDropdown from 'src/components/userDropdown';
+import UserDropdown from 'src/common/userDropdown';
 import './index.css';
 import OrganizationNavbar from '../navbar';
 import OrganizationApi from 'src/api/organization';

@@ -4,9 +4,9 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 
 import OrganizationApi from 'src/api/organization';
-import Loading from 'src/components/loading';
-import StyledTableRow from 'src/components/styledTable/row';
-import StyledTableCell from 'src/components/styledTable/cell';
+import Loading from 'src/common/loading';
+import StyledTableRow from 'src/common/styledTable/row';
+import StyledTableCell from 'src/common/styledTable/cell';
 
 const BaseballTeamsTable = ({ organizationId }) => {
   const [ loading, setLoading ] = useState(true);

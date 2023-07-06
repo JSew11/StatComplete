@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
 import OrganizationApi from 'src/api/organization';
-import Loading from 'src/components/loading';
+import Loading from 'src/common/loading';
 
 const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 

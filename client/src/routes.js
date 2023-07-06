@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Routes as Switch } from 'react-router-dom';
 
-import Layout from 'src/components/layout';
+import Layout from 'src/common/layout';
 import Dashboard from 'src/pages/dashboard';
 import Login from 'src/pages/user/auth/login';
 import Register from 'src/pages/user/auth/register';
 import UserProfile from 'src/pages/user/profile';
 import OrganizationSearch from 'src/pages/organization/search';
-import OrganizationLayout from './components/organization/layout';
+import OrganizationLayout from './common/organization/layout';
 import OrganizationHome from './pages/organization/home';
 import Error404 from './pages/error404';
 
