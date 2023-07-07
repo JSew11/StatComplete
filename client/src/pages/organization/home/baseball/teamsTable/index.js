@@ -33,29 +33,30 @@ const BaseballTeamsTable = ({ organizationId }) => {
   }, []);
 
   return (
-    <>
-      {
-        loading ?
-          <Loading />
-        :
-          <Table stickyHeader size='small' className='mb-2'>
-            <TableHead>
-              <StyledTableRow>
-                <StyledTableCell>Team</StyledTableCell>
-                <StyledTableCell>Location</StyledTableCell>
+    <Table stickyHeader size='small' className='mb-2'>
+      <TableHead>
+        <StyledTableRow>
+          <StyledTableCell>Team</StyledTableCell>
+          <StyledTableCell>Location</StyledTableCell>
+        </StyledTableRow>
+      </TableHead>
+      <TableBody>
+        { loading ?
+            <StyledTableRow>
+              <StyledTableCell colSpan={5}>
+                <Loading />
+              </StyledTableCell>
+            </StyledTableRow>
+          :
+            teamRowData.map((row) => (
+              <StyledTableRow key={row.id}>
+                <StyledTableCell component='th' scope='row'>{row.name}</StyledTableCell>
+                <StyledTableCell>{row.location}</StyledTableCell>
               </StyledTableRow>
-            </TableHead>
-            <TableBody>
-              { teamRowData.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell component='th' scope='row'>{row.name}</StyledTableCell>
-                  <StyledTableCell>{row.location}</StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-      }
-    </>
+            ))
+        }
+      </TableBody>
+    </Table>
   );
 }
 

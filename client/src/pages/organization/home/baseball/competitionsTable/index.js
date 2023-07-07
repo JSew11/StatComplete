@@ -69,35 +69,36 @@ const BaseballCompetitionsTable = ({ organizationId }) => {
   }, []);
 
   return (
-    <>
-      { 
-        loading ?
-          <Loading />
-        :
-          <Table stickyHeader size='small' className='mb-2'>
-            <TableHead>
-              <StyledTableRow>
-                <StyledTableCell>Competition</StyledTableCell>
-                <StyledTableCell align='right'>Type</StyledTableCell>
-                <StyledTableCell align='right'>Start Date</StyledTableCell>
-                <StyledTableCell align='right'>End Date</StyledTableCell>
-                <StyledTableCell align='right'>Status</StyledTableCell>
+    <Table stickyHeader size='small' className='mb-2'>
+      <TableHead>
+        <StyledTableRow>
+          <StyledTableCell>Competition</StyledTableCell>
+          <StyledTableCell align='right'>Type</StyledTableCell>
+          <StyledTableCell align='right'>Start Date</StyledTableCell>
+          <StyledTableCell align='right'>End Date</StyledTableCell>
+          <StyledTableCell align='right'>Status</StyledTableCell>
+        </StyledTableRow>
+      </TableHead>
+      <TableBody>
+        { loading ?
+            <StyledTableRow>
+              <StyledTableCell colSpan={5}>
+                <Loading />
+              </StyledTableCell>
+            </StyledTableRow>
+          :
+            competitionRowData.map((row) => (
+              <StyledTableRow key={row.id}>
+                <StyledTableCell component='th' scope='row'>{row.name}</StyledTableCell>
+                <StyledTableCell align='right'>{row.type}</StyledTableCell>
+                <StyledTableCell align='right'>{row.startDate}</StyledTableCell>
+                <StyledTableCell align='right'>{row.endDate}</StyledTableCell>
+                <StyledTableCell align='right'>{row.status}</StyledTableCell>
               </StyledTableRow>
-            </TableHead>
-            <TableBody>
-              { competitionRowData.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell component='th' scope='row'>{row.name}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.type}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.startDate}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.endDate}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.status}</StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-      }
-    </>
+            ))
+        }
+      </TableBody>
+    </Table>
   );
 }
 
