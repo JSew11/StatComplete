@@ -77,7 +77,7 @@ export default function ContactInfo({ user }) {
                 fullWidth
                 InputProps={{ readOnly: !editingContactInfo }}
                 InputLabelProps={{ shrink: true }}
-                helperText={emailErrorMsg}
+                helperText={ editingContactInfo ? emailErrorMsg : '' }
               />
             </Grid>
           </Grid>
